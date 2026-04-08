@@ -4,16 +4,10 @@ export function getApiOrigin(): string {
     return configured.replace(/\/+$/, "");
   }
 
-  if (typeof window === "undefined") {
-    return "";
-  }
-
-  const { protocol, hostname, port, origin } = window.location;
-  if (port === "5173") {
-    return `${protocol}//${hostname}:3000`;
-  }
-
-  return origin;
+  // Default: same-origin. In development the Vite proxy forwards /api/* to the
+  // backend, so no cross-origin cookie issues. In production the frontend is
+  // served by the same host as the backend.
+  return "";
 }
 
 export function apiUrl(path: string): string {

@@ -21,7 +21,7 @@ const NAV_LINKS = [
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
-  const { data: session, isLoading, isFetching } = useGetSession({
+  const { data: session, isLoading, isFetching, isError } = useGetSession({
     query: { refetchOnMount: "always" },
   });
   const logoutMut = useLogout();
@@ -47,6 +47,22 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  // Network / server error: don't redirect — the user may be authenticated but
+  // temporarily unreachable. Show a recoverable error screen instead.
+  if (isError && !session) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-slate-50">
+        <p className="text-slate-600 text-sm">Não foi possível verificar sua sessão.</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary/90 transition-colors"
+        >
+          Tentar novamente
+        </button>
       </div>
     );
   }
