@@ -23,8 +23,7 @@ interface CalEvent {
   color: string;
 }
 
-type ProposalWithUuid = ScheduleProposal & { uuid?: string };
-const proposalUuid = (proposal: ProposalWithUuid) => proposal.uuid ?? String(proposal.id);
+const proposalUuid = (proposal: ScheduleProposal) => proposal.uuid;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function getWeekMonday(date: Date): Date {
@@ -149,7 +148,7 @@ function HistoryPanel({
   onDelete,
   deletingUuid,
 }: {
-  proposals: ProposalWithUuid[];
+  proposals: ScheduleProposal[];
   onSync: (uuid: string) => void;
   syncingUuid: string | null;
   onDelete: (uuid: string) => void;
@@ -180,7 +179,7 @@ function HistoryPanel({
     onError: () => toast({ title: "Erro ao renomear", variant: "destructive" }),
   });
 
-  const startEdit = (p: ProposalWithUuid, fallbackLabel: string) => {
+  const startEdit = (p: ScheduleProposal, fallbackLabel: string) => {
     setEditingUuid(proposalUuid(p));
     setEditValue(p.title || fallbackLabel);
     setTimeout(() => inputRef.current?.focus(), 50);

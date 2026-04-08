@@ -69,8 +69,7 @@ export default function Chat() {
       { data: { conversationId: activeConvId, userId: "current", events: [] } },
       {
         onSuccess: (proposal) => {
-          const proposalPath = (proposal as { uuid?: string; id: number }).uuid ?? String(proposal.id);
-          setLocation(`/proposal/${proposalPath}`);
+          setLocation(`/proposal/${proposal.uuid}`);
         }
       }
     );

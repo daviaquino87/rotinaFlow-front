@@ -60,7 +60,6 @@ export interface OpenaiError {
 
 export interface ScheduleEvent {
   id: number;
-  proposalId: number;
   title: string;
   description?: string;
   startTime: string;
@@ -72,18 +71,14 @@ export interface ScheduleEvent {
 }
 
 export interface ScheduleProposal {
-  id: number;
-  conversationId?: number;
-  userId: string;
+  uuid: string;
   status: string;
   title?: string;
   createdAt: string;
 }
 
 export interface ScheduleProposalWithEvents {
-  id: number;
-  conversationId?: number;
-  userId: string;
+  uuid: string;
   status: string;
   title?: string;
   createdAt: string;

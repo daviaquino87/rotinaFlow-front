@@ -48,7 +48,6 @@ function eventDuration(ev: ScheduleEvent): number {
 }
 
 type ProposalWithEvents = {
-  id: number;
   uuid: string;
   status: string;
   title?: string;
@@ -405,7 +404,6 @@ export default function ProposalViewPage() {
     const endTime = `${String(endH).padStart(2,"0")}:${String(m).padStart(2,"0")}:00`;
     const newEv: ScheduleEvent = {
       id: tempId,
-      proposalId: proposal?.id ?? 0,
       title: "",
       startTime,
       endTime,
