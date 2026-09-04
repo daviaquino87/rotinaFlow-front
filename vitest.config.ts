@@ -13,7 +13,6 @@ export default defineConfig({
         "src/shared/lib/security/index.ts",
         "src/modules/schedule/utils/validators.ts",
         "src/lib/security.ts",
-        "src/pages/routine-form.tsx",
       ],
     },
   },

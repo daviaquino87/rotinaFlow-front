@@ -10,7 +10,11 @@ interface BeforeInstallPromptEvent extends Event {
 export function usePwaInstall() {
   const [canInstall, setCanInstall] = useState(false);
   const [dismissed, setDismissed] = useState(() => {
-    try { return localStorage.getItem("pwa-install-dismissed") === "true"; } catch { return false; }
+    try {
+      return localStorage.getItem("pwa-install-dismissed") === "true";
+    } catch {
+      return false;
+    }
   });
 
   useEffect(() => {
@@ -20,7 +24,10 @@ export function usePwaInstall() {
       setCanInstall(true);
     };
     window.addEventListener("beforeinstallprompt", handler);
-    window.addEventListener("appinstalled", () => { setCanInstall(false); deferredPrompt = null; });
+    window.addEventListener("appinstalled", () => {
+      setCanInstall(false);
+      deferredPrompt = null;
+    });
     return () => window.removeEventListener("beforeinstallprompt", handler);
   }, []);
 
@@ -29,11 +36,16 @@ export function usePwaInstall() {
     const prompt = deferredPrompt as BeforeInstallPromptEvent;
     prompt.prompt();
     const { outcome } = await prompt.userChoice;
-    if (outcome === "accepted") { deferredPrompt = null; setCanInstall(false); }
+    if (outcome === "accepted") {
+      deferredPrompt = null;
+      setCanInstall(false);
+    }
   };
 
   const dismiss = () => {
-    try { localStorage.setItem("pwa-install-dismissed", "true"); } catch {}
+    try {
+      localStorage.setItem("pwa-install-dismissed", "true");
+    } catch {}
     setDismissed(true);
   };
 

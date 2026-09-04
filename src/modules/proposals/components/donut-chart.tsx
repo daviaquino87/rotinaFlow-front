@@ -14,7 +14,10 @@ export function DonutChart({ segments }: { segments: DonutSegment[] }) {
     );
   }
 
-  const r = 50, cx = 60, cy = 60, stroke = 22;
+  const r = 50,
+    cx = 60,
+    cy = 60,
+    stroke = 22;
   const circumference = 2 * Math.PI * r;
   let offset = 0;
 
@@ -28,8 +31,14 @@ export function DonutChart({ segments }: { segments: DonutSegment[] }) {
         const rotation = -90 + (offset / total) * 360;
         offset += seg.value;
         return (
-          <circle key={i} cx={cx} cy={cy} r={r}
-            fill="none" stroke={seg.color} strokeWidth={stroke}
+          <circle
+            key={i}
+            cx={cx}
+            cy={cy}
+            r={r}
+            fill="none"
+            stroke={seg.color}
+            strokeWidth={stroke}
             strokeDasharray={`${dash} ${gap}`}
             strokeDashoffset={0}
             transform={`rotate(${rotation} ${cx} ${cy})`}

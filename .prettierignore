@@ -1,0 +1,4 @@
+dist
+coverage
+src/api-client/generated
+pnpm-lock.yaml

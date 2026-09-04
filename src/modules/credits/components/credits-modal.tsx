@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Coins, Zap, Star, Rocket, Loader2 } from "lucide-react";
-import { Button } from "@/components/ui-elements";
 import { useToast } from "@hooks/use-toast";
 import { ApiError, customFetch } from "@/api-client";
 
@@ -47,7 +46,13 @@ interface CreditsModalProps {
   action?: string;
 }
 
-export function CreditsModal({ open, onClose, currentCredits, requiredCredits, action }: CreditsModalProps) {
+export function CreditsModal({
+  open,
+  onClose,
+  currentCredits,
+  requiredCredits,
+  action,
+}: CreditsModalProps) {
   const [loading, setLoading] = useState<number | null>(null);
   const { toast } = useToast();
 
@@ -76,7 +81,8 @@ export function CreditsModal({ open, onClose, currentCredits, requiredCredits, a
         err instanceof ApiError && typeof (err.data as { error?: unknown })?.error === "string"
           ? (err.data as { error: string }).error
           : undefined;
-      const message = backendError ?? (err instanceof Error ? err.message : "Erro ao criar checkout");
+      const message =
+        backendError ?? (err instanceof Error ? err.message : "Erro ao criar checkout");
       toast({ title: "Erro", description: message, variant: "destructive" });
       setLoading(null);
     }
@@ -91,10 +97,7 @@ export function CreditsModal({ open, onClose, currentCredits, requiredCredits, a
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <motion.div
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={onClose}
-          />
+          <motion.div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
 
           <motion.div
             className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden"
@@ -122,19 +125,23 @@ export function CreditsModal({ open, onClose, currentCredits, requiredCredits, a
 
               <div className="mt-4 bg-white/10 rounded-xl p-3 flex items-center justify-between">
                 <span className="text-sm text-white/80">Seu saldo atual</span>
-                <span className="font-bold text-xl">{currentCredits} crédito{currentCredits !== 1 ? "s" : ""}</span>
+                <span className="font-bold text-xl">
+                  {currentCredits} crédito{currentCredits !== 1 ? "s" : ""}
+                </span>
               </div>
 
               {requiredCredits !== undefined && requiredCredits > currentCredits && (
                 <div className="mt-3 bg-white/10 rounded-xl p-3 text-sm text-white/90">
-                  Você precisa de <strong>{requiredCredits} créditos</strong> para {action ?? "esta ação"}.
-                  Você tem <strong>{currentCredits}</strong>.
+                  Você precisa de <strong>{requiredCredits} créditos</strong> para{" "}
+                  {action ?? "esta ação"}. Você tem <strong>{currentCredits}</strong>.
                 </div>
               )}
             </div>
 
             <div className="px-6 pt-5 pb-2">
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Custo por ação</p>
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
+                Custo por ação
+              </p>
               <div className="flex gap-3">
                 <div className="flex-1 bg-blue-50 rounded-lg p-2.5 text-center">
                   <div className="text-blue-600 font-bold text-lg">2</div>
@@ -150,7 +157,9 @@ export function CreditsModal({ open, onClose, currentCredits, requiredCredits, a
             </div>
 
             <div className="px-6 py-4 space-y-3">
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Escolha um pacote</p>
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Escolha um pacote
+              </p>
               {PACKAGES.map((pkg) => (
                 <div
                   key={pkg.credits}
@@ -167,7 +176,9 @@ export function CreditsModal({ open, onClose, currentCredits, requiredCredits, a
                   )}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${pkg.popular ? "bg-primary text-white" : "bg-slate-100 text-slate-600"}`}>
+                      <div
+                        className={`w-9 h-9 rounded-lg flex items-center justify-center ${pkg.popular ? "bg-primary text-white" : "bg-slate-100 text-slate-600"}`}
+                      >
                         {pkg.icon}
                       </div>
                       <div>

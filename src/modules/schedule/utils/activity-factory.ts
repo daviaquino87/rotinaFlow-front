@@ -7,7 +7,7 @@ export const makeId = () => `act-${counter++}`;
 export function guessEmoji(name: string): string {
   const lower = name.toLowerCase();
   for (const { words, emoji } of EMOJI_KEYWORDS) {
-    if (words.some(w => lower.includes(w))) return emoji;
+    if (words.some((w) => lower.includes(w))) return emoji;
   }
   return "📌";
 }

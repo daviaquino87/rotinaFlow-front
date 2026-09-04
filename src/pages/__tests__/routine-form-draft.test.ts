@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { DraftSchema } from "../routine-form";
+import { DraftSchema } from "@modules/schedule/utils/validators";
 
 const validActivity = {
   id: "act-1",

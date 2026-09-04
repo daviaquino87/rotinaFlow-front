@@ -24,7 +24,8 @@ const STEPS = [
     textColor: "text-blue-700",
     num: "2",
     title: "A IA gera sua agenda",
-    description: "Nossa IA analisa suas informações e monta uma rotina semanal personalizada para você.",
+    description:
+      "Nossa IA analisa suas informações e monta uma rotina semanal personalizada para você.",
   },
   {
     icon: CalendarCheck2,
@@ -52,7 +53,9 @@ export function OnboardingModal() {
   }, []);
 
   const dismiss = () => {
-    try { localStorage.setItem(STORAGE_KEY, "1"); } catch {}
+    try {
+      localStorage.setItem(STORAGE_KEY, "1");
+    } catch {}
     setVisible(false);
   };
 
@@ -96,7 +99,8 @@ export function OnboardingModal() {
                 Bem-vindo ao rotinaFlow!
               </h2>
               <p className="text-slate-500 text-sm leading-relaxed max-w-sm mx-auto">
-                Organize sua semana com inteligência artificial em <strong className="text-slate-700">3 passos simples</strong>.
+                Organize sua semana com inteligência artificial em{" "}
+                <strong className="text-slate-700">3 passos simples</strong>.
               </p>
             </div>
 
@@ -111,17 +115,23 @@ export function OnboardingModal() {
                     transition={{ delay: 0.15 + idx * 0.1, duration: 0.3 }}
                     className={`flex items-start gap-4 p-4 rounded-xl border ${step.bg} ${step.border}`}
                   >
-                    <div className={`shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br ${step.color} flex items-center justify-center shadow-sm`}>
+                    <div
+                      className={`shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br ${step.color} flex items-center justify-center shadow-sm`}
+                    >
                       <Icon className="w-5 h-5 text-white" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-0.5">
-                        <span className={`text-[10px] font-bold uppercase tracking-widest ${step.textColor}`}>
+                        <span
+                          className={`text-[10px] font-bold uppercase tracking-widest ${step.textColor}`}
+                        >
                           Passo {step.num}
                         </span>
                       </div>
                       <p className="text-sm font-semibold text-slate-800">{step.title}</p>
-                      <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">{step.description}</p>
+                      <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                        {step.description}
+                      </p>
                     </div>
                   </motion.div>
                 );
@@ -140,7 +150,8 @@ export function OnboardingModal() {
                 <ArrowRight className="w-4 h-4" />
               </motion.button>
               <p className="text-center text-xs text-slate-400 mt-3">
-                Sua primeira rotina é <span className="font-semibold text-emerald-600">gratuita</span> 🎉
+                Sua primeira rotina é{" "}
+                <span className="font-semibold text-emerald-600">gratuita</span> 🎉
               </p>
             </div>
           </motion.div>

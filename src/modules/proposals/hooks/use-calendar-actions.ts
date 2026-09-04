@@ -21,19 +21,35 @@ export function useCalendarActions(refetchCalendar: () => void, refetchCredits: 
     const creditSession = params.get("credit_session");
     const cancelled = params.get("credit_cancelled");
     if (creditSession) {
-      verifyCredit(creditSession).then((data) => {
-        if (data.paid) toast({ title: "Créditos adicionados!", description: `+${data.added} crédito${(data.added ?? 0) > 1 ? "s" : ""} na sua conta.` });
-      }).catch(() => {});
+      verifyCredit(creditSession)
+        .then((data) => {
+          if (data.paid)
+            toast({
+              title: "Créditos adicionados!",
+              description: `+${data.added} crédito${(data.added ?? 0) > 1 ? "s" : ""} na sua conta.`,
+            });
+        })
+        .catch(() => {});
       window.history.replaceState({}, "", window.location.pathname);
     } else if (cancelled) {
-      toast({ title: "Compra cancelada", description: "Nenhum crédito foi adicionado.", variant: "destructive" });
+      toast({
+        title: "Compra cancelada",
+        description: "Nenhum crédito foi adicionado.",
+        variant: "destructive",
+      });
       window.history.replaceState({}, "", window.location.pathname);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const syncMutation = useMutation({
-    mutationFn: async ({ proposalUuid, clearBefore }: { proposalUuid: string; clearBefore: boolean }) => {
+    mutationFn: async ({
+      proposalUuid,
+      clearBefore,
+    }: {
+      proposalUuid: string;
+      clearBefore: boolean;
+    }) => {
       try {
         return await customFetch<{ message?: string }>(
           `/api/schedule/proposals/${proposalUuid}/approve`,
@@ -48,14 +64,21 @@ export function useCalendarActions(refetchCalendar: () => void, refetchCredits: 
       }
     },
     onSuccess: (data) => {
-      toast({ title: "Sincronizado!", description: data.message ?? "Rotina enviada para o Google Agenda." });
+      toast({
+        title: "Sincronizado!",
+        description: data.message ?? "Rotina enviada para o Google Agenda.",
+      });
       refetchCredits();
       refetchCalendar();
     },
     onError: (err: unknown) => {
       const isInsufficientCredits = err instanceof ApiError && err.status === 402;
       if (!isInsufficientCredits) {
-        toast({ title: "Erro ao sincronizar", description: "Não foi possível sincronizar. Tente novamente.", variant: "destructive" });
+        toast({
+          title: "Erro ao sincronizar",
+          description: "Não foi possível sincronizar. Tente novamente.",
+          variant: "destructive",
+        });
       }
     },
   });
@@ -64,22 +87,34 @@ export function useCalendarActions(refetchCalendar: () => void, refetchCredits: 
     mutationFn: () =>
       customFetch<{ message?: string }>("/api/schedule/calendar/events", { method: "DELETE" }),
     onSuccess: (data) => {
-      toast({ title: "Agenda limpa!", description: data.message ?? "Eventos removidos do Google Agenda." });
+      toast({
+        title: "Agenda limpa!",
+        description: data.message ?? "Eventos removidos do Google Agenda.",
+      });
       refetchCalendar();
     },
     onError: () => {
-      toast({ title: "Erro ao limpar agenda", description: "Não foi possível limpar os eventos. Tente novamente.", variant: "destructive" });
+      toast({
+        title: "Erro ao limpar agenda",
+        description: "Não foi possível limpar os eventos. Tente novamente.",
+        variant: "destructive",
+      });
     },
   });
 
   const deleteProposalMutation = useMutation({
-    mutationFn: (uuid: string) => customFetch(`/api/schedule/proposals/${uuid}`, { method: "DELETE" }),
+    mutationFn: (uuid: string) =>
+      customFetch(`/api/schedule/proposals/${uuid}`, { method: "DELETE" }),
     onSuccess: () => {
       toast({ title: "Rotina excluída!" });
       queryClient.invalidateQueries({ queryKey: ["/api/schedule/proposals"] });
     },
     onError: () => {
-      toast({ title: "Erro ao excluir", description: "Não foi possível excluir a rotina. Tente novamente.", variant: "destructive" });
+      toast({
+        title: "Erro ao excluir",
+        description: "Não foi possível excluir a rotina. Tente novamente.",
+        variant: "destructive",
+      });
     },
   });
 

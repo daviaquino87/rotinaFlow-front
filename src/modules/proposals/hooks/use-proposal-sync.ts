@@ -15,20 +15,31 @@ export function useProposalSync(proposalUuid: string, refetchProposal: () => voi
 
   // Handle returning from Stripe credit purchase
   useEffect(() => {
-    const searchParams = new URLSearchParams(typeof window !== "undefined" ? window.location.search : "");
+    const searchParams = new URLSearchParams(
+      typeof window !== "undefined" ? window.location.search : "",
+    );
     const creditSession = searchParams.get("credit_session");
     const creditCancelled = searchParams.get("credit_cancelled");
 
     if (creditSession) {
-      verifyCredit(creditSession).then(data => {
-        if (data.paid) {
-          toast({ title: "Créditos adicionados!", description: `+${data.added} crédito${(data.added ?? 0) > 1 ? "s" : ""} na sua conta.` });
-          refetchCredits();
-        }
-      }).catch(() => {});
+      verifyCredit(creditSession)
+        .then((data) => {
+          if (data.paid) {
+            toast({
+              title: "Créditos adicionados!",
+              description: `+${data.added} crédito${(data.added ?? 0) > 1 ? "s" : ""} na sua conta.`,
+            });
+            refetchCredits();
+          }
+        })
+        .catch(() => {});
       window.history.replaceState({}, "", `/proposal/${proposalUuid}`);
     } else if (creditCancelled) {
-      toast({ title: "Compra cancelada", description: "Nenhum crédito foi adicionado.", variant: "destructive" });
+      toast({
+        title: "Compra cancelada",
+        description: "Nenhum crédito foi adicionado.",
+        variant: "destructive",
+      });
       window.history.replaceState({}, "", `/proposal/${proposalUuid}`);
     }
     // Runs once per proposal load — reads the URL directly, not react-router state.
@@ -48,7 +59,10 @@ export function useProposalSync(proposalUuid: string, refetchProposal: () => voi
         `/api/schedule/proposals/${proposalUuid}/approve`,
         { method: "POST", body: JSON.stringify({ clearBefore }) },
       );
-      toast({ title: "Sincronizado!", description: `${body.createdCount} eventos adicionados ao Google Agenda.` });
+      toast({
+        title: "Sincronizado!",
+        description: `${body.createdCount} eventos adicionados ao Google Agenda.`,
+      });
       refetchProposal();
       refetchCredits();
     } catch (err) {
@@ -58,7 +72,11 @@ export function useProposalSync(proposalUuid: string, refetchProposal: () => voi
         return;
       }
       if (err instanceof ApiError) {
-        toast({ title: "Erro ao sincronizar", description: "Não foi possível sincronizar. Tente novamente.", variant: "destructive" });
+        toast({
+          title: "Erro ao sincronizar",
+          description: "Não foi possível sincronizar. Tente novamente.",
+          variant: "destructive",
+        });
       } else {
         toast({ title: "Erro ao sincronizar", variant: "destructive" });
       }

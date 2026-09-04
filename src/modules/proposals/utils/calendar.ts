@@ -37,9 +37,9 @@ export async function fetchCalendarEvents(weekStart: Date) {
     );
   } catch (err) {
     if (err instanceof ApiError && (err.data as { noToken?: boolean } | null)?.noToken) {
-      throw new Error("NO_TOKEN");
+      throw new Error("NO_TOKEN", { cause: err });
     }
-    throw new Error("Erro ao buscar eventos");
+    throw new Error("Erro ao buscar eventos", { cause: err });
   }
 }
 

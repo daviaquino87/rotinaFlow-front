@@ -15,7 +15,12 @@ interface SyncConfirmModalProps {
 
 export function SyncConfirmModal({ open, onClose, onConfirm, loading }: SyncConfirmModalProps) {
   return (
-    <Dialog open={open} onOpenChange={v => { if (!v && !loading) onClose(); }}>
+    <Dialog
+      open={open}
+      onOpenChange={(v) => {
+        if (!v && !loading) onClose();
+      }}
+    >
       <DialogContent className="max-w-sm rounded-2xl p-6">
         <DialogHeader className="space-y-2">
           <div className="mx-auto w-12 h-12 rounded-2xl bg-violet-100 flex items-center justify-center mb-1">
@@ -40,7 +45,9 @@ export function SyncConfirmModal({ open, onClose, onConfirm, loading }: SyncConf
             </span>
             <span>
               <p className="text-sm font-semibold text-slate-800">Limpar e sincronizar</p>
-              <p className="text-xs text-slate-500">Remove eventos anteriores e adiciona os novos</p>
+              <p className="text-xs text-slate-500">
+                Remove eventos anteriores e adiciona os novos
+              </p>
             </span>
           </button>
 
@@ -54,7 +61,9 @@ export function SyncConfirmModal({ open, onClose, onConfirm, loading }: SyncConf
             </span>
             <span>
               <p className="text-sm font-semibold text-slate-800">Apenas adicionar</p>
-              <p className="text-xs text-slate-500">Mantém eventos existentes e adiciona os novos</p>
+              <p className="text-xs text-slate-500">
+                Mantém eventos existentes e adiciona os novos
+              </p>
             </span>
           </button>
 

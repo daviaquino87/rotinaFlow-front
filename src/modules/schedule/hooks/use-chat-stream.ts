@@ -10,82 +10,84 @@ export function useChatStream(conversationId: number | undefined) {
   const abortControllerRef = useRef<AbortController | null>(null);
   const queryClient = useQueryClient();
 
-  const sendMessage = useCallback(async (content: string, overrideConvId?: number) => {
-    const convId = overrideConvId ?? conversationId;
-    if (!convId) return;
+  const sendMessage = useCallback(
+    async (content: string, overrideConvId?: number) => {
+      const convId = overrideConvId ?? conversationId;
+      if (!convId) return;
 
-    setIsStreaming(true);
-    setCurrentStream("");
-    setError(null);
+      setIsStreaming(true);
+      setCurrentStream("");
+      setError(null);
 
-    abortControllerRef.current = new AbortController();
+      abortControllerRef.current = new AbortController();
 
-    try {
-      // Uses the raw fetch (not customFetch) because it needs the unconsumed
-      // ReadableStream body for SSE — customFetch always parses the response
-      // into json/text/blob. apiUrl() still routes it through VITE_API_BASE_URL
-      // like every other request, and credentials must be set explicitly here
-      // since native fetch doesn't default to sending cookies cross-origin.
-      const response = await fetch(apiUrl(`/api/openai/conversations/${convId}/messages`), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ content }),
-        signal: abortControllerRef.current.signal,
-      });
+      try {
+        // Uses the raw fetch (not customFetch) because it needs the unconsumed
+        // ReadableStream body for SSE — customFetch always parses the response
+        // into json/text/blob. apiUrl() still routes it through VITE_API_BASE_URL
+        // like every other request, and credentials must be set explicitly here
+        // since native fetch doesn't default to sending cookies cross-origin.
+        const response = await fetch(apiUrl(`/api/openai/conversations/${convId}/messages`), {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ content }),
+          signal: abortControllerRef.current.signal,
+        });
 
-      if (!response.ok) {
-        throw new Error("request-failed");
-      }
+        if (!response.ok) {
+          throw new Error("request-failed");
+        }
 
-      if (!response.body) throw new Error("No response body");
+        if (!response.body) throw new Error("No response body");
 
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let streamText = "";
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let streamText = "";
 
-      readLoop: while (true) {
-        const { value, done } = await reader.read();
-        if (done) break;
+        readLoop: while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
 
-        const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split("\n");
+          const chunk = decoder.decode(value, { stream: true });
+          const lines = chunk.split("\n");
 
-        for (const line of lines) {
-          if (line.startsWith("data: ")) {
-            const dataStr = line.replace("data: ", "").trim();
-            if (!dataStr) continue;
+          for (const line of lines) {
+            if (line.startsWith("data: ")) {
+              const dataStr = line.replace("data: ", "").trim();
+              if (!dataStr) continue;
 
-            try {
-              const data = JSON.parse(dataStr);
-              if (data.done) {
-                break readLoop;
-              } else if (data.content) {
-                streamText += data.content;
-                setCurrentStream(streamText);
+              try {
+                const data = JSON.parse(dataStr);
+                if (data.done) {
+                  break readLoop;
+                } else if (data.content) {
+                  streamText += data.content;
+                  setCurrentStream(streamText);
+                }
+              } catch {
+                // Ignore malformed SSE chunks silently in production
               }
-            } catch {
-              // Ignore malformed SSE chunks silently in production
             }
           }
         }
-      }
 
-      queryClient.invalidateQueries({
-        queryKey: getGetOpenaiConversationQueryKey(convId)
-      });
-
-    } catch (err: unknown) {
-      const isAbort = err instanceof Error && err.name === "AbortError";
-      if (!isAbort) {
-        setError("Ocorreu um erro ao processar a resposta. Tente novamente.");
+        queryClient.invalidateQueries({
+          queryKey: getGetOpenaiConversationQueryKey(convId),
+        });
+      } catch (err: unknown) {
+        const isAbort = err instanceof Error && err.name === "AbortError";
+        if (!isAbort) {
+          setError("Ocorreu um erro ao processar a resposta. Tente novamente.");
+        }
+      } finally {
+        setIsStreaming(false);
+        setCurrentStream("");
+        abortControllerRef.current = null;
       }
-    } finally {
-      setIsStreaming(false);
-      setCurrentStream("");
-      abortControllerRef.current = null;
-    }
-  }, [conversationId, queryClient]);
+    },
+    [conversationId, queryClient],
+  );
 
   const stopStream = useCallback(() => {
     if (abortControllerRef.current) {
@@ -98,6 +100,6 @@ export function useChatStream(conversationId: number | undefined) {
     isStreaming,
     currentStream,
     error,
-    stopStream
+    stopStream,
   };
 }

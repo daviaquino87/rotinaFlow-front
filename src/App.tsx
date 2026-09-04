@@ -40,13 +40,19 @@ function Router() {
 
         {/* Protected Routes wrapped in Layout */}
         <Route path="/routine">
-          <AppLayout><RoutineForm /></AppLayout>
+          <AppLayout>
+            <RoutineForm />
+          </AppLayout>
         </Route>
         <Route path="/proposals">
-          <AppLayout><ProposalsList /></AppLayout>
+          <AppLayout>
+            <ProposalsList />
+          </AppLayout>
         </Route>
         <Route path="/proposal/:uuid">
-          <AppLayout><ProposalView /></AppLayout>
+          <AppLayout>
+            <ProposalView />
+          </AppLayout>
         </Route>
 
         <Route path="/privacidade" component={PrivacyPolicy} />

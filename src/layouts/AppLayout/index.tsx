@@ -15,13 +15,28 @@ function cn(...inputs: ClassValue[]) {
 }
 
 const NAV_LINKS = [
-  { href: "/routine",   icon: ClipboardList, label: "Nova Rotina",  match: (l: string) => l.startsWith("/routine") },
-  { href: "/proposals", icon: CalendarDays,  label: "Minha Rotina", match: (l: string) => l.startsWith("/proposal") },
+  {
+    href: "/routine",
+    icon: ClipboardList,
+    label: "Nova Rotina",
+    match: (l: string) => l.startsWith("/routine"),
+  },
+  {
+    href: "/proposals",
+    icon: CalendarDays,
+    label: "Minha Rotina",
+    match: (l: string) => l.startsWith("/proposal"),
+  },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
-  const { data: session, isLoading, isFetching, isError } = useGetSession({
+  const {
+    data: session,
+    isLoading,
+    isFetching,
+    isError,
+  } = useGetSession({
     query: { refetchOnMount: "always" },
   });
   const logoutMut = useLogout();
@@ -74,9 +89,13 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
   const handleLogout = () => {
     setShowUserMenu(false);
-    try { localStorage.removeItem("rotinaflow_form_draft"); } catch {}
+    try {
+      localStorage.removeItem("rotinaflow_form_draft");
+    } catch {}
     logoutMut.mutate(undefined, {
-      onSuccess: () => { window.location.href = "/"; },
+      onSuccess: () => {
+        window.location.href = "/";
+      },
     });
   };
 
@@ -96,13 +115,17 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       }`}
       title="Ver meus créditos"
     >
-      <Coins className={`w-4 h-4 ${
-        !firstSyncDone ? "text-emerald-600" : credits <= 2 ? "text-red-500" : "text-amber-600"
-      }`} />
+      <Coins
+        className={`w-4 h-4 ${
+          !firstSyncDone ? "text-emerald-600" : credits <= 2 ? "text-red-500" : "text-amber-600"
+        }`}
+      />
       {!firstSyncDone ? (
         <span className="text-sm font-semibold text-emerald-700">Grátis</span>
       ) : (
-        <span className={`text-sm font-semibold ${credits <= 2 ? "text-red-600" : "text-amber-700"}`}>
+        <span
+          className={`text-sm font-semibold ${credits <= 2 ? "text-red-600" : "text-amber-700"}`}
+        >
           {credits}
         </span>
       )}
@@ -115,12 +138,13 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       {isLoggedIn && <OnboardingModal />}
 
       <header className="h-14 bg-white border-b border-slate-200 flex items-center px-4 md:px-6 gap-3 shrink-0 z-10">
-
         <Link href="/routine" className="flex items-center gap-2 shrink-0">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center shadow shadow-primary/20">
             <Sparkles className="w-4 h-4 text-white" />
           </div>
-          <span className="font-display font-bold text-lg tracking-tight text-slate-900">rotinaFlow</span>
+          <span className="font-display font-bold text-lg tracking-tight text-slate-900">
+            rotinaFlow
+          </span>
         </Link>
 
         <nav className="hidden sm:flex items-center gap-1 ml-2">
@@ -132,7 +156,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 "flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all",
                 match(location)
                   ? "bg-primary/10 text-primary"
-                  : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                  : "text-slate-600 hover:bg-slate-100 hover:text-slate-900",
               )}
             >
               <Icon className="w-4 h-4" />
@@ -148,7 +172,10 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         {isLoggedIn && (
           <div className="hidden sm:flex items-center gap-2">
             <img
-              src={session.user!.picture || `https://ui-avatars.com/api/?name=${encodeURIComponent(session.user!.name)}&background=random`}
+              src={
+                session.user!.picture ||
+                `https://ui-avatars.com/api/?name=${encodeURIComponent(session.user!.name)}&background=random`
+              }
               alt={session.user!.name}
               className="w-8 h-8 rounded-full border border-slate-200 shrink-0"
             />
@@ -160,9 +187,11 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               title="Sair"
               className="ml-1 p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all"
             >
-              {logoutMut.isPending
-                ? <Loader2 className="w-4 h-4 animate-spin" />
-                : <LogOut className="w-4 h-4" />}
+              {logoutMut.isPending ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <LogOut className="w-4 h-4" />
+              )}
             </button>
           </div>
         )}
@@ -170,11 +199,14 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         {isLoggedIn && (
           <div className="sm:hidden relative" ref={userMenuRef}>
             <button
-              onClick={() => setShowUserMenu(v => !v)}
+              onClick={() => setShowUserMenu((v) => !v)}
               className="relative w-8 h-8 rounded-full border-2 border-slate-200 overflow-hidden focus:outline-none focus:ring-2 focus:ring-primary/50"
             >
               <img
-                src={session.user!.picture || `https://ui-avatars.com/api/?name=${encodeURIComponent(session.user!.name)}&background=random`}
+                src={
+                  session.user!.picture ||
+                  `https://ui-avatars.com/api/?name=${encodeURIComponent(session.user!.name)}&background=random`
+                }
                 alt={session.user!.name}
                 className="w-full h-full object-cover"
               />
@@ -183,7 +215,9 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             {showUserMenu && (
               <div className="absolute right-0 top-10 bg-white rounded-2xl shadow-xl border border-slate-100 w-48 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-150">
                 <div className="px-4 py-3 border-b border-slate-100">
-                  <p className="text-sm font-semibold text-slate-800 truncate">{session.user!.name}</p>
+                  <p className="text-sm font-semibold text-slate-800 truncate">
+                    {session.user!.name}
+                  </p>
                   <p className="text-xs text-slate-400 truncate">{session.user!.email}</p>
                 </div>
                 <button
@@ -191,9 +225,11 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   disabled={logoutMut.isPending}
                   className="w-full flex items-center gap-2 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
                 >
-                  {logoutMut.isPending
-                    ? <Loader2 className="w-4 h-4 animate-spin" />
-                    : <LogOut className="w-4 h-4" />}
+                  {logoutMut.isPending ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <LogOut className="w-4 h-4" />
+                  )}
                   Sair
                 </button>
               </div>
@@ -221,18 +257,26 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           {NAV_LINKS.map(({ href, icon: Icon, label, match }) => {
             const active = match(location);
             return (
-              <Link
-                key={href}
-                href={href}
-                className="flex flex-col items-center gap-1 flex-1 py-2"
-              >
-                <div className={cn(
-                  "w-10 h-10 rounded-2xl flex items-center justify-center transition-all",
-                  active ? "bg-primary/10" : "hover:bg-slate-100"
-                )}>
-                  <Icon className={cn("w-5 h-5 transition-colors", active ? "text-primary" : "text-slate-400")} />
+              <Link key={href} href={href} className="flex flex-col items-center gap-1 flex-1 py-2">
+                <div
+                  className={cn(
+                    "w-10 h-10 rounded-2xl flex items-center justify-center transition-all",
+                    active ? "bg-primary/10" : "hover:bg-slate-100",
+                  )}
+                >
+                  <Icon
+                    className={cn(
+                      "w-5 h-5 transition-colors",
+                      active ? "text-primary" : "text-slate-400",
+                    )}
+                  />
                 </div>
-                <span className={cn("text-[10px] font-semibold transition-colors", active ? "text-primary" : "text-slate-400")}>
+                <span
+                  className={cn(
+                    "text-[10px] font-semibold transition-colors",
+                    active ? "text-primary" : "text-slate-400",
+                  )}
+                >
                   {label}
                 </span>
               </Link>

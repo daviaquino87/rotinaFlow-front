@@ -2,7 +2,17 @@ import React, { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { CalendarCheck2, CalendarDays, Loader2, Trash2, History, Eye, Pencil, Check, X } from "lucide-react";
+import {
+  CalendarCheck2,
+  CalendarDays,
+  Loader2,
+  Trash2,
+  History,
+  Eye,
+  Pencil,
+  Check,
+  X,
+} from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui-elements";
 import { useToast } from "@hooks/use-toast";
@@ -48,11 +58,17 @@ export function HistoryPanel({
     setTimeout(() => inputRef.current?.focus(), 50);
   };
 
-  const cancelEdit = () => { setEditingUuid(null); setEditValue(""); };
+  const cancelEdit = () => {
+    setEditingUuid(null);
+    setEditValue("");
+  };
 
   const saveEdit = (uuid: string) => {
     const trimmed = editValue.trim();
-    if (!trimmed) { cancelEdit(); return; }
+    if (!trimmed) {
+      cancelEdit();
+      return;
+    }
     renameMut.mutate({ uuid, title: trimmed });
   };
 
@@ -63,7 +79,9 @@ export function HistoryPanel({
           <History className="w-6 h-6 text-slate-400" />
         </div>
         <p className="text-sm font-semibold text-slate-700">Nenhuma rotina salva</p>
-        <p className="text-xs text-slate-400">Gere sua primeira rotina para ver o histórico aqui.</p>
+        <p className="text-xs text-slate-400">
+          Gere sua primeira rotina para ver o histórico aqui.
+        </p>
         <Link href="/routine">
           <Button variant="outline" className="text-xs h-8 px-3 gap-1.5">
             <CalendarDays className="w-3.5 h-3.5" /> Criar Rotina
@@ -78,7 +96,9 @@ export function HistoryPanel({
       <div className="px-4 py-3 border-b border-slate-100 flex items-center gap-2 bg-slate-50 sticky top-0">
         <History className="w-4 h-4 text-slate-500" />
         <h2 className="text-sm font-bold text-slate-700">Histórico de Rotinas</h2>
-        <span className="ml-auto text-xs text-slate-400 bg-slate-200 rounded-full px-2 py-0.5">{proposals.length}</span>
+        <span className="ml-auto text-xs text-slate-400 bg-slate-200 rounded-full px-2 py-0.5">
+          {proposals.length}
+        </span>
       </div>
       <div className="divide-y divide-slate-100">
         {proposals.map((p, idx) => {
@@ -100,8 +120,8 @@ export function HistoryPanel({
                       <input
                         ref={inputRef}
                         value={editValue}
-                        onChange={e => setEditValue(e.target.value)}
-                        onKeyDown={e => {
+                        onChange={(e) => setEditValue(e.target.value)}
+                        onKeyDown={(e) => {
                           if (e.key === "Enter") saveEdit(pUuid);
                           if (e.key === "Escape") cancelEdit();
                         }}
@@ -115,7 +135,11 @@ export function HistoryPanel({
                         className="p-1 rounded-lg text-green-600 hover:bg-green-50 transition-all"
                         title="Salvar"
                       >
-                        {isSaving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5" />}
+                        {isSaving ? (
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        ) : (
+                          <Check className="w-3.5 h-3.5" />
+                        )}
                       </button>
                       <button
                         onClick={cancelEdit}
@@ -158,10 +182,11 @@ export function HistoryPanel({
                     className="p-1 rounded-lg text-slate-300 hover:text-red-500 hover:bg-red-50 transition-all disabled:opacity-50"
                     title="Excluir rotina"
                   >
-                    {isDeleting
-                      ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                      : <Trash2 className="w-3.5 h-3.5" />
-                    }
+                    {isDeleting ? (
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    ) : (
+                      <Trash2 className="w-3.5 h-3.5" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -176,10 +201,11 @@ export function HistoryPanel({
                   disabled={isSyncing || isDeleting}
                   className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-xs font-semibold hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSyncing
-                    ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                    : <CalendarCheck2 className="w-3.5 h-3.5" />
-                  }
+                  {isSyncing ? (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  ) : (
+                    <CalendarCheck2 className="w-3.5 h-3.5" />
+                  )}
                   {isApproved ? "Re-sincronizar" : "Sincronizar"}
                 </button>
               </div>

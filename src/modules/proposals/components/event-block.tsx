@@ -1,5 +1,10 @@
 import { format } from "date-fns";
-import { timeToMinutes, START_HOUR, TOTAL_HOURS, type CalEvent } from "@modules/proposals/utils/calendar";
+import {
+  timeToMinutes,
+  START_HOUR,
+  TOTAL_HOURS,
+  type CalEvent,
+} from "@modules/proposals/utils/calendar";
 
 export function EventBlock({ event }: { event: CalEvent }) {
   if (!event.start || event.isAllDay) return null;
@@ -11,7 +16,13 @@ export function EventBlock({ event }: { event: CalEvent }) {
   return (
     <div
       className="absolute left-0.5 right-0.5 rounded-lg px-2 py-1 overflow-hidden text-white text-xs leading-tight cursor-default select-none"
-      style={{ top: `${topPct}%`, height: `${Math.max(heightPct, 2.5)}%`, backgroundColor: event.color, opacity: 0.92, minHeight: 22 }}
+      style={{
+        top: `${topPct}%`,
+        height: `${Math.max(heightPct, 2.5)}%`,
+        backgroundColor: event.color,
+        opacity: 0.92,
+        minHeight: 22,
+      }}
       title={`${event.title}${event.description ? "\n" + event.description : ""}`}
     >
       <p className="font-semibold truncate">{event.title}</p>

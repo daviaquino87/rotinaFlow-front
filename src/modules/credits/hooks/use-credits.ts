@@ -24,7 +24,9 @@ export function useCredits() {
 export function useVerifyCreditPayment() {
   const queryClient = useQueryClient();
 
-  return async (sessionId: string): Promise<{ paid: boolean; added?: number; credits?: number }> => {
+  return async (
+    sessionId: string,
+  ): Promise<{ paid: boolean; added?: number; credits?: number }> => {
     const data = await customFetch<{ paid: boolean; added?: number; credits?: number }>(
       `/api/credits/verify/${sessionId}`,
     );

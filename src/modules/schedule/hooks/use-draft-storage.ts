@@ -9,13 +9,19 @@ export function loadDraft(): DraftData | null {
     const result = DraftSchema.safeParse(parsed);
     if (!result.success) return null;
     return result.data;
-  } catch { return null; }
+  } catch {
+    return null;
+  }
 }
 
 export function saveDraft(data: DraftData) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch {}
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch {}
 }
 
 export function clearDraft() {
-  try { localStorage.removeItem(STORAGE_KEY); } catch {}
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {}
 }

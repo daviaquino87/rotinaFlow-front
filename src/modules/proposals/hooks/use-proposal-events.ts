@@ -14,7 +14,11 @@ export type ProposalWithEvents = {
 export function useProposalEvents(proposalUuid: string) {
   const { toast } = useToast();
 
-  const { data: proposal, isLoading, refetch } = useQuery<ProposalWithEvents>({
+  const {
+    data: proposal,
+    isLoading,
+    refetch,
+  } = useQuery<ProposalWithEvents>({
     queryKey: ["proposal-by-uuid", proposalUuid],
     queryFn: () => customFetch<ProposalWithEvents>(`/api/schedule/proposals/${proposalUuid}`),
     enabled: Boolean(proposalUuid),
@@ -26,7 +30,7 @@ export function useProposalEvents(proposalUuid: string) {
   useEffect(() => {
     if (proposal?.events) {
       setLocalEvents(proposal.events);
-      const firstDay = DAYS_OF_WEEK.find(d => proposal.events.some(e => e.dayOfWeek === d.id));
+      const firstDay = DAYS_OF_WEEK.find((d) => proposal.events.some((e) => e.dayOfWeek === d.id));
       if (firstDay) setSelectedDayId(firstDay.id);
     }
   }, [proposal?.events]);
@@ -48,11 +52,11 @@ export function useProposalEvents(proposalUuid: string) {
   };
 
   const handleSwapTimes = (idA: number, idB: number) => {
-    setLocalEvents(prev => {
-      const evA = prev.find(e => e.id === idA);
-      const evB = prev.find(e => e.id === idB);
+    setLocalEvents((prev) => {
+      const evA = prev.find((e) => e.id === idA);
+      const evB = prev.find((e) => e.id === idB);
       if (!evA || !evB) return prev;
-      return prev.map(ev => {
+      return prev.map((ev) => {
         if (ev.id === idA) return { ...ev, startTime: evB.startTime, endTime: evB.endTime };
         if (ev.id === idB) return { ...ev, startTime: evA.startTime, endTime: evA.endTime };
         return ev;
@@ -60,9 +64,11 @@ export function useProposalEvents(proposalUuid: string) {
     });
   };
 
-  const addLocalEvent = (event: ScheduleEvent) => setLocalEvents(prev => [...prev, event]);
-  const updateLocalEvent = (event: ScheduleEvent) => setLocalEvents(prev => prev.map(ev => (ev.id === event.id ? event : ev)));
-  const deleteLocalEvent = (id: number) => setLocalEvents(prev => prev.filter(ev => ev.id !== id));
+  const addLocalEvent = (event: ScheduleEvent) => setLocalEvents((prev) => [...prev, event]);
+  const updateLocalEvent = (event: ScheduleEvent) =>
+    setLocalEvents((prev) => prev.map((ev) => (ev.id === event.id ? event : ev)));
+  const deleteLocalEvent = (id: number) =>
+    setLocalEvents((prev) => prev.filter((ev) => ev.id !== id));
 
   return {
     proposal,

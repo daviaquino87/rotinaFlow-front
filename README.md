@@ -23,10 +23,10 @@ Permite ao usuário criar rotinas personalizadas com IA, gerenciar créditos e a
 
 ## Pré-requisitos
 
-| Ferramenta | Versão mínima |
-|---|---|
-| Node.js | 24+ |
-| pnpm | 10+ (ou npm 10+) |
+| Ferramenta | Versão mínima    |
+| ---------- | ---------------- |
+| Node.js    | 24+              |
+| pnpm       | 10+ (ou npm 10+) |
 
 ---
 
@@ -84,15 +84,15 @@ pnpm serve
 
 ## Comandos disponíveis
 
-| Comando | Descrição |
-|---|---|
-| `pnpm dev` | Inicia o servidor de desenvolvimento (Vite) |
-| `pnpm build` | Gera o build de produção em `dist/public/` |
-| `pnpm serve` | Pré-visualiza o build de produção localmente |
-| `pnpm typecheck` | Verifica tipos TypeScript sem compilar |
-| `pnpm test` | Executa a suíte de testes (Vitest) |
-| `pnpm test:watch` | Testes em modo watch |
-| `pnpm test:coverage` | Testes com relatório de cobertura |
+| Comando              | Descrição                                    |
+| -------------------- | -------------------------------------------- |
+| `pnpm dev`           | Inicia o servidor de desenvolvimento (Vite)  |
+| `pnpm build`         | Gera o build de produção em `dist/public/`   |
+| `pnpm serve`         | Pré-visualiza o build de produção localmente |
+| `pnpm typecheck`     | Verifica tipos TypeScript sem compilar       |
+| `pnpm test`          | Executa a suíte de testes (Vitest)           |
+| `pnpm test:watch`    | Testes em modo watch                         |
+| `pnpm test:coverage` | Testes com relatório de cobertura            |
 
 ---
 
@@ -131,17 +131,17 @@ src/
 
 Configurados em `vite.config.ts` e `tsconfig.json`:
 
-| Alias | Caminho real | Uso típico |
-|---|---|---|
-| `@` | `src/` | Importações absolutas genéricas |
-| `@modules` | `src/modules/` | Módulos de domínio |
-| `@shared` | `src/shared/` | Código compartilhado |
-| `@ui` | `src/shared/ui/` | Componentes de UI |
-| `@lib` | `src/shared/lib/` | Utilitários e cliente HTTP |
-| `@hooks` | `src/shared/hooks/` | Hooks compartilhados |
-| `@layouts` | `src/layouts/` | Layouts de página |
-| `@config` | `src/config/` | Configurações da aplicação |
-| `@app` | `src/app/` | Setup global (providers, router) |
+| Alias      | Caminho real        | Uso típico                       |
+| ---------- | ------------------- | -------------------------------- |
+| `@`        | `src/`              | Importações absolutas genéricas  |
+| `@modules` | `src/modules/`      | Módulos de domínio               |
+| `@shared`  | `src/shared/`       | Código compartilhado             |
+| `@ui`      | `src/shared/ui/`    | Componentes de UI                |
+| `@lib`     | `src/shared/lib/`   | Utilitários e cliente HTTP       |
+| `@hooks`   | `src/shared/hooks/` | Hooks compartilhados             |
+| `@layouts` | `src/layouts/`      | Layouts de página                |
+| `@config`  | `src/config/`       | Configurações da aplicação       |
+| `@app`     | `src/app/`          | Setup global (providers, router) |
 
 **Exemplo:**
 
@@ -157,13 +157,13 @@ import { Button } from "@ui/button";
 
 Consulte `.env.example` para a lista completa. Resumo:
 
-| Variável | Padrão | Descrição |
-|---|---|---|
-| `PORT` | `5173` | Porta do servidor Vite |
-| `BASE_PATH` | `/` | Base path da aplicação |
-| `VITE_API_BASE_URL` | *(vazio)* | URL base da API. Vazio = proxy Vite em dev |
-| `VITE_STRIPE_PUBLIC_KEY` | — | Publishable key do Stripe |
-| `CHOKIDAR_USEPOLLING` | `false` | Hot-reload por polling (WSL/Docker Desktop) |
+| Variável                 | Padrão    | Descrição                                   |
+| ------------------------ | --------- | ------------------------------------------- |
+| `PORT`                   | `5173`    | Porta do servidor Vite                      |
+| `BASE_PATH`              | `/`       | Base path da aplicação                      |
+| `VITE_API_BASE_URL`      | _(vazio)_ | URL base da API. Vazio = proxy Vite em dev  |
+| `VITE_STRIPE_PUBLIC_KEY` | —         | Publishable key do Stripe                   |
+| `CHOKIDAR_USEPOLLING`    | `false`   | Hot-reload por polling (WSL/Docker Desktop) |
 
 > Variáveis prefixadas com `VITE_` ficam expostas no bundle do cliente. **Nunca coloque segredos com prefixo `VITE_`.**
 
