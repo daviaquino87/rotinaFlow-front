@@ -137,22 +137,22 @@ export default function ProposalViewPage() {
         </div>
         <div className="flex items-center gap-3">
           {hasUnsavedChanges && (
-            <Button variant="outline" onClick={handleSaveEvents}
+            <Button variant="outline" size="sm" onClick={handleSaveEvents}
               className="gap-2 bg-white">
               <Save className="w-4 h-4" /> Salvar
             </Button>
           )}
           {!isApproved && (
             <Link href="/routine?step=2">
-              <Button variant="outline" className="gap-2 bg-white">
+              <Button variant="outline" size="sm" className="gap-2 bg-white">
                 <RefreshCw className="w-4 h-4" /> Regerar
               </Button>
             </Link>
           )}
           {!isApproved && (
-            <Button onClick={handleApprove} isLoading={isSyncing} disabled={isSyncing}
-              className="gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-indigo-500/20">
-              <CalendarCheck2 className="w-4 h-4" />
+            <Button onClick={handleApprove} isLoading={isSyncing} disabled={isSyncing} size="lg"
+              className="gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/40">
+              <CalendarCheck2 className="w-5 h-5" />
               {isSyncing ? "Sincronizando..." : "Sincronizar Agenda"}
             </Button>
           )}
