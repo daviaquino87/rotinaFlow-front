@@ -114,8 +114,7 @@ export default function RoutineFormPage() {
             onSuccess: (p) => {
               clearDraft();
               queryClient.invalidateQueries({ queryKey: ["/api/schedule/proposals"] });
-              const path = (p as { uuid?: string; id: number }).uuid ?? String(p.id);
-              setLocation(`/proposal/${path}`);
+              setLocation(`/proposal/${p.uuid}`);
               resolve();
             },
             onError: reject,

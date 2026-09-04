@@ -37,7 +37,7 @@ export function useChatStream(conversationId: number | undefined) {
       const decoder = new TextDecoder();
       let streamText = "";
 
-      while (true) {
+      readLoop: while (true) {
         const { value, done } = await reader.read();
         if (done) break;
 
@@ -52,7 +52,7 @@ export function useChatStream(conversationId: number | undefined) {
             try {
               const data = JSON.parse(dataStr);
               if (data.done) {
-                break;
+                break readLoop;
               } else if (data.content) {
                 streamText += data.content;
                 setCurrentStream(streamText);

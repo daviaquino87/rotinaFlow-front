@@ -5,6 +5,7 @@ import { ptBR } from "date-fns/locale";
 import { ChevronLeft, ChevronRight, RefreshCw, CalendarCheck2, CalendarDays, ExternalLink, Loader2, Trash2, History, Eye, Pencil, Check, X } from "lucide-react";
 import { Button } from "@/components/ui-elements";
 import { useToast } from "@hooks/use-toast";
+import { useIsMobile } from "@hooks/use-mobile";
 import { useListScheduleProposals, type ScheduleProposal } from "@/api-client";
 import { Link } from "wouter";
 import { CreditsModal } from "@modules/credits/components/credits-modal";
@@ -42,16 +43,6 @@ function toDateStr(date: Date) {
 function timeToMinutes(iso: string) {
   const d = new Date(iso);
   return d.getHours() * 60 + d.getMinutes();
-}
-
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 640);
-  useEffect(() => {
-    const handler = () => setIsMobile(window.innerWidth < 640);
-    window.addEventListener("resize", handler);
-    return () => window.removeEventListener("resize", handler);
-  }, []);
-  return isMobile;
 }
 
 async function fetchCalendarEvents(weekStart: Date) {

@@ -73,11 +73,11 @@ export const getHealthCheckQueryOptions = <
   TData = Awaited<ReturnType<typeof healthCheck>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: Omit<UseQueryOptions<
+  query?: Partial<UseQueryOptions<
     Awaited<ReturnType<typeof healthCheck>>,
     TError,
     TData
-  >, 'queryKey'>;
+  >>;
   request?: SecondParameter<typeof customFetch>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -108,11 +108,11 @@ export function useHealthCheck<
   TData = Awaited<ReturnType<typeof healthCheck>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: Omit<UseQueryOptions<
+  query?: Partial<UseQueryOptions<
     Awaited<ReturnType<typeof healthCheck>>,
     TError,
     TData
-  >, 'queryKey'>;
+  >>;
   request?: SecondParameter<typeof customFetch>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getHealthCheckQueryOptions(options);
@@ -148,11 +148,11 @@ export const getGoogleAuthRedirectQueryOptions = <
   TData = Awaited<ReturnType<typeof googleAuthRedirect>>,
   TError = ErrorType<void>,
 >(options?: {
-  query?: Omit<UseQueryOptions<
+  query?: Partial<UseQueryOptions<
     Awaited<ReturnType<typeof googleAuthRedirect>>,
     TError,
     TData
-  >, 'queryKey'>;
+  >>;
   request?: SecondParameter<typeof customFetch>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -183,11 +183,11 @@ export function useGoogleAuthRedirect<
   TData = Awaited<ReturnType<typeof googleAuthRedirect>>,
   TError = ErrorType<void>,
 >(options?: {
-  query?: Omit<UseQueryOptions<
+  query?: Partial<UseQueryOptions<
     Awaited<ReturnType<typeof googleAuthRedirect>>,
     TError,
     TData
-  >, 'queryKey'>;
+  >>;
   request?: SecondParameter<typeof customFetch>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGoogleAuthRedirectQueryOptions(options);
@@ -240,11 +240,11 @@ export const getGoogleAuthCallbackQueryOptions = <
 >(
   params: GoogleAuthCallbackParams,
   options?: {
-    query?: Omit<UseQueryOptions<
+    query?: Partial<UseQueryOptions<
       Awaited<ReturnType<typeof googleAuthCallback>>,
       TError,
       TData
-    >, 'queryKey'>;
+    >>;
     request?: SecondParameter<typeof customFetch>;
   },
 ) => {
@@ -279,11 +279,11 @@ export function useGoogleAuthCallback<
 >(
   params: GoogleAuthCallbackParams,
   options?: {
-    query?: Omit<UseQueryOptions<
+    query?: Partial<UseQueryOptions<
       Awaited<ReturnType<typeof googleAuthCallback>>,
       TError,
       TData
-    >, 'queryKey'>;
+    >>;
     request?: SecondParameter<typeof customFetch>;
   },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
@@ -320,11 +320,11 @@ export const getGetSessionQueryOptions = <
   TData = Awaited<ReturnType<typeof getSession>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: Omit<UseQueryOptions<
+  query?: Partial<UseQueryOptions<
     Awaited<ReturnType<typeof getSession>>,
     TError,
     TData
-  >, 'queryKey'>;
+  >>;
   request?: SecondParameter<typeof customFetch>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -355,11 +355,11 @@ export function useGetSession<
   TData = Awaited<ReturnType<typeof getSession>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: Omit<UseQueryOptions<
+  query?: Partial<UseQueryOptions<
     Awaited<ReturnType<typeof getSession>>,
     TError,
     TData
-  >, 'queryKey'>;
+  >>;
   request?: SecondParameter<typeof customFetch>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGetSessionQueryOptions(options);
@@ -476,11 +476,11 @@ export const getListOpenaiConversationsQueryOptions = <
   TData = Awaited<ReturnType<typeof listOpenaiConversations>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: Omit<UseQueryOptions<
+  query?: Partial<UseQueryOptions<
     Awaited<ReturnType<typeof listOpenaiConversations>>,
     TError,
     TData
-  >, 'queryKey'>;
+  >>;
   request?: SecondParameter<typeof customFetch>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -512,11 +512,11 @@ export function useListOpenaiConversations<
   TData = Awaited<ReturnType<typeof listOpenaiConversations>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: Omit<UseQueryOptions<
+  query?: Partial<UseQueryOptions<
     Awaited<ReturnType<typeof listOpenaiConversations>>,
     TError,
     TData
-  >, 'queryKey'>;
+  >>;
   request?: SecondParameter<typeof customFetch>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getListOpenaiConversationsQueryOptions(options);
@@ -645,11 +645,11 @@ export const getGetOpenaiConversationQueryOptions = <
 >(
   id: number,
   options?: {
-    query?: Omit<UseQueryOptions<
+    query?: Partial<UseQueryOptions<
       Awaited<ReturnType<typeof getOpenaiConversation>>,
       TError,
       TData
-    >, 'queryKey'>;
+    >>;
     request?: SecondParameter<typeof customFetch>;
   },
 ) => {
@@ -689,11 +689,11 @@ export function useGetOpenaiConversation<
 >(
   id: number,
   options?: {
-    query?: Omit<UseQueryOptions<
+    query?: Partial<UseQueryOptions<
       Awaited<ReturnType<typeof getOpenaiConversation>>,
       TError,
       TData
-    >, 'queryKey'>;
+    >>;
     request?: SecondParameter<typeof customFetch>;
   },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
@@ -817,11 +817,11 @@ export const getListOpenaiMessagesQueryOptions = <
 >(
   id: number,
   options?: {
-    query?: Omit<UseQueryOptions<
+    query?: Partial<UseQueryOptions<
       Awaited<ReturnType<typeof listOpenaiMessages>>,
       TError,
       TData
-    >, 'queryKey'>;
+    >>;
     request?: SecondParameter<typeof customFetch>;
   },
 ) => {
@@ -860,11 +860,11 @@ export function useListOpenaiMessages<
 >(
   id: number,
   options?: {
-    query?: Omit<UseQueryOptions<
+    query?: Partial<UseQueryOptions<
       Awaited<ReturnType<typeof listOpenaiMessages>>,
       TError,
       TData
-    >, 'queryKey'>;
+    >>;
     request?: SecondParameter<typeof customFetch>;
   },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
@@ -988,11 +988,11 @@ export const getListScheduleProposalsQueryOptions = <
   TData = Awaited<ReturnType<typeof listScheduleProposals>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: Omit<UseQueryOptions<
+  query?: Partial<UseQueryOptions<
     Awaited<ReturnType<typeof listScheduleProposals>>,
     TError,
     TData
-  >, 'queryKey'>;
+  >>;
   request?: SecondParameter<typeof customFetch>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -1023,11 +1023,11 @@ export function useListScheduleProposals<
   TData = Awaited<ReturnType<typeof listScheduleProposals>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: Omit<UseQueryOptions<
+  query?: Partial<UseQueryOptions<
     Awaited<ReturnType<typeof listScheduleProposals>>,
     TError,
     TData
-  >, 'queryKey'>;
+  >>;
   request?: SecondParameter<typeof customFetch>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getListScheduleProposalsQueryOptions(options);
@@ -1156,11 +1156,11 @@ export const getGetScheduleProposalQueryOptions = <
 >(
   id: number,
   options?: {
-    query?: Omit<UseQueryOptions<
+    query?: Partial<UseQueryOptions<
       Awaited<ReturnType<typeof getScheduleProposal>>,
       TError,
       TData
-    >, 'queryKey'>;
+    >>;
     request?: SecondParameter<typeof customFetch>;
   },
 ) => {
@@ -1199,11 +1199,11 @@ export function useGetScheduleProposal<
 >(
   id: number,
   options?: {
-    query?: Omit<UseQueryOptions<
+    query?: Partial<UseQueryOptions<
       Awaited<ReturnType<typeof getScheduleProposal>>,
       TError,
       TData
-    >, 'queryKey'>;
+    >>;
     request?: SecondParameter<typeof customFetch>;
   },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
@@ -1667,11 +1667,11 @@ export const getGetPaymentStatusQueryOptions = <
   TData = Awaited<ReturnType<typeof getPaymentStatus>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: Omit<UseQueryOptions<
+  query?: Partial<UseQueryOptions<
     Awaited<ReturnType<typeof getPaymentStatus>>,
     TError,
     TData
-  >, 'queryKey'>;
+  >>;
   request?: SecondParameter<typeof customFetch>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -1702,11 +1702,11 @@ export function useGetPaymentStatus<
   TData = Awaited<ReturnType<typeof getPaymentStatus>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: Omit<UseQueryOptions<
+  query?: Partial<UseQueryOptions<
     Awaited<ReturnType<typeof getPaymentStatus>>,
     TError,
     TData
-  >, 'queryKey'>;
+  >>;
   request?: SecondParameter<typeof customFetch>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGetPaymentStatusQueryOptions(options);
