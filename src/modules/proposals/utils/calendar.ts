@@ -1,4 +1,4 @@
-import type { ScheduleProposal } from "@/api-client";
+import { ApiError, customFetch, type ScheduleProposal } from "@/api-client";
 
 export interface CalEvent {
   id: string;
@@ -31,13 +31,16 @@ export function timeToMinutes(iso: string) {
 }
 
 export async function fetchCalendarEvents(weekStart: Date) {
-  const res = await fetch(`/api/calendar/events?weekStart=${weekStart.toISOString()}`, { credentials: "include" });
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    if (body.noToken) throw new Error("NO_TOKEN");
+  try {
+    return await customFetch<{ events: CalEvent[]; weekStart: string }>(
+      `/api/calendar/events?weekStart=${weekStart.toISOString()}`,
+    );
+  } catch (err) {
+    if (err instanceof ApiError && (err.data as { noToken?: boolean } | null)?.noToken) {
+      throw new Error("NO_TOKEN");
+    }
     throw new Error("Erro ao buscar eventos");
   }
-  return res.json() as Promise<{ events: CalEvent[]; weekStart: string }>;
 }
 
 // ─── Day-grid layout constants ─────────────────────────────────────────────

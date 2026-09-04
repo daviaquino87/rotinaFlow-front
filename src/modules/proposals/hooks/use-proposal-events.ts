@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import type { ScheduleEvent } from "@/api-client";
+import { customFetch, type ScheduleEvent } from "@/api-client";
 import { DAYS_OF_WEEK } from "@lib/utils";
 import { useToast } from "@hooks/use-toast";
 
@@ -16,13 +16,7 @@ export function useProposalEvents(proposalUuid: string) {
 
   const { data: proposal, isLoading, refetch } = useQuery<ProposalWithEvents>({
     queryKey: ["proposal-by-uuid", proposalUuid],
-    queryFn: async () => {
-      const res = await fetch(`/api/schedule/proposals/${proposalUuid}`, {
-        credentials: "include",
-      });
-      if (!res.ok) throw new Error("Failed to load proposal");
-      return res.json() as Promise<ProposalWithEvents>;
-    },
+    queryFn: () => customFetch<ProposalWithEvents>(`/api/schedule/proposals/${proposalUuid}`),
     enabled: Boolean(proposalUuid),
   });
 
@@ -40,14 +34,11 @@ export function useProposalEvents(proposalUuid: string) {
   const hasUnsavedChanges = JSON.stringify(localEvents) !== JSON.stringify(proposal?.events);
 
   const handleSaveEvents = () => {
-    fetch(`/api/schedule/proposals/${proposalUuid}/events`, {
+    customFetch(`/api/schedule/proposals/${proposalUuid}/events`, {
       method: "PUT",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ events: localEvents }),
     })
-      .then(async (res) => {
-        if (!res.ok) throw new Error("save-failed");
+      .then(async () => {
         toast({ title: "Salvo!" });
         await refetch();
       })

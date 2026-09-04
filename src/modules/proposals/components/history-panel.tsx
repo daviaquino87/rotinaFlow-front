@@ -6,7 +6,7 @@ import { CalendarCheck2, CalendarDays, Loader2, Trash2, History, Eye, Pencil, Ch
 import { Link } from "wouter";
 import { Button } from "@/components/ui-elements";
 import { useToast } from "@hooks/use-toast";
-import type { ScheduleProposal } from "@/api-client";
+import { customFetch, type ScheduleProposal } from "@/api-client";
 import { proposalUuid } from "@modules/proposals/utils/calendar";
 
 export function HistoryPanel({
@@ -29,16 +29,11 @@ export function HistoryPanel({
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const renameMut = useMutation({
-    mutationFn: async ({ uuid, title }: { uuid: string; title: string }) => {
-      const res = await fetch(`/api/schedule/proposals/${uuid}`, {
+    mutationFn: ({ uuid, title }: { uuid: string; title: string }) =>
+      customFetch(`/api/schedule/proposals/${uuid}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ title }),
-      });
-      if (!res.ok) throw new Error("Erro ao renomear");
-      return res.json();
-    },
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/schedule/proposals"] });
       setEditingUuid(null);

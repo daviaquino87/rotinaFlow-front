@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { ApiError, customFetch } from "@/api-client";
 import { useToast } from "@hooks/use-toast";
 import { useCredits, useVerifyCreditPayment } from "@modules/credits/hooks/use-credits";
 
@@ -43,27 +44,24 @@ export function useProposalSync(proposalUuid: string, refetchProposal: () => voi
     setShowSyncModal(false);
     setIsSyncing(true);
     try {
-      const res = await fetch(`/api/schedule/proposals/${proposalUuid}/approve`, {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ clearBefore }),
-      });
-      const body = await res.json();
-      if (res.status === 402) {
-        setCreditsRequired(body.required);
-        setShowCreditsModal(true);
-        return;
-      }
-      if (!res.ok) {
-        toast({ title: "Erro ao sincronizar", description: "Não foi possível sincronizar. Tente novamente.", variant: "destructive" });
-        return;
-      }
+      const body = await customFetch<{ createdCount: number }>(
+        `/api/schedule/proposals/${proposalUuid}/approve`,
+        { method: "POST", body: JSON.stringify({ clearBefore }) },
+      );
       toast({ title: "Sincronizado!", description: `${body.createdCount} eventos adicionados ao Google Agenda.` });
       refetchProposal();
       refetchCredits();
-    } catch {
-      toast({ title: "Erro ao sincronizar", variant: "destructive" });
+    } catch (err) {
+      if (err instanceof ApiError && err.status === 402) {
+        setCreditsRequired((err.data as { required?: number } | null)?.required);
+        setShowCreditsModal(true);
+        return;
+      }
+      if (err instanceof ApiError) {
+        toast({ title: "Erro ao sincronizar", description: "Não foi possível sincronizar. Tente novamente.", variant: "destructive" });
+      } else {
+        toast({ title: "Erro ao sincronizar", variant: "destructive" });
+      }
     } finally {
       setIsSyncing(false);
     }

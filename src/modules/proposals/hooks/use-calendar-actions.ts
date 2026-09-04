@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ApiError, customFetch } from "@/api-client";
 import { useToast } from "@hooks/use-toast";
 import { useVerifyCreditPayment } from "@modules/credits/hooks/use-credits";
 
@@ -33,36 +34,35 @@ export function useCalendarActions(refetchCalendar: () => void, refetchCredits: 
 
   const syncMutation = useMutation({
     mutationFn: async ({ proposalUuid, clearBefore }: { proposalUuid: string; clearBefore: boolean }) => {
-      const res = await fetch(`/api/schedule/proposals/${proposalUuid}/approve`, {
-        method: "POST", credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ clearBefore }),
-      });
-      const body = await res.json();
-      if (res.status === 402) { setCreditsRequired(body.required); setShowCreditsModal(true); throw new Error("INSUFFICIENT_CREDITS"); }
-      if (!res.ok) throw new Error(body.error || "Erro ao sincronizar");
-      return body;
+      try {
+        return await customFetch<{ message?: string }>(
+          `/api/schedule/proposals/${proposalUuid}/approve`,
+          { method: "POST", body: JSON.stringify({ clearBefore }) },
+        );
+      } catch (err) {
+        if (err instanceof ApiError && err.status === 402) {
+          setCreditsRequired((err.data as { required?: number } | null)?.required);
+          setShowCreditsModal(true);
+        }
+        throw err;
+      }
     },
     onSuccess: (data) => {
       toast({ title: "Sincronizado!", description: data.message ?? "Rotina enviada para o Google Agenda." });
       refetchCredits();
       refetchCalendar();
     },
-    onError: (err: Error) => {
-      if (err.message !== "INSUFFICIENT_CREDITS") toast({ title: "Erro ao sincronizar", description: "Não foi possível sincronizar. Tente novamente.", variant: "destructive" });
+    onError: (err: unknown) => {
+      const isInsufficientCredits = err instanceof ApiError && err.status === 402;
+      if (!isInsufficientCredits) {
+        toast({ title: "Erro ao sincronizar", description: "Não foi possível sincronizar. Tente novamente.", variant: "destructive" });
+      }
     },
   });
 
   const clearCalendarMutation = useMutation({
-    mutationFn: async () => {
-      const res = await fetch("/api/schedule/calendar/events", {
-        method: "DELETE",
-        credentials: "include",
-      });
-      const body = await res.json();
-      if (!res.ok) throw new Error(body.error || "Erro ao limpar agenda");
-      return body;
-    },
+    mutationFn: () =>
+      customFetch<{ message?: string }>("/api/schedule/calendar/events", { method: "DELETE" }),
     onSuccess: (data) => {
       toast({ title: "Agenda limpa!", description: data.message ?? "Eventos removidos do Google Agenda." });
       refetchCalendar();
@@ -73,15 +73,7 @@ export function useCalendarActions(refetchCalendar: () => void, refetchCredits: 
   });
 
   const deleteProposalMutation = useMutation({
-    mutationFn: async (uuid: string) => {
-      const res = await fetch(`/api/schedule/proposals/${uuid}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
-      const body = await res.json();
-      if (!res.ok) throw new Error(body.error || "Erro ao excluir rotina");
-      return body;
-    },
+    mutationFn: (uuid: string) => customFetch(`/api/schedule/proposals/${uuid}`, { method: "DELETE" }),
     onSuccess: () => {
       toast({ title: "Rotina excluída!" });
       queryClient.invalidateQueries({ queryKey: ["/api/schedule/proposals"] });

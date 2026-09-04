@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Coins, Zap, Star, Rocket, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui-elements";
 import { useToast } from "@hooks/use-toast";
+import { ApiError, customFetch } from "@/api-client";
 
 interface Package {
   credits: number;
@@ -65,17 +66,17 @@ export function CreditsModal({ open, onClose, currentCredits, requiredCredits, a
   const handleBuy = async (credits: number) => {
     setLoading(credits);
     try {
-      const res = await fetch("/api/credits/checkout", {
+      const data = await customFetch<{ url?: string }>("/api/credits/checkout", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ credits, returnPath: window.location.pathname }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Erro ao criar checkout");
       if (data.url) window.location.href = data.url;
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Erro ao criar checkout";
+      const backendError =
+        err instanceof ApiError && typeof (err.data as { error?: unknown })?.error === "string"
+          ? (err.data as { error: string }).error
+          : undefined;
+      const message = backendError ?? (err instanceof Error ? err.message : "Erro ao criar checkout");
       toast({ title: "Erro", description: message, variant: "destructive" });
       setLoading(null);
     }

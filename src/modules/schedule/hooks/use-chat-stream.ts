@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { getGetOpenaiConversationQueryKey } from "@/api-client";
+import { apiUrl } from "@lib/api";
 
 export function useChatStream(conversationId: number | undefined) {
   const [isStreaming, setIsStreaming] = useState(false);
@@ -20,9 +21,15 @@ export function useChatStream(conversationId: number | undefined) {
     abortControllerRef.current = new AbortController();
 
     try {
-      const response = await fetch(`/api/openai/conversations/${convId}/messages`, {
+      // Uses the raw fetch (not customFetch) because it needs the unconsumed
+      // ReadableStream body for SSE — customFetch always parses the response
+      // into json/text/blob. apiUrl() still routes it through VITE_API_BASE_URL
+      // like every other request, and credentials must be set explicitly here
+      // since native fetch doesn't default to sending cookies cross-origin.
+      const response = await fetch(apiUrl(`/api/openai/conversations/${convId}/messages`), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ content }),
         signal: abortControllerRef.current.signal,
       });

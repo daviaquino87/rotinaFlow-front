@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useSearch } from "wouter";
 import { useQueryClient } from "@tanstack/react-query";
 import {
+  customFetch,
   useCreateOpenaiConversation,
   useCreateScheduleProposal,
   useListScheduleProposals,
@@ -70,11 +71,9 @@ export default function RoutineFormPage() {
   const handleGoogleSync = async () => {
     setIsSyncing(true);
     try {
-      const res = await fetch("/api/calendar/import", { credentials: "include" });
-      if (!res.ok) throw new Error(await res.text());
-      const data = (await res.json()) as {
+      const data = await customFetch<{
         activities: { name: string; days: string[]; startTime: string; endTime: string }[];
-      };
+      }>("/api/calendar/import");
       if (data.activities.length === 0) {
         toast({ title: "Nenhum evento encontrado", description: "Não encontramos eventos agendados nos próximos 14 dias." });
         return;

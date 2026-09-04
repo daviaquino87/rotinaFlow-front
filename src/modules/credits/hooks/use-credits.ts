@@ -1,4 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { customFetch } from "@/api-client";
 
 export interface CreditsData {
   credits: number;
@@ -15,11 +16,7 @@ export interface CreditsData {
 export function useCredits() {
   return useQuery<CreditsData>({
     queryKey: ["credits-balance"],
-    queryFn: async () => {
-      const res = await fetch("/api/credits/balance", { credentials: "include" });
-      if (!res.ok) throw new Error("Failed to fetch credits");
-      return res.json();
-    },
+    queryFn: () => customFetch<CreditsData>("/api/credits/balance"),
     staleTime: 30_000,
   });
 }
@@ -28,9 +25,9 @@ export function useVerifyCreditPayment() {
   const queryClient = useQueryClient();
 
   return async (sessionId: string): Promise<{ paid: boolean; added?: number; credits?: number }> => {
-    const res = await fetch(`/api/credits/verify/${sessionId}`, { credentials: "include" });
-    if (!res.ok) throw new Error("Failed to verify payment");
-    const data = await res.json();
+    const data = await customFetch<{ paid: boolean; added?: number; credits?: number }>(
+      `/api/credits/verify/${sessionId}`,
+    );
     if (data.paid) {
       await queryClient.invalidateQueries({ queryKey: ["credits-balance"] });
     }
