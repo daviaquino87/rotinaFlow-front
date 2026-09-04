@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import { VitePWA } from "vite-plugin-pwa";
 import path from "path";
 
 const rawPort = process.env.PORT ?? "5173";
@@ -18,6 +19,41 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    VitePWA({
+      registerType: "autoUpdate",
+      // "script" injects a same-origin <script src="/registerSW.js"> tag —
+      // "inline" would embed the registration JS directly in index.html,
+      // which the app's CSP (script-src 'self', no 'unsafe-inline') blocks.
+      injectRegister: "script",
+      manifest: {
+        name: "rotinaFlow — Organizador Inteligente",
+        short_name: "rotinaFlow",
+        description:
+          "Organize sua rotina semanal com inteligência artificial e sincronize com o Google Calendar.",
+        start_url: "/",
+        display: "standalone",
+        orientation: "portrait",
+        background_color: "#ffffff",
+        theme_color: "#7c3aed",
+        lang: "pt-BR",
+        icons: [
+          { src: "/images/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
+          { src: "/images/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
+          {
+            src: "/images/icon-512-maskable.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "maskable",
+          },
+        ],
+      },
+      workbox: {
+        // Only precache the built static assets — never let the service
+        // worker's navigation fallback touch /api/*, which includes the SSE
+        // chat stream and every credit/calendar mutation.
+        navigateFallbackDenylist: [/^\/api\//],
+      },
+    }),
   ],
   resolve: {
     alias: {
