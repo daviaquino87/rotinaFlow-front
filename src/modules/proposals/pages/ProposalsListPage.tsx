@@ -194,7 +194,9 @@ export default function ProposalsListPage() {
               <div className="flex flex-col" style={{ height: `${TOTAL_HOURS * HOUR_HEIGHT}px` }}>
                 {Array.from({ length: TOTAL_HOURS }, (_, i) => (
                   <div key={i} className="flex items-start justify-end pr-2 pt-0" style={{ height: HOUR_HEIGHT }}>
-                    <span className="text-[10px] text-slate-400 font-medium -translate-y-2">
+                    <span
+                      className={`text-[10px] text-slate-400 font-medium ${i === 0 ? "" : "-translate-y-2"}`}
+                    >
                       {String(START_HOUR + i).padStart(2, "0")}:00
                     </span>
                   </div>
