@@ -39,12 +39,13 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          "vendor-react": ["react", "react-dom"],
-          "vendor-query": ["@tanstack/react-query"],
-          "vendor-ui": ["framer-motion", "@radix-ui/react-dialog", "@radix-ui/react-tooltip", "@radix-ui/react-toast"],
-          "vendor-charts": ["recharts"],
-          "vendor-form": ["react-hook-form", "@hookform/resolvers", "zod"],
+        manualChunks(id) {
+          if (!id.includes("node_modules")) return;
+          if (id.includes("/react-dom/") || id.includes("/react/") || id.includes("/scheduler/")) {
+            return "vendor-react";
+          }
+          if (id.includes("@tanstack/react-query")) return "vendor-query";
+          if (id.includes("framer-motion") || id.includes("@radix-ui")) return "vendor-ui";
         },
       },
     },

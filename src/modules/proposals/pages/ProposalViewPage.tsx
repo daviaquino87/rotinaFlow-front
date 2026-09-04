@@ -1,374 +1,52 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { useRoute, useLocation } from "wouter";
-import {
-  ScheduleEvent
-} from "@/api-client";
-import { useQuery } from "@tanstack/react-query";
-import { DAYS_OF_WEEK, formatTime, cn } from "@lib/utils";
-import { Button, Badge, Skeleton, Input } from "@/components/ui-elements";
-import {
-  Save, Trash2, Edit2, CalendarCheck2,
-  RefreshCw, Check, Plus, ArrowLeft, ChevronUp, ChevronDown
-} from "lucide-react";
+import React, { useState } from "react";
+import { useRoute } from "wouter";
 import { Link } from "wouter";
-import { useToast } from "@hooks/use-toast";
-import { motion, AnimatePresence } from "framer-motion";
+import type { ScheduleEvent } from "@/api-client";
+import { DAYS_OF_WEEK, cn } from "@lib/utils";
+import { Button, Skeleton, Input } from "@/components/ui-elements";
+import {
+  Save, Trash2, CalendarCheck2,
+  RefreshCw, Check, Plus, ArrowLeft,
+} from "lucide-react";
 import { CreditsModal } from "@modules/credits/components/credits-modal";
 import { SyncConfirmModal } from "@modules/proposals/components/sync-confirm-modal";
-import { useCredits, useVerifyCreditPayment } from "@modules/credits/hooks/use-credits";
+import { DonutChart } from "@modules/proposals/components/donut-chart";
+import { ProgressBar } from "@modules/proposals/components/progress-bar";
+import { TimelineEventCard } from "@modules/proposals/components/timeline-event-card";
+import { Modal } from "@modules/proposals/components/modal";
+import { AddBetweenButton } from "@modules/proposals/components/add-between-button";
+import { getCategory } from "@modules/proposals/utils/event-category";
+import { useProposalEvents } from "@modules/proposals/hooks/use-proposal-events";
+import { useProposalSync } from "@modules/proposals/hooks/use-proposal-sync";
+import { useProposalStats } from "@modules/proposals/hooks/use-proposal-stats";
 
-// ─── Category helpers ─────────────────────────────────────────────────────────
-interface Category { label: string; color: string; bg: string; textColor: string }
-
-function getCategory(event: ScheduleEvent): Category {
-  const t = event.title.toLowerCase();
-  if (/trabalho|reunião|meeting|foco|bloco|office|job|project/.test(t))
-    return { label: "Trabalho",    color: "#3B82F6", bg: "#DBEAFE", textColor: "#1D4ED8" };
-  if (/academia|corrida|yoga|saúde|exercício|gym|treino|despertar|natação|musculação|caminhada/.test(t))
-    return { label: "Saúde",       color: "#10B981", bg: "#D1FAE5", textColor: "#065F46" };
-  if (/almoço|jantar|refeição|café|lanche|alimentação|lunch|dinner|breakfast/.test(t))
-    return { label: "Refeição",    color: "#F59E0B", bg: "#FEF3C7", textColor: "#92400E" };
-  if (/estudo|idioma|leitura|curso|aprender|habit|journal|anotação|meditação|mindful/.test(t))
-    return { label: "Novo Hábito", color: "#06B6D4", bg: "#CFFAFE", textColor: "#0E7490" };
-  if (/lazer|hobby|game|música|arte|cinema|lúdic|família|social|amigo/.test(t))
-    return { label: "Lazer",       color: "#8B5CF6", bg: "#EDE9FE", textColor: "#5B21B6" };
-  return { label: "Geral", color: event.color || "#6366F1", bg: "#E0E7FF", textColor: "#3730A3" };
-}
-
-function parseMinutes(time: string): number {
-  const [h, m] = time.split(":").map(Number);
-  return h * 60 + m;
-}
-
-function eventDuration(ev: ScheduleEvent): number {
-  const start = parseMinutes(ev.startTime);
-  let end = parseMinutes(ev.endTime);
-  if (end < start) end += 24 * 60;
-  return Math.max(0, end - start);
-}
-
-type ProposalWithEvents = {
-  uuid: string;
-  status: string;
-  title?: string;
-  events: ScheduleEvent[];
-};
-
-// ─── Donut Chart ──────────────────────────────────────────────────────────────
-function DonutChart({ segments }: { segments: { value: number; color: string; label: string }[] }) {
-  const total = segments.reduce((s, seg) => s + seg.value, 0);
-  if (total === 0) return <div className="w-28 h-28 rounded-full bg-slate-200 flex items-center justify-center text-xs text-slate-400">Sem dados</div>;
-
-  const r = 50, cx = 60, cy = 60, stroke = 22;
-  const circumference = 2 * Math.PI * r;
-  let offset = 0;
-
-  return (
-    <svg width="120" height="120" viewBox="0 0 120 120">
-      <circle cx={cx} cy={cy} r={r} fill="none" stroke="#F1F5F9" strokeWidth={stroke} />
-      {segments.map((seg, i) => {
-        const pct = seg.value / total;
-        const dash = circumference * pct;
-        const gap = circumference - dash;
-        const rotation = -90 + (offset / total) * 360;
-        offset += seg.value;
-        return (
-          <circle key={i} cx={cx} cy={cy} r={r}
-            fill="none" stroke={seg.color} strokeWidth={stroke}
-            strokeDasharray={`${dash} ${gap}`}
-            strokeDashoffset={0}
-            transform={`rotate(${rotation} ${cx} ${cy})`}
-            strokeLinecap="butt"
-          />
-        );
-      })}
-    </svg>
-  );
-}
-
-// ─── Progress Bar ─────────────────────────────────────────────────────────────
-function ProgressBar({ label, value, color }: { label: string; value: number; color: string }) {
-  return (
-    <div>
-      <div className="flex justify-between text-sm mb-1.5">
-        <span className="text-slate-300">{label}</span>
-        <span className="font-bold text-white">{value}%</span>
-      </div>
-      <div className="h-2 rounded-full bg-white/10">
-        <div className="h-2 rounded-full transition-all duration-700" style={{ width: `${value}%`, backgroundColor: color }} />
-      </div>
-    </div>
-  );
-}
-
-// ─── Timeline Event Card ──────────────────────────────────────────────────────
-function TimelineEventCard({ event, side, onEdit, onMoveUp, onMoveDown, isDragging, isOver, onDragStart, onDragEnd, onDragOver, onDragLeave, onDrop }: {
-  event: ScheduleEvent;
-  side: "left" | "right";
-  onEdit?: () => void;
-  onMoveUp?: () => void;
-  onMoveDown?: () => void;
-  isDragging?: boolean;
-  isOver?: boolean;
-  onDragStart?: () => void;
-  onDragEnd?: () => void;
-  onDragOver?: (e: React.DragEvent) => void;
-  onDragLeave?: () => void;
-  onDrop?: () => void;
-}) {
-  const cat = getCategory(event);
-  return (
-    <div className={cn(
-      "flex items-start gap-0 w-full transition-all duration-200 flex-row",
-      side === "left" ? "sm:flex-row" : "sm:flex-row-reverse",
-      isDragging && "opacity-40 scale-95",
-    )}>
-      {/* Content */}
-      <div
-        draggable
-        onDragStart={e => { e.dataTransfer.effectAllowed = "move"; onDragStart?.(); }}
-        onDragEnd={() => { onDragEnd?.(); }}
-        onDragOver={e => { e.preventDefault(); e.dataTransfer.dropEffect = "move"; onDragOver?.(e); }}
-        onDragLeave={onDragLeave}
-        onDrop={e => { e.preventDefault(); onDrop?.(); }}
-        className={cn(
-          "flex-1 min-w-0 bg-white rounded-2xl p-4 shadow-sm border-2 transition-all duration-150 group select-none",
-          "ml-4 text-left",
-          side === "left" ? "sm:mr-6 sm:ml-0 sm:text-right" : "sm:ml-6 sm:text-left",
-          isOver
-            ? "border-primary bg-primary/5 shadow-lg shadow-primary/20 scale-[1.02]"
-            : "border-slate-100 cursor-grab active:cursor-grabbing hover:shadow-md hover:border-slate-200",
-        )}
-      >
-        <div className={cn(
-          "flex items-center gap-2 mb-2 justify-start",
-          side === "left" ? "sm:justify-end" : "sm:justify-start",
-        )}>
-          <span className="text-sm font-bold text-slate-800">{event.startTime.substring(0,5)} – {event.endTime.substring(0,5)}</span>
-          <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full" style={{ backgroundColor: cat.bg, color: cat.textColor }}>
-            {cat.label}
-          </span>
-        </div>
-        <p className="font-bold text-slate-900 text-base">{event.title}</p>
-        {event.description && <p className="text-sm text-slate-400 mt-0.5 line-clamp-2">{event.description}</p>}
-
-        {/* Actions row */}
-        {onEdit && (
-          <div className={cn(
-            "flex items-center gap-1 mt-2.5 justify-start",
-            side === "left" ? "sm:justify-end" : "sm:justify-start",
-          )}>
-            {/* Edit — always visible on mobile, hover-only on desktop */}
-            <button
-              onClick={e => { e.stopPropagation(); onEdit(); }}
-              onMouseDown={e => e.stopPropagation()}
-              className="flex items-center gap-1 text-xs font-semibold text-slate-400 hover:text-primary hover:bg-primary/8 px-2 py-1 rounded-lg transition-all sm:opacity-0 sm:group-hover:opacity-100"
-            >
-              <Edit2 className="w-3 h-3" /> Editar
-            </button>
-            {/* Up/down — only on mobile */}
-            {(onMoveUp || onMoveDown) && (
-              <div className="flex sm:hidden items-center gap-0.5 ml-auto">
-                <button
-                  onClick={e => { e.stopPropagation(); onMoveUp?.(); }}
-                  disabled={!onMoveUp}
-                  className="p-1.5 rounded-lg text-slate-300 hover:text-primary hover:bg-primary/8 disabled:opacity-20 transition-all"
-                  title="Mover para cima"
-                >
-                  <ChevronUp className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={e => { e.stopPropagation(); onMoveDown?.(); }}
-                  disabled={!onMoveDown}
-                  className="p-1.5 rounded-lg text-slate-300 hover:text-primary hover:bg-primary/8 disabled:opacity-20 transition-all"
-                  title="Mover para baixo"
-                >
-                  <ChevronDown className="w-4 h-4" />
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-
-      {/* Dot on the center line */}
-      <div className="relative flex flex-col items-center">
-        <div className={cn("w-4 h-4 rounded-full border-2 border-white shadow-md z-10 transition-transform duration-150",
-          isOver && "scale-125")}
-          style={{ backgroundColor: isOver ? "var(--color-primary, #c904bc)" : cat.color }} />
-      </div>
-
-      {/* Spacer for the other side — hidden on mobile */}
-      <div className="hidden sm:block sm:flex-1" />
-    </div>
-  );
-}
-
-// ─── Modal ────────────────────────────────────────────────────────────────────
-function Modal({ isOpen, onClose, title, children }: { isOpen: boolean; onClose: () => void; title: string; children: React.ReactNode }) {
-  if (!isOpen) return null;
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
-      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        <div className="px-6 py-4 border-b border-slate-100 flex justify-between items-center">
-          <h3 className="font-display font-bold text-lg">{title}</h3>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600 text-2xl leading-none">&times;</button>
-        </div>
-        <div className="p-6">{children}</div>
-      </div>
-    </div>
-  );
-}
-
-
-// ─── Add-between button ───────────────────────────────────────────────────────
-function AddBetweenButton({ onClick, label }: { onClick: () => void; label: string }) {
-  return (
-    <button
-      onClick={onClick}
-      title={label}
-      className="group w-full flex items-center gap-2 py-1.5 opacity-0 hover:opacity-100 focus:opacity-100 transition-opacity duration-150"
-    >
-      <div className="flex-1 h-px bg-slate-200 group-hover:bg-primary/30 transition-colors" />
-      <span className="flex items-center gap-1 text-xs font-semibold text-slate-400 group-hover:text-primary px-2 py-0.5 rounded-full group-hover:bg-primary/10 transition-all whitespace-nowrap">
-        <Plus className="w-3 h-3" /> Adicionar
-      </span>
-      <div className="flex-1 h-px bg-slate-200 group-hover:bg-primary/30 transition-colors" />
-    </button>
-  );
-}
-
-// ─── Main Component ───────────────────────────────────────────────────────────
 export default function ProposalViewPage() {
   const [, params] = useRoute("/proposal/:uuid");
-  const [location] = useLocation();
   const proposalUuid = params?.uuid ?? "";
-  const { toast } = useToast();
 
-  const searchParams = new URLSearchParams(typeof window !== "undefined" ? window.location.search : "");
-  const creditSession = searchParams.get("credit_session");
-  const creditCancelled = searchParams.get("credit_cancelled");
+  const {
+    proposal, isLoading, refetch,
+    localEvents, selectedDayId, setSelectedDayId,
+    hasUnsavedChanges, handleSaveEvents, handleSwapTimes,
+    addLocalEvent, updateLocalEvent, deleteLocalEvent,
+  } = useProposalEvents(proposalUuid);
 
-  const { data: proposal, isLoading, refetch } = useQuery<ProposalWithEvents>({
-    queryKey: ["proposal-by-uuid", proposalUuid],
-    queryFn: async () => {
-      const res = await fetch(`/api/schedule/proposals/${proposalUuid}`, {
-        credentials: "include",
-      });
-      if (!res.ok) {
-        throw new Error("Failed to load proposal");
-      }
-      return res.json() as Promise<ProposalWithEvents>;
-    },
-    enabled: Boolean(proposalUuid),
-  });
-  const { data: creditsData, refetch: refetchCredits } = useCredits();
-  const verifyCredit = useVerifyCreditPayment();
+  const {
+    creditsData, isSyncing, showSyncModal, setShowSyncModal,
+    showCreditsModal, setShowCreditsModal, creditsRequired,
+    handleApprove, handleSyncConfirm,
+  } = useProposalSync(proposalUuid, refetch);
+
+  const { eventsByDay, selectedDayEvents, equilibrio, distribuicaoSegments } =
+    useProposalStats(localEvents, selectedDayId);
 
   const [editingEvent, setEditingEvent] = useState<ScheduleEvent | null>(null);
   const [isAddingNew, setIsAddingNew] = useState(false);
-  const [localEvents, setLocalEvents] = useState<ScheduleEvent[]>([]);
-  const [showCreditsModal, setShowCreditsModal] = useState(false);
-  const [creditsRequired, setCreditsRequired] = useState<number | undefined>(undefined);
-  const [isSyncing, setIsSyncing] = useState(false);
-  const [showSyncModal, setShowSyncModal] = useState(false);
   const [viewMode, setViewMode] = useState<"dia" | "semana">("dia");
-  const [selectedDayId, setSelectedDayId] = useState("seg");
   const [draggedId, setDraggedId] = useState<number | null>(null);
   const [dragOverId, setDragOverId] = useState<number | null>(null);
 
-  useEffect(() => {
-    if (proposal?.events) {
-      setLocalEvents(proposal.events);
-      const firstDay = DAYS_OF_WEEK.find(d => proposal.events.some(e => e.dayOfWeek === d.id));
-      if (firstDay) setSelectedDayId(firstDay.id);
-    }
-  }, [proposal?.events]);
-
-  // Handle returning from Stripe credit purchase
-  useEffect(() => {
-    if (creditSession) {
-      verifyCredit(creditSession).then(data => {
-        if (data.paid) {
-          toast({ title: "Créditos adicionados!", description: `+${data.added} crédito${(data.added ?? 0) > 1 ? "s" : ""} na sua conta.` });
-          refetchCredits();
-        }
-      }).catch(() => {});
-      window.history.replaceState({}, "", `/proposal/${proposalUuid}`);
-    } else if (creditCancelled) {
-      toast({ title: "Compra cancelada", description: "Nenhum crédito foi adicionado.", variant: "destructive" });
-      window.history.replaceState({}, "", `/proposal/${proposalUuid}`);
-    }
-  }, [creditSession, creditCancelled]);
-
-  const handleSaveEvents = () => {
-    fetch(`/api/schedule/proposals/${proposalUuid}/events`, {
-      method: "PUT",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ events: localEvents }),
-    })
-      .then(async (res) => {
-        if (!res.ok) throw new Error("save-failed");
-        toast({ title: "Salvo!" });
-        await refetch();
-      })
-      .catch(() => {
-        toast({ title: "Erro ao salvar", variant: "destructive" });
-      });
-  };
-
-  const handleApprove = () => {
-    if (isSyncing) return;
-    setShowSyncModal(true);
-  };
-
-  const handleSyncConfirm = async (clearBefore: boolean) => {
-    setShowSyncModal(false);
-    setIsSyncing(true);
-    try {
-      const res = await fetch(`/api/schedule/proposals/${proposalUuid}/approve`, {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ clearBefore }),
-      });
-      const body = await res.json();
-      if (res.status === 402) {
-        setCreditsRequired(body.required);
-        setShowCreditsModal(true);
-        return;
-      }
-      if (!res.ok) {
-        toast({ title: "Erro ao sincronizar", description: "Não foi possível sincronizar. Tente novamente.", variant: "destructive" });
-        return;
-      }
-      toast({ title: "Sincronizado!", description: `${body.createdCount} eventos adicionados ao Google Agenda.` });
-      refetch();
-      refetchCredits();
-    } catch {
-      toast({ title: "Erro ao sincronizar", variant: "destructive" });
-    } finally {
-      setIsSyncing(false);
-    }
-  };
-
-  const handleSwapTimes = (idA: number, idB: number) => {
-    setLocalEvents(prev => {
-      const evA = prev.find(e => e.id === idA);
-      const evB = prev.find(e => e.id === idB);
-      if (!evA || !evB) return prev;
-      return prev.map(ev => {
-        if (ev.id === idA) return { ...ev, startTime: evB.startTime, endTime: evB.endTime };
-        if (ev.id === idB) return { ...ev, startTime: evA.startTime, endTime: evA.endTime };
-        return ev;
-      });
-    });
-    setDraggedId(null);
-    setDragOverId(null);
-  };
-
-  const normalizeTime = (t: string) => t.length === 5 ? `${t}:00` : t;
+  const normalizeTime = (t: string) => (t.length === 5 ? `${t}:00` : t);
 
   const saveEditedEvent = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -382,9 +60,9 @@ export default function ProposalViewPage() {
         description: (fd.get("description") as string) || undefined,
       };
       if (isAddingNew) {
-        setLocalEvents(prev => [...prev, updated]);
+        addLocalEvent(updated);
       } else {
-        setLocalEvents(prev => prev.map(ev => ev.id === updated.id ? updated : ev));
+        updateLocalEvent(updated);
       }
     }
     setEditingEvent(null);
@@ -392,7 +70,7 @@ export default function ProposalViewPage() {
   };
 
   const deleteEvent = (id: number) => {
-    setLocalEvents(prev => prev.filter(ev => ev.id !== id));
+    deleteLocalEvent(id);
     setEditingEvent(null);
   };
 
@@ -401,7 +79,7 @@ export default function ProposalViewPage() {
     const startTime = afterTime || "09:00:00";
     const [h, m] = startTime.split(":").map(Number);
     const endH = Math.min(h + 1, 23);
-    const endTime = `${String(endH).padStart(2,"0")}:${String(m).padStart(2,"0")}:00`;
+    const endTime = `${String(endH).padStart(2, "0")}:${String(m).padStart(2, "0")}:00`;
     const newEv: ScheduleEvent = {
       id: tempId,
       title: "",
@@ -414,48 +92,8 @@ export default function ProposalViewPage() {
     setIsAddingNew(true);
   };
 
-  // ── Derived data ────────────────────────────────────────────────────────────
-  const eventsByDay = useMemo(() => DAYS_OF_WEEK.reduce((acc, day) => {
-    acc[day.id] = localEvents
-      .filter(e => e.dayOfWeek === day.id)
-      .sort((a, b) => a.startTime.localeCompare(b.startTime));
-    return acc;
-  }, {} as Record<string, ScheduleEvent[]>), [localEvents]);
-
-  const selectedDayEvents = eventsByDay[selectedDayId] ?? [];
-
-  const equilibrio = useMemo(() => {
-    const mins = { produtividade: 0, bemEstar: 0, lazer: 0 };
-    selectedDayEvents.forEach(ev => {
-      const cat = getCategory(ev).label;
-      const dur = eventDuration(ev);
-      if (cat === "Trabalho" || cat === "Novo Hábito") mins.produtividade += dur;
-      else if (cat === "Saúde" || cat === "Refeição") mins.bemEstar += dur;
-      else if (cat === "Lazer") mins.lazer += dur;
-    });
-    const total = mins.produtividade + mins.bemEstar + mins.lazer || 1;
-    return {
-      produtividade: Math.round(mins.produtividade / total * 100),
-      bemEstar: Math.round(mins.bemEstar / total * 100),
-      lazer: Math.round(mins.lazer / total * 100),
-    };
-  }, [selectedDayEvents]);
-
-  const distribuicaoSegments = useMemo(() => {
-    const totals: Record<string, { value: number; color: string }> = {};
-    localEvents.forEach(ev => {
-      const cat = getCategory(ev);
-      const dur = eventDuration(ev);
-      if (!totals[cat.label]) totals[cat.label] = { value: 0, color: cat.color };
-      totals[cat.label].value += dur;
-    });
-    return Object.entries(totals).map(([label, info]) => ({ label, ...info }));
-  }, [localEvents]);
-
   const isApproved = proposal?.status === "approved";
-  const hasUnsavedChanges = JSON.stringify(localEvents) !== JSON.stringify(proposal?.events);
 
-  // ── Loading ─────────────────────────────────────────────────────────────────
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[70vh] gap-4">
