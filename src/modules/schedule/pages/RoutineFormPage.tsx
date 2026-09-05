@@ -147,6 +147,12 @@ export default function RoutineFormPage() {
             onSuccess: (p) => {
               clearDraft();
               queryClient.invalidateQueries({ queryKey: ["/api/schedule/proposals"] });
+              // A successful generation may have spent credits (see
+              // GENERATION_COST in schedule.service.ts) — the header badge
+              // reads from this same cache key, so without invalidating it
+              // here it keeps showing the pre-generation balance until its
+              // 30s staleTime lapses, making it look like nothing was charged.
+              queryClient.invalidateQueries({ queryKey: ["credits-balance"] });
               setLocation(`/proposal/${p.uuid}`);
               resolve();
             },
