@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useSearch } from "wouter";
 import { useQueryClient } from "@tanstack/react-query";
 import {
+  ApiError,
   customFetch,
   useCreateOpenaiConversation,
   useCreateScheduleProposal,
@@ -153,10 +154,17 @@ export default function RoutineFormPage() {
           },
         ),
       );
-    } catch {
+    } catch (err) {
+      const isNoEvents = err instanceof ApiError && err.status === 422;
       toast({
-        title: "Erro ao gerar proposta",
-        description: "Tente novamente.",
+        title: isNoEvents ? "Não conseguimos gerar sua rotina" : "Erro ao gerar proposta",
+        description:
+          (err instanceof ApiError && typeof err.data === "object" && err.data
+            ? (err.data as { error?: string }).error
+            : undefined) ??
+          (isNoEvents
+            ? "Detalhe melhor sua rotina atual e seus objetivos e tente novamente."
+            : "Tente novamente."),
         variant: "destructive",
       });
       setIsGenerating(false);
