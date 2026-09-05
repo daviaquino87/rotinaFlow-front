@@ -24,7 +24,7 @@ export default function TermsOfService() {
       {/* Content */}
       <main className="max-w-3xl mx-auto px-6 py-12">
         <h1 className="text-3xl font-extrabold text-slate-900 mb-2">Termos de Serviço</h1>
-        <p className="text-sm text-slate-400 mb-10">Última atualização: março de 2025</p>
+        <p className="text-sm text-slate-400 mb-10">Última atualização: setembro de 2026</p>
 
         <div className="prose prose-slate max-w-none space-y-8 text-slate-600 leading-relaxed">
           <section>
@@ -175,8 +175,8 @@ export default function TermsOfService() {
             <h2 className="text-lg font-bold text-slate-800 mb-2">13. Contato</h2>
             <p>
               Para dúvidas sobre estes termos:{" "}
-              <a href="mailto:davi26031@gmail.com" className="text-primary underline">
-                davi26031@gmail.com
+              <a href="mailto:approtinaflow@gmail.com" className="text-primary underline">
+                approtinaflow@gmail.com
               </a>
             </p>
           </section>

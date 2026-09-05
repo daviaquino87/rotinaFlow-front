@@ -24,7 +24,7 @@ export default function PrivacyPolicy() {
       {/* Content */}
       <main className="max-w-3xl mx-auto px-6 py-12">
         <h1 className="text-3xl font-extrabold text-slate-900 mb-2">Política de Privacidade</h1>
-        <p className="text-sm text-slate-400 mb-10">Última atualização: março de 2025</p>
+        <p className="text-sm text-slate-400 mb-10">Última atualização: setembro de 2026</p>
 
         <div className="prose prose-slate max-w-none space-y-8 text-slate-600 leading-relaxed">
           <section>
@@ -32,8 +32,8 @@ export default function PrivacyPolicy() {
             <p>
               O <strong>rotinaFlow</strong> é um serviço de organização de rotina semanal com
               inteligência artificial, disponível em{" "}
-              <a href="https://rotina-flow.replit.app" className="text-primary underline">
-                rotina-flow.replit.app
+              <a href="https://app.rotinaflow.com.br" className="text-primary underline">
+                app.rotinaflow.com.br
               </a>
               . Esta política descreve como coletamos, usamos e protegemos suas informações
               pessoais.
@@ -70,7 +70,7 @@ export default function PrivacyPolicy() {
             <h2 className="text-lg font-bold text-slate-800 mb-2">3. Como usamos seus dados</h2>
             <ul className="list-disc pl-5 space-y-1">
               <li>Autenticar sua conta e manter sua sessão ativa.</li>
-              <li>Gerar rotinas personalizadas com inteligência artificial (OpenAI).</li>
+              <li>Gerar rotinas personalizadas com inteligência artificial (GroqCloud).</li>
               <li>Sincronizar eventos aprovados com o seu Google Calendar.</li>
               <li>Processar e registrar suas compras de créditos.</li>
               <li>Melhorar o serviço com base em dados agregados e anônimos.</li>
@@ -85,15 +85,19 @@ export default function PrivacyPolicy() {
                 <strong>Google LLC</strong> — para autenticação e integração com o Google Calendar.
               </li>
               <li>
-                <strong>OpenAI</strong> — para processamento de linguagem natural e geração de
-                rotinas. Os dados enviados são usados somente para gerar sua resposta e não são
-                usados para treinar modelos, conforme a política da API da OpenAI.
+                <strong>Groq (GroqCloud)</strong> — para processamento de linguagem natural e
+                geração de rotinas. Os dados enviados são usados somente para gerar sua resposta e
+                não são usados para treinar modelos, conforme a política da API da Groq.
               </li>
               <li>
                 <strong>Stripe</strong> — para processamento de pagamentos.
               </li>
               <li>
-                <strong>Replit</strong> — infraestrutura de hospedagem onde o serviço opera.
+                <strong>Railway</strong> — infraestrutura de hospedagem onde o serviço opera.
+              </li>
+              <li>
+                <strong>Supabase</strong> — banco de dados onde suas informações de conta, rotinas
+                e sessão são armazenadas.
               </li>
             </ul>
           </section>
@@ -156,8 +160,8 @@ export default function PrivacyPolicy() {
             <p>
               Para dúvidas, solicitações ou exercício dos seus direitos, entre em contato pelo
               e-mail:{" "}
-              <a href="mailto:davi26031@gmail.com" className="text-primary underline">
-                davi26031@gmail.com
+              <a href="mailto:approtinaflow@gmail.com" className="text-primary underline">
+                approtinaflow@gmail.com
               </a>
             </p>
           </section>
