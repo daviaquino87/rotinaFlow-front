@@ -96,8 +96,8 @@ export default function PrivacyPolicy() {
                 <strong>Railway</strong> — infraestrutura de hospedagem onde o serviço opera.
               </li>
               <li>
-                <strong>Supabase</strong> — banco de dados onde suas informações de conta, rotinas
-                e sessão são armazenadas.
+                <strong>Supabase</strong> — banco de dados onde suas informações de conta, rotinas e
+                sessão são armazenadas.
               </li>
             </ul>
           </section>
