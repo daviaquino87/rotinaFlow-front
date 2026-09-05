@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { LogOut, Loader2, Sparkles, ClipboardList, CalendarDays, Coins } from "lucide-react";
+import { LogOut, Loader2, ClipboardList, CalendarDays, Coins } from "lucide-react";
 import { useGetSession, useLogout } from "@/api-client";
 import { CreditsModal } from "@modules/credits/components/credits-modal";
 import { useCredits } from "@modules/credits/hooks/use-credits";
@@ -139,9 +139,11 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
       <header className="h-14 bg-white border-b border-slate-200 flex items-center px-4 md:px-6 gap-3 shrink-0 z-10">
         <Link href="/routine" className="flex items-center gap-2 shrink-0">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center shadow shadow-primary/20">
-            <Sparkles className="w-4 h-4 text-white" />
-          </div>
+          <img
+            src="/images/icon-192.png"
+            alt="rotinaFlow"
+            className="w-8 h-8 rounded-lg shadow shadow-primary/20"
+          />
           <span className="font-display font-bold text-lg tracking-tight text-slate-900">
             rotinaFlow
           </span>

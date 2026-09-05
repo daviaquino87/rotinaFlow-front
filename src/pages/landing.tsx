@@ -204,9 +204,11 @@ export default function Landing() {
       >
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-violet-500 flex items-center justify-center shadow shadow-primary/30">
-              <Sparkles className="w-4 h-4 text-white" />
-            </div>
+            <img
+              src="/images/icon-192.png"
+              alt="rotinaFlow"
+              className="w-8 h-8 rounded-lg shadow shadow-primary/30"
+            />
             <span className="font-display font-bold text-lg tracking-tight">rotinaFlow</span>
           </div>
           <button
@@ -707,9 +709,7 @@ export default function Landing() {
       <footer className="py-8 px-6 border-t border-slate-100 bg-slate-50">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-gradient-to-br from-primary to-violet-500 flex items-center justify-center">
-              <Sparkles className="w-3 h-3 text-white" />
-            </div>
+            <img src="/images/icon-192.png" alt="rotinaFlow" className="w-6 h-6 rounded-md" />
             <span className="font-bold text-slate-700">rotinaFlow</span>
           </div>
           <p className="text-sm text-slate-400">© 2025 rotinaFlow. Todos os direitos reservados.</p>

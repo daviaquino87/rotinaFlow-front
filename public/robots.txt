@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Allow: /privacidade
+Allow: /termos
+Disallow: /routine
+Disallow: /proposals
+Disallow: /proposal/
+
+Sitemap: https://app.rotinaflow.com.br/sitemap.xml

@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Sparkles, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 export default function TermsOfService() {
   return (
@@ -8,9 +8,7 @@ export default function TermsOfService() {
       <header className="border-b border-slate-100 px-6 py-4">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary to-violet-500 flex items-center justify-center">
-              <Sparkles className="w-4 h-4 text-white" />
-            </div>
+            <img src="/images/icon-192.png" alt="rotinaFlow" className="w-7 h-7 rounded-lg" />
             <span className="font-bold text-slate-800">rotinaFlow</span>
           </Link>
           <Link
