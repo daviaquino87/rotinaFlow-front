@@ -30,8 +30,8 @@ export default function TemplatesGalleryPage() {
       <div>
         <h1 className="font-display text-3xl font-bold text-slate-900">Templates de Rotina</h1>
         <p className="text-slate-500 mt-2">
-          Rotinas prontas, criadas por especialistas. Compre uma com seus créditos e ela vira sua
-          — totalmente editável, sem afetar o template original.
+          Rotinas prontas, criadas por especialistas. Compre uma com seus créditos e ela vira sua —
+          totalmente editável, sem afetar o template original.
         </p>
       </div>
 

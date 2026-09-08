@@ -92,13 +92,20 @@ export default function TemplateViewPage() {
               <ArrowLeft className="w-4 h-4" /> Templates
             </button>
           </Link>
-          <div className="flex items-center gap-3">
-            <span className="text-3xl">{template.emoji}</span>
-            <h1 className="font-display text-3xl font-bold text-slate-900">{template.title}</h1>
-            <span className="text-[11px] font-semibold uppercase tracking-wide text-primary bg-primary/10 px-2 py-1 rounded-full whitespace-nowrap">
-              {template.category}
-            </span>
+          {/* flex-wrap + break-words: several real template titles ("Founder
+              em Fase de Lançamento", "Universitário Multitarefa"...) are long
+              enough to overflow a rigid single row at 320-375px, so the title
+              wraps onto its own line instead, and the category badge moves
+              below it rather than fighting it for space. */}
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-3xl shrink-0">{template.emoji}</span>
+            <h1 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 break-words">
+              {template.title}
+            </h1>
           </div>
+          <span className="inline-block mt-1.5 text-[11px] font-semibold uppercase tracking-wide text-primary bg-primary/10 px-2 py-1 rounded-full whitespace-nowrap">
+            {template.category}
+          </span>
           <p className="text-slate-500 mt-2 max-w-xl">{template.description}</p>
         </div>
 
@@ -267,8 +274,8 @@ export default function TemplateViewPage() {
           {!template.alreadyPurchased && (
             <div className="bg-primary/5 rounded-2xl p-5 border border-primary/10 space-y-3">
               <p className="text-sm text-slate-600">
-                Ao comprar, esta rotina é copiada para a sua conta — você pode editar dias,
-                horários e atividades livremente, sem afetar este template.
+                Ao comprar, esta rotina é copiada para a sua conta — você pode editar dias, horários
+                e atividades livremente, sem afetar este template.
               </p>
               <Button
                 onClick={handlePurchase}

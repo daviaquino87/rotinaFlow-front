@@ -140,8 +140,10 @@ export function TimelineEventCard({
         )}
       </div>
 
-      {/* Dot on the center line */}
-      <div className="relative flex flex-col items-center">
+      {/* Dot on the center line — the line itself is hidden below sm: (see
+          the timeline's own "hidden sm:block" divider), so hide the dot
+          there too instead of leaving an orphan marker with nothing to sit on. */}
+      <div className="hidden sm:relative sm:flex sm:flex-col sm:items-center">
         <div
           className={cn(
             "w-4 h-4 rounded-full border-2 border-white shadow-md z-10 transition-transform duration-150",

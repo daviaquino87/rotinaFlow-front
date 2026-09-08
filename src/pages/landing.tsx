@@ -200,7 +200,10 @@ export default function Landing() {
     <div className="min-h-screen bg-white text-slate-900 font-sans overflow-x-hidden">
       {/* ── Navbar ── */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100" : "bg-transparent"}`}
+        // safe-area-pt: this is the app's start_url ("/") for the installed
+        // PWA — the first fixed element a standalone-mode user sees — so it
+        // needs the same notch clearance as AppLayout's header.
+        className={`fixed top-0 left-0 right-0 z-50 safe-area-pt transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100" : "bg-transparent"}`}
       >
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">

@@ -100,16 +100,17 @@ export function CreditsModal({
           <motion.div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
 
           <motion.div
-            className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden"
+            className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-hidden flex flex-col"
             initial={{ scale: 0.92, y: 20 }}
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.92, y: 20 }}
             transition={{ type: "spring", duration: 0.4 }}
           >
-            <div className="bg-gradient-to-br from-primary to-purple-600 p-6 text-white">
+            <div className="bg-gradient-to-br from-primary to-purple-600 p-6 text-white shrink-0">
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 p-1 rounded-full bg-white/20 hover:bg-white/30 transition"
+                aria-label="Fechar"
+                className="absolute top-4 right-4 p-2 rounded-full bg-white/20 hover:bg-white/30 transition"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -138,80 +139,86 @@ export function CreditsModal({
               )}
             </div>
 
-            <div className="px-6 pt-5 pb-2">
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
-                Custo por ação
-              </p>
-              <div className="flex gap-3">
-                <div className="flex-1 bg-blue-50 rounded-lg p-2.5 text-center">
-                  <div className="text-blue-600 font-bold text-lg">2</div>
-                  <div className="text-blue-700 text-xs">créditos</div>
-                  <div className="text-slate-500 text-xs mt-0.5">Gerar rotina</div>
-                </div>
-                <div className="flex-1 bg-purple-50 rounded-lg p-2.5 text-center">
-                  <div className="text-purple-600 font-bold text-lg">3</div>
-                  <div className="text-purple-700 text-xs">créditos</div>
-                  <div className="text-slate-500 text-xs mt-0.5">Sincronizar</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="px-6 py-4 space-y-3">
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Escolha um pacote
-              </p>
-              {PACKAGES.map((pkg) => (
-                <div
-                  key={pkg.credits}
-                  className={`relative border-2 rounded-xl p-4 cursor-pointer transition-all ${
-                    pkg.popular
-                      ? "border-primary bg-primary/5"
-                      : "border-slate-200 hover:border-primary/50 hover:bg-slate-50"
-                  }`}
-                >
-                  {pkg.popular && (
-                    <span className="absolute -top-2.5 left-4 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
-                      Mais popular
-                    </span>
-                  )}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`w-9 h-9 rounded-lg flex items-center justify-center ${pkg.popular ? "bg-primary text-white" : "bg-slate-100 text-slate-600"}`}
-                      >
-                        {pkg.icon}
-                      </div>
-                      <div>
-                        <div className="font-semibold text-slate-900">
-                          {pkg.credits} crédito{pkg.credits > 1 ? "s" : ""}
-                        </div>
-                        <div className="text-xs text-slate-500">{pkg.description}</div>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => handleBuy(pkg.credits)}
-                      disabled={loading !== null}
-                      className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${
-                        pkg.popular
-                          ? "bg-primary text-white hover:bg-primary/90"
-                          : "bg-slate-900 text-white hover:bg-slate-700"
-                      } disabled:opacity-60`}
-                    >
-                      {loading === pkg.credits ? (
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                      ) : (
-                        pkg.priceLabel
-                      )}
-                    </button>
+            {/* flex-1 min-h-0 so this section scrolls internally on short
+                viewports (iPhone SE, any mobile landscape) instead of the
+                "10 créditos" package and the footer being clipped by the
+                card's max-h-[90vh] + overflow-hidden. */}
+            <div className="overflow-y-auto flex-1 min-h-0">
+              <div className="px-6 pt-5 pb-2">
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
+                  Custo por ação
+                </p>
+                <div className="flex gap-3">
+                  <div className="flex-1 bg-blue-50 rounded-lg p-2.5 text-center">
+                    <div className="text-blue-600 font-bold text-lg">2</div>
+                    <div className="text-blue-700 text-xs">créditos</div>
+                    <div className="text-slate-500 text-xs mt-0.5">Gerar rotina</div>
+                  </div>
+                  <div className="flex-1 bg-purple-50 rounded-lg p-2.5 text-center">
+                    <div className="text-purple-600 font-bold text-lg">3</div>
+                    <div className="text-purple-700 text-xs">créditos</div>
+                    <div className="text-slate-500 text-xs mt-0.5">Sincronizar</div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
 
-            <div className="px-6 pb-5">
-              <p className="text-center text-xs text-slate-400">
-                Pagamento seguro via Stripe • Créditos não expiram
-              </p>
+              <div className="px-6 py-4 space-y-3">
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  Escolha um pacote
+                </p>
+                {PACKAGES.map((pkg) => (
+                  <div
+                    key={pkg.credits}
+                    className={`relative border-2 rounded-xl p-4 cursor-pointer transition-all ${
+                      pkg.popular
+                        ? "border-primary bg-primary/5"
+                        : "border-slate-200 hover:border-primary/50 hover:bg-slate-50"
+                    }`}
+                  >
+                    {pkg.popular && (
+                      <span className="absolute -top-2.5 left-4 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                        Mais popular
+                      </span>
+                    )}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div
+                          className={`w-9 h-9 rounded-lg flex items-center justify-center ${pkg.popular ? "bg-primary text-white" : "bg-slate-100 text-slate-600"}`}
+                        >
+                          {pkg.icon}
+                        </div>
+                        <div>
+                          <div className="font-semibold text-slate-900">
+                            {pkg.credits} crédito{pkg.credits > 1 ? "s" : ""}
+                          </div>
+                          <div className="text-xs text-slate-500">{pkg.description}</div>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => handleBuy(pkg.credits)}
+                        disabled={loading !== null}
+                        className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${
+                          pkg.popular
+                            ? "bg-primary text-white hover:bg-primary/90"
+                            : "bg-slate-900 text-white hover:bg-slate-700"
+                        } disabled:opacity-60`}
+                      >
+                        {loading === pkg.credits ? (
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                          pkg.priceLabel
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="px-6 pb-5">
+                <p className="text-center text-xs text-slate-400">
+                  Pagamento seguro via Stripe • Créditos não expiram
+                </p>
+              </div>
             </div>
           </motion.div>
         </motion.div>

@@ -27,7 +27,7 @@ export const Button = forwardRef<
     };
 
     const sizes = {
-      sm: "h-9 px-4 text-xs rounded-lg",
+      sm: "h-10 px-4 text-xs rounded-lg",
       md: "h-11 px-6 py-2 text-sm rounded-xl",
       lg: "h-14 px-8 text-base rounded-2xl",
       icon: "h-10 w-10 rounded-xl",

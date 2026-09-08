@@ -131,6 +131,19 @@
   @apply bg-white/80 backdrop-blur-xl border border-white/20 shadow-lg shadow-black/5;
 }
 
+/* Safe-area utilities — additive padding so fixed elements anchored to a
+   screen edge (e.g. the mobile bottom nav) clear the iPhone home indicator /
+   notch in standalone PWA mode. env() resolves to 0 on devices without an
+   inset (including all of desktop), so these are no-ops there. Requires
+   viewport-fit=cover on the <meta name="viewport"> tag (see index.html) —
+   without it env(safe-area-inset-*) always evaluates to 0. */
+.safe-area-pb {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.safe-area-pt {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
 /* Calendar Grid Custom Utilities */
 .calendar-grid {
   display: grid;

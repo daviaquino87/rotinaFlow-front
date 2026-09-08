@@ -132,8 +132,9 @@ export function HistoryPanel({
                       <button
                         onClick={() => saveEdit(pUuid)}
                         disabled={isSaving}
-                        className="p-1 rounded-lg text-green-600 hover:bg-green-50 transition-all"
+                        className="p-2.5 -m-1 rounded-lg text-green-600 hover:bg-green-50 transition-all"
                         title="Salvar"
+                        aria-label="Salvar"
                       >
                         {isSaving ? (
                           <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -144,8 +145,9 @@ export function HistoryPanel({
                       <button
                         onClick={cancelEdit}
                         disabled={isSaving}
-                        className="p-1 rounded-lg text-slate-400 hover:bg-slate-100 transition-all"
+                        className="p-2.5 -m-1 rounded-lg text-slate-400 hover:bg-slate-100 transition-all"
                         title="Cancelar"
+                        aria-label="Cancelar edição"
                       >
                         <X className="w-3.5 h-3.5" />
                       </button>
@@ -179,8 +181,9 @@ export function HistoryPanel({
                   <button
                     onClick={() => onDelete(pUuid)}
                     disabled={isDeleting}
-                    className="p-1 rounded-lg text-slate-300 hover:text-red-500 hover:bg-red-50 transition-all disabled:opacity-50"
+                    className="p-2.5 -m-1 rounded-lg text-slate-300 hover:text-red-500 hover:bg-red-50 transition-all disabled:opacity-50"
                     title="Excluir rotina"
+                    aria-label="Excluir rotina"
                   >
                     {isDeleting ? (
                       <Loader2 className="w-3.5 h-3.5 animate-spin" />

@@ -143,7 +143,12 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       <PwaInstallBanner />
       {isLoggedIn && <OnboardingModal />}
 
-      <header className="h-14 bg-white border-b border-slate-200 flex items-center px-4 md:px-6 gap-3 shrink-0 z-10">
+      {/* safe-area-pt: with viewport-fit=cover (needed for the bottom nav's
+          safe-area-pb below to work at all) the whole layout viewport can
+          extend under the status bar/notch in standalone PWA mode — this is
+          the first element on every authenticated screen, so it needs the
+          same top clearance as the landing page's fixed navbar. */}
+      <header className="h-14 bg-white border-b border-slate-200 flex items-center px-4 md:px-6 gap-3 shrink-0 z-10 safe-area-pt">
         <Link href="/routine" className="flex items-center gap-2 shrink-0">
           <img
             src="/images/icon-192.png"

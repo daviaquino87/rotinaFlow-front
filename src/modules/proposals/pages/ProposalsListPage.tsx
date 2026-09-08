@@ -153,7 +153,12 @@ export default function ProposalsListPage() {
         </div>
       </div>
 
-      <div className="sm:hidden flex overflow-x-auto gap-1 px-3 py-2 bg-white border-b border-slate-100 shrink-0 scrollbar-hide">
+      {/* md:hidden (not sm:) to match useIsMobile's 768px threshold — the
+          calendar grid below collapses to a single visible day whenever
+          isMobile is true, so this day-switcher must stay visible for
+          exactly that same range or there'd be no way to pick which day
+          shows in the 640-767px gap between the two breakpoints. */}
+      <div className="md:hidden flex overflow-x-auto gap-1 px-3 py-2 bg-white border-b border-slate-100 shrink-0 scrollbar-hide">
         {days.map((day, idx) => {
           const isToday = isSameDay(day, today);
           const isSelected = idx === mobileDayIdx;

@@ -292,7 +292,7 @@ export default function RoutineFormPage() {
                 Escolha as novas atividades ou deixe a IA decidir o que é melhor para você.
               </p>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {[
                 {
                   value: false,

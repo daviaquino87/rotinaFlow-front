@@ -85,11 +85,12 @@ export function ActivityCard({ activity, onToggleExpand, onUpdate, onRemove }: A
         <div className="flex items-center gap-2">
           <button
             type="button"
+            aria-label="Remover atividade"
             onClick={(e) => {
               e.stopPropagation();
               onRemove();
             }}
-            className="text-slate-300 hover:text-red-400 transition-colors p-1"
+            className="text-slate-300 hover:text-red-400 transition-colors p-2.5 -m-1"
           >
             <Trash2 className="w-4 h-4" />
           </button>
@@ -112,9 +113,10 @@ export function ActivityCard({ activity, onToggleExpand, onUpdate, onRemove }: A
                   <button
                     key={em}
                     type="button"
+                    aria-label={`Usar ícone ${em}`}
                     onClick={() => onUpdate({ emoji: em })}
                     className={cn(
-                      "w-9 h-9 rounded-xl text-lg transition-all",
+                      "w-11 h-11 rounded-xl text-lg transition-all",
                       activity.emoji === em
                         ? "bg-primary/20 ring-2 ring-primary"
                         : "bg-slate-100 hover:bg-slate-200",

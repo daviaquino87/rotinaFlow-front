@@ -470,7 +470,10 @@ export default function ProposalViewPage() {
                 className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 min-h-[80px]"
               />
             </div>
-            <div className="pt-4 flex justify-between items-center border-t border-slate-100">
+            {/* flex-col below sm: the 3 buttons (Excluir/Cancelar/Salvar)
+                don't fit on one row under ~320-375px — stacking avoids
+                cramped/overflowing buttons on small phones. */}
+            <div className="pt-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 border-t border-slate-100">
               {!isAddingNew && (
                 <Button
                   type="button"
@@ -480,16 +483,21 @@ export default function ProposalViewPage() {
                     deleteEvent(editingEvent.id);
                     setIsAddingNew(false);
                   }}
-                  className="bg-red-50 text-red-600 hover:bg-red-100 border-0"
+                  className="bg-red-50 text-red-600 hover:bg-red-100 border-0 w-full sm:w-auto"
                 >
                   <Trash2 className="w-4 h-4 mr-2" /> Excluir
                 </Button>
               )}
-              {isAddingNew && <div />}
-              <div className="flex gap-2">
+              {/* sm:justify-between needs a second flex item to push the
+                  Cancelar/Salvar group right when there's no Excluir button
+                  (isAddingNew) — hidden (not just empty) so it doesn't add
+                  stray vertical space in the stacked mobile layout. */}
+              {isAddingNew && <div className="hidden sm:block" />}
+              <div className="flex gap-2 w-full sm:w-auto">
                 <Button
                   type="button"
                   variant="ghost"
+                  className="flex-1 sm:flex-none"
                   onClick={() => {
                     setEditingEvent(null);
                     setIsAddingNew(false);
@@ -497,7 +505,9 @@ export default function ProposalViewPage() {
                 >
                   Cancelar
                 </Button>
-                <Button type="submit">Salvar</Button>
+                <Button type="submit" className="flex-1 sm:flex-none">
+                  Salvar
+                </Button>
               </div>
             </div>
           </form>

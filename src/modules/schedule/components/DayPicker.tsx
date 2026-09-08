@@ -18,12 +18,13 @@ export function DayPicker({ days, onChange }: DayPickerProps) {
           type="button"
           onClick={() => toggle(day.id)}
           className={cn(
-            "px-2.5 h-9 rounded-xl text-xs font-bold transition-all",
+            "px-2.5 h-11 rounded-xl text-xs font-bold transition-all",
             days.includes(day.id)
               ? "bg-primary text-white shadow-md shadow-primary/25"
               : "bg-slate-100 text-slate-500 hover:bg-slate-200",
           )}
           title={day.label}
+          aria-label={day.label}
         >
           {day.abbr}
         </button>
@@ -31,7 +32,7 @@ export function DayPicker({ days, onChange }: DayPickerProps) {
       <button
         type="button"
         onClick={() => onChange(days.length === 7 ? [] : ALL_DAYS.map((d) => d.id))}
-        className="px-2.5 h-9 rounded-xl text-xs font-semibold text-primary bg-primary/10 hover:bg-primary/20 transition-all"
+        className="px-2.5 h-11 rounded-xl text-xs font-semibold text-primary bg-primary/10 hover:bg-primary/20 transition-all"
       >
         {days.length === 7 ? "Nenhum" : "Todos"}
       </button>

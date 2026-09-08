@@ -2,7 +2,14 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <!--
+      viewport-fit=cover is required for env(safe-area-inset-*) to resolve to
+      non-zero values on iOS — without it, every safe-area CSS rule in the app
+      is silently inert, even in a standalone PWA on a notched iPhone.
+      maximum-scale is intentionally omitted: capping it disables pinch-zoom,
+      which fails WCAG 1.4.4 (users must be able to zoom text up to 200%).
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>rotinaFlow - Organizador Inteligente</title>
     <meta
       name="description"

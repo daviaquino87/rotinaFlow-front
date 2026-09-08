@@ -24,7 +24,7 @@ export function PwaInstallBanner() {
       </div>
       <button
         onClick={dismiss}
-        className="p-1 rounded-lg hover:bg-white/20 transition-colors shrink-0"
+        className="p-2.5 -m-1 rounded-lg hover:bg-white/20 transition-colors shrink-0"
         aria-label="Fechar"
       >
         <X className="w-4 h-4" />
