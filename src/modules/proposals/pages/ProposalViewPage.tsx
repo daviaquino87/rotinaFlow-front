@@ -11,6 +11,7 @@ import { DonutChart } from "@modules/proposals/components/donut-chart";
 import { ProgressBar } from "@modules/proposals/components/progress-bar";
 import { TimelineEventCard } from "@modules/proposals/components/timeline-event-card";
 import { Modal } from "@modules/proposals/components/modal";
+import { PromptHistoryModal } from "@modules/proposals/components/prompt-history-modal";
 import { AddBetweenButton } from "@modules/proposals/components/add-between-button";
 import { getCategory } from "@modules/proposals/utils/event-category";
 import { useProposalEvents } from "@modules/proposals/hooks/use-proposal-events";
@@ -58,6 +59,7 @@ export default function ProposalViewPage() {
   const [viewMode, setViewMode] = useState<"dia" | "semana">("dia");
   const [draggedId, setDraggedId] = useState<number | null>(null);
   const [dragOverId, setDragOverId] = useState<number | null>(null);
+  const [showPromptHistory, setShowPromptHistory] = useState(false);
 
   const normalizeTime = (t: string) => (t.length === 5 ? `${t}:00` : t);
 
@@ -154,6 +156,17 @@ export default function ProposalViewPage() {
           <h1 className="font-display text-3xl font-bold text-slate-900">Sua Rotina Sugerida</h1>
           <p className="text-slate-500 mt-1">
             Gerada com análise de IA com base nas suas preferências
+            {proposal.conversationId != null && (
+              <>
+                {" · "}
+                <button
+                  onClick={() => setShowPromptHistory(true)}
+                  className="text-primary font-medium hover:underline"
+                >
+                  Ver o que eu pedi
+                </button>
+              </>
+            )}
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -524,6 +537,12 @@ export default function ProposalViewPage() {
         onClose={() => setShowSyncModal(false)}
         onConfirm={handleSyncConfirm}
         loading={isSyncing}
+      />
+
+      <PromptHistoryModal
+        open={showPromptHistory}
+        onClose={() => setShowPromptHistory(false)}
+        conversationId={proposal.conversationId}
       />
     </div>
   );

@@ -210,8 +210,28 @@ export default function RoutineFormPage() {
     );
   }
 
+  const approvedCount = existingProposals?.filter((p) => p.status === "approved").length ?? 0;
+
   return (
     <div className="max-w-3xl mx-auto px-4 md:px-8 py-8">
+      {/* A real, personal stat instead of a marketing-style vanity metric —
+          computed straight from this user's own proposals, shown only once
+          they actually have some. Nothing to fabricate on a first visit. */}
+      {!isFirstGeneration && (
+        <div className="flex items-center gap-2 mb-4 text-xs font-medium text-slate-500">
+          <Sparkles className="w-3.5 h-3.5 text-primary shrink-0" />
+          <span>
+            Você já criou {existingProposals!.length}{" "}
+            {existingProposals!.length === 1 ? "rotina" : "rotinas"} com o rotinaFlow
+            {approvedCount > 0 && (
+              <>
+                {" "}
+                · {approvedCount} sincronizada{approvedCount > 1 ? "s" : ""} com o Google Agenda
+              </>
+            )}
+          </span>
+        </div>
+      )}
       <StepIndicator current={step} />
       <AnimatePresence mode="wait">
         {step === 1 && (

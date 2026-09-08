@@ -8,6 +8,7 @@ export type ProposalWithEvents = {
   uuid: string;
   status: string;
   title?: string;
+  conversationId?: number;
   events: ScheduleEvent[];
 };
 

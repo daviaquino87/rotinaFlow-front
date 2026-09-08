@@ -4,6 +4,12 @@
  * Api
  * API specification
  * OpenAPI spec version: 0.1.0
+ *
+ * MANUAL PATCH (no working orval/OpenAPI regen pipeline in this checkout):
+ * added `conversationId` to ScheduleProposal / ScheduleProposalWithEvents to
+ * match schedule.crud.controller.ts's sanitizeProposal(). Re-running the
+ * real codegen should keep this field — update the backend OpenAPI source
+ * first if these two ever drift.
  */
 export interface HealthStatus {
   status: string;
@@ -75,6 +81,7 @@ export interface ScheduleProposal {
   status: string;
   title?: string;
   createdAt: string;
+  conversationId?: number;
 }
 
 export interface ScheduleProposalWithEvents {
@@ -82,6 +89,7 @@ export interface ScheduleProposalWithEvents {
   status: string;
   title?: string;
   createdAt: string;
+  conversationId?: number;
   events: ScheduleEvent[];
 }
 
