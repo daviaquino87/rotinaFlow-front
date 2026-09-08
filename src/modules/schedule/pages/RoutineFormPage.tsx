@@ -356,9 +356,9 @@ export default function RoutineFormPage() {
                 />
                 <p className="text-xs text-slate-400 flex items-center gap-1.5">
                   <Wand2 className="w-3.5 h-3.5 shrink-0" />
-                  Você só escolhe o quê. A IA encaixa o melhor dia, horário e frequência para
-                  cada atividade com base na sua rotina atual — clique numa atividade selecionada
-                  para adicionar uma observação, se quiser.
+                  Você só escolhe o quê. A IA encaixa o melhor dia, horário e frequência para cada
+                  atividade com base na sua rotina atual — clique numa atividade selecionada para
+                  adicionar uma observação, se quiser.
                 </p>
               </div>
             )}

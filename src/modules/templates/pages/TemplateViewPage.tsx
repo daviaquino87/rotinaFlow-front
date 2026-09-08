@@ -316,7 +316,11 @@ export default function TemplateViewPage() {
                 disabled={isPurchasing}
                 className="w-full gap-2 bg-emerald-600 hover:bg-emerald-700"
               >
-                {isPurchasing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
+                {isPurchasing ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Check className="w-4 h-4" />
+                )}
                 Recriar minha rotina
               </Button>
             </div>
