@@ -390,7 +390,7 @@ export default function Landing() {
               icon={Brain}
               color="#c904bc"
               title="IA que entende seu estilo"
-              desc="Analisa sua rotina atual, seus objetivos e preferências para criar uma agenda que realmente se encaixa na sua vida — não um template genérico."
+              desc="Analisa sua rotina atual, seus objetivos e preferências para criar uma agenda feita sob medida — que realmente se encaixa na sua vida."
             />
             <BenefitCard
               delay={0.05}
@@ -622,7 +622,7 @@ export default function Landing() {
                   <span className="text-white/70 text-sm">/ crédito</span>
                 </p>
                 <p className="text-white/70 text-sm mb-6">
-                  Gerar custa 2 créditos · Sync custa 3 créditos
+                  Gerar custa 2 créditos · Sync custa 3 créditos · Template pronto custa 5 créditos
                 </p>
                 <div className="space-y-3 mb-4">
                   {[
