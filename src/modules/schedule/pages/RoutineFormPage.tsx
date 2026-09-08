@@ -35,13 +35,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@lib/utils";
 
 // ─── List management hook ─────────────────────────────────────────────────────
-function useActivityList(setList: React.Dispatch<React.SetStateAction<Activity[]>>) {
+function useActivityList(
+  setList: React.Dispatch<React.SetStateAction<Activity[]>>,
+  withSchedule = true,
+) {
   return {
     addPreset: (p: ActivityPreset) =>
       setList((prev) =>
-        prev.some((a) => !a.custom && a.name === p.name) ? prev : [...prev, makeActivity(p)],
+        prev.some((a) => !a.custom && a.name === p.name)
+          ? prev
+          : [...prev, makeActivity(p, withSchedule)],
       ),
-    addCustom: () => setList((prev) => [...prev, makeCustomActivity()]),
+    addCustom: () => setList((prev) => [...prev, makeCustomActivity(withSchedule)]),
     toggle: (id: string) =>
       setList((prev) => prev.map((a) => (a.id === id ? { ...a, expanded: !a.expanded } : a))),
     update: (id: string, u: Partial<Activity>) =>
@@ -81,7 +86,7 @@ export default function RoutineFormPage() {
   const isFirstGeneration = (existingProposals?.length ?? 0) === 0;
 
   const current = useActivityList(setCurrentActs);
-  const newList = useActivityList(setNewActs);
+  const newList = useActivityList(setNewActs, false);
 
   const handleGoogleSync = async () => {
     setIsSyncing(true);
@@ -105,6 +110,7 @@ export default function RoutineFormPage() {
         endTime: ev.endTime,
         expanded: false,
         custom: true,
+        note: "",
       }));
       setCurrentActs((prev) => {
         const existing = new Set(prev.map((a) => a.name.toLowerCase()));
@@ -298,7 +304,7 @@ export default function RoutineFormPage() {
                   value: false,
                   Icon: ListChecks,
                   title: "Escolho eu mesmo",
-                  desc: "Seleciono as atividades que quero adicionar",
+                  desc: "Seleciono as atividades — a IA encaixa o dia e horário",
                 },
                 {
                   value: true,
@@ -335,16 +341,26 @@ export default function RoutineFormPage() {
               ))}
             </div>
             {!isDynamic && (
-              <ActivitySelector
-                presets={NEW_PRESETS}
-                activities={newActs}
-                onAddPreset={newList.addPreset}
-                onAddCustom={newList.addCustom}
-                onToggleExpand={newList.toggle}
-                onUpdate={newList.update}
-                onRemove={newList.remove}
-                label="Atividades que quero incluir"
-              />
+              <div className="space-y-3">
+                <ActivitySelector
+                  presets={NEW_PRESETS}
+                  activities={newActs}
+                  onAddPreset={newList.addPreset}
+                  onAddCustom={newList.addCustom}
+                  onToggleExpand={newList.toggle}
+                  onUpdate={newList.update}
+                  onRemove={newList.remove}
+                  label="Atividades que quero incluir"
+                  showSchedule={false}
+                  allowNotes
+                />
+                <p className="text-xs text-slate-400 flex items-center gap-1.5">
+                  <Wand2 className="w-3.5 h-3.5 shrink-0" />
+                  Você só escolhe o quê. A IA encaixa o melhor dia, horário e frequência para
+                  cada atividade com base na sua rotina atual — clique numa atividade selecionada
+                  para adicionar uma observação, se quiser.
+                </p>
+              </div>
             )}
             <div>
               <label className="text-sm font-semibold text-slate-700 mb-2 block">

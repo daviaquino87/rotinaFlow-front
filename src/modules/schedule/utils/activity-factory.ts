@@ -12,28 +12,30 @@ export function guessEmoji(name: string): string {
   return "📌";
 }
 
-export function makeActivity(preset: ActivityPreset): Activity {
+export function makeActivity(preset: ActivityPreset, withSchedule = true): Activity {
   return {
     id: makeId(),
     name: preset.name,
     emoji: preset.emoji,
-    days: preset.defaultDays,
-    startTime: preset.defaultStart,
-    endTime: preset.defaultEnd,
+    days: withSchedule ? preset.defaultDays : ([] as Day[]),
+    startTime: withSchedule ? preset.defaultStart : "",
+    endTime: withSchedule ? preset.defaultEnd : "",
     expanded: false,
     custom: false,
+    note: "",
   };
 }
 
-export function makeCustomActivity(): Activity {
+export function makeCustomActivity(withSchedule = true): Activity {
   return {
     id: makeId(),
     name: "",
     emoji: "⭐",
     days: [] as Day[],
-    startTime: "08:00",
-    endTime: "09:00",
-    expanded: true,
+    startTime: withSchedule ? "08:00" : "",
+    endTime: withSchedule ? "09:00" : "",
+    expanded: withSchedule,
     custom: true,
+    note: "",
   };
 }

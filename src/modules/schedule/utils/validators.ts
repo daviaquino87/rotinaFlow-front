@@ -7,10 +7,11 @@ const ActivitySchema = z.object({
   name: z.string().max(100),
   emoji: z.string().max(10),
   days: z.array(DaySchema).max(7),
-  startTime: z.string().regex(/^\d{2}:\d{2}$/),
-  endTime: z.string().regex(/^\d{2}:\d{2}$/),
+  startTime: z.string().regex(/^(\d{2}:\d{2})?$/),
+  endTime: z.string().regex(/^(\d{2}:\d{2})?$/),
   expanded: z.boolean(),
   custom: z.boolean(),
+  note: z.string().max(500).default(""),
 });
 
 export const DraftSchema = z.object({

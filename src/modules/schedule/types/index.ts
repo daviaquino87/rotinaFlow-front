@@ -9,6 +9,8 @@ export interface Activity {
   endTime: string;
   expanded: boolean;
   custom: boolean;
+  /** Free-text note about this activity (e.g. "prefiro à noite", "não pode no fim de semana"). */
+  note: string;
 }
 
 export interface ActivityPreset {

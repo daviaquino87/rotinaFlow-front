@@ -12,6 +12,10 @@ interface ActivitySelectorProps {
   onUpdate: (id: string, updates: Partial<Activity>) => void;
   onRemove: (id: string) => void;
   label: string;
+  /** When false, hides day/time configuration — the AI decides scheduling instead. */
+  showSchedule?: boolean;
+  /** When true, shows a free-text note field per activity (e.g. preferences/constraints for the AI). */
+  allowNotes?: boolean;
 }
 
 export function ActivitySelector({
@@ -23,6 +27,8 @@ export function ActivitySelector({
   onUpdate,
   onRemove,
   label,
+  showSchedule = true,
+  allowNotes = false,
 }: ActivitySelectorProps) {
   const selectedNames = new Set(activities.map((a) => a.name));
   return (
@@ -68,6 +74,8 @@ export function ActivitySelector({
               onToggleExpand={() => onToggleExpand(activity.id)}
               onUpdate={(u) => onUpdate(activity.id, u)}
               onRemove={() => onRemove(activity.id)}
+              showSchedule={showSchedule}
+              allowNotes={allowNotes}
             />
           ))}
         </div>

@@ -45,9 +45,21 @@ interface ActivityCardProps {
   onToggleExpand: () => void;
   onUpdate: (updates: Partial<Activity>) => void;
   onRemove: () => void;
+  /** When false, hides day/time configuration — the AI decides scheduling instead. */
+  showSchedule?: boolean;
+  /** When true, shows a free-text note field (e.g. preferences/constraints for the AI). */
+  allowNotes?: boolean;
 }
 
-export function ActivityCard({ activity, onToggleExpand, onUpdate, onRemove }: ActivityCardProps) {
+export function ActivityCard({
+  activity,
+  onToggleExpand,
+  onUpdate,
+  onRemove,
+  showSchedule = true,
+  allowNotes = false,
+}: ActivityCardProps) {
+  const isExpandable = activity.custom || showSchedule || allowNotes;
   return (
     <div
       className={cn(
@@ -57,10 +69,11 @@ export function ActivityCard({ activity, onToggleExpand, onUpdate, onRemove }: A
     >
       <div
         className={cn(
-          "flex items-center gap-3 px-4 py-3 cursor-pointer select-none",
+          "flex items-center gap-3 px-4 py-3 select-none",
+          isExpandable && "cursor-pointer",
           activity.expanded ? "bg-primary/5" : "bg-white hover:bg-slate-50",
         )}
-        onClick={onToggleExpand}
+        onClick={isExpandable ? onToggleExpand : undefined}
       >
         <span className="text-2xl">{activity.emoji}</span>
         <div className="flex-1 min-w-0">
@@ -75,11 +88,14 @@ export function ActivityCard({ activity, onToggleExpand, onUpdate, onRemove }: A
           ) : (
             <p className="font-semibold text-slate-800 text-sm">{activity.name}</p>
           )}
-          {!activity.expanded && activity.days.length > 0 && (
+          {showSchedule && !activity.expanded && activity.days.length > 0 && (
             <p className="text-xs text-slate-400 truncate mt-0.5">
               <Clock className="inline w-3 h-3 mr-1" />
               {formatDayList(activity.days)} · {activity.startTime}–{activity.endTime}
             </p>
+          )}
+          {allowNotes && !activity.expanded && activity.note.trim() && (
+            <p className="text-xs text-slate-400 truncate mt-0.5 italic">"{activity.note}"</p>
           )}
         </div>
         <div className="flex items-center gap-2">
@@ -94,11 +110,12 @@ export function ActivityCard({ activity, onToggleExpand, onUpdate, onRemove }: A
           >
             <Trash2 className="w-4 h-4" />
           </button>
-          {activity.expanded ? (
-            <ChevronUp className="w-4 h-4 text-primary" />
-          ) : (
-            <ChevronDown className="w-4 h-4 text-slate-400" />
-          )}
+          {isExpandable &&
+            (activity.expanded ? (
+              <ChevronUp className="w-4 h-4 text-primary" />
+            ) : (
+              <ChevronDown className="w-4 h-4 text-slate-400" />
+            ))}
         </div>
       </div>
       {activity.expanded && (
@@ -128,36 +145,53 @@ export function ActivityCard({ activity, onToggleExpand, onUpdate, onRemove }: A
               </div>
             </div>
           )}
-          <div>
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2 block">
-              Dias
-            </label>
-            <DayPicker days={activity.days} onChange={(days) => onUpdate({ days })} />
-          </div>
-          <div className="grid grid-cols-2 gap-3">
+          {showSchedule && (
+            <>
+              <div>
+                <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2 block">
+                  Dias
+                </label>
+                <DayPicker days={activity.days} onChange={(days) => onUpdate({ days })} />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">
+                    Início
+                  </label>
+                  <input
+                    type="time"
+                    value={activity.startTime}
+                    onChange={(e) => onUpdate({ startTime: e.target.value })}
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">
+                    Fim
+                  </label>
+                  <input
+                    type="time"
+                    value={activity.endTime}
+                    onChange={(e) => onUpdate({ endTime: e.target.value })}
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  />
+                </div>
+              </div>
+            </>
+          )}
+          {allowNotes && (
             <div>
               <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">
-                Início
+                Observação (opcional)
               </label>
-              <input
-                type="time"
-                value={activity.startTime}
-                onChange={(e) => onUpdate({ startTime: e.target.value })}
-                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              <textarea
+                value={activity.note}
+                onChange={(e) => onUpdate({ note: e.target.value })}
+                placeholder="Ex: prefiro à noite, não pode no fim de semana, 2x por semana já basta..."
+                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 min-h-[60px] resize-none"
               />
             </div>
-            <div>
-              <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">
-                Fim
-              </label>
-              <input
-                type="time"
-                value={activity.endTime}
-                onChange={(e) => onUpdate({ endTime: e.target.value })}
-                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
-              />
-            </div>
-          </div>
+          )}
         </div>
       )}
     </div>
