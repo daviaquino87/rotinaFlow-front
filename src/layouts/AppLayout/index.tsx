@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { LogOut, Loader2, ClipboardList, CalendarDays, Coins } from "lucide-react";
+import { LogOut, Loader2, ClipboardList, CalendarDays, Coins, LayoutTemplate } from "lucide-react";
 import { useGetSession, useLogout } from "@/api-client";
 import { CreditsModal } from "@modules/credits/components/credits-modal";
 import { useCredits } from "@modules/credits/hooks/use-credits";
@@ -26,6 +26,12 @@ const NAV_LINKS = [
     icon: CalendarDays,
     label: "Minha Rotina",
     match: (l: string) => l.startsWith("/proposal"),
+  },
+  {
+    href: "/templates",
+    icon: LayoutTemplate,
+    label: "Templates",
+    match: (l: string) => l.startsWith("/templates"),
   },
 ];
 

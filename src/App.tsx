@@ -11,6 +11,8 @@ const Landing = lazy(() => import("@/pages/landing"));
 const RoutineForm = lazy(() => import("@/pages/routine-form"));
 const ProposalsList = lazy(() => import("@/pages/proposals-list"));
 const ProposalView = lazy(() => import("@/pages/proposal-view"));
+const TemplatesGallery = lazy(() => import("@/pages/templates"));
+const TemplateView = lazy(() => import("@/pages/template-view"));
 const PrivacyPolicy = lazy(() => import("@/pages/privacy-policy"));
 const TermsOfService = lazy(() => import("@/pages/terms-of-service"));
 const NotFound = lazy(() => import("@/pages/not-found"));
@@ -52,6 +54,16 @@ function Router() {
         <Route path="/proposal/:uuid">
           <AppLayout>
             <ProposalView />
+          </AppLayout>
+        </Route>
+        <Route path="/templates">
+          <AppLayout>
+            <TemplatesGallery />
+          </AppLayout>
+        </Route>
+        <Route path="/templates/:uuid">
+          <AppLayout>
+            <TemplateView />
           </AppLayout>
         </Route>
 
