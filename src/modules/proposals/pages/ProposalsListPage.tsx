@@ -136,7 +136,7 @@ export default function ProposalsListPage() {
         )}
 
         <div className="flex items-center gap-2">
-          <p className="text-xs text-slate-400 flex-1 min-w-0 truncate capitalize">{weekLabel}</p>
+          <p className="text-xs text-slate-500 flex-1 min-w-0 truncate capitalize">{weekLabel}</p>
           {latestProposal?.status === "approved" ? (
             <span className="flex items-center gap-1 text-xs font-semibold text-green-700 bg-green-50 border border-green-200 px-2.5 py-1 rounded-xl shrink-0">
               <CalendarCheck2 className="w-3 h-3" /> Sincronizada
@@ -193,7 +193,7 @@ export default function ProposalsListPage() {
         {noToken ? (
           <div className="flex-1 flex flex-col items-center justify-center gap-4 p-8 text-center">
             <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center">
-              <CalendarDays className="w-8 h-8 text-slate-400" />
+              <CalendarDays className="w-8 h-8 text-slate-500" />
             </div>
             <h3 className="text-lg font-bold text-slate-800">Google Agenda não conectado</h3>
             <p className="text-slate-500 max-w-sm text-sm">
@@ -211,7 +211,7 @@ export default function ProposalsListPage() {
           <div className="flex-1 flex items-center justify-center p-8 text-center">
             <div>
               <p className="text-slate-600 font-medium">Erro ao carregar calendário</p>
-              <p className="text-slate-400 text-sm mt-1">
+              <p className="text-slate-500 text-sm mt-1">
                 Não foi possível carregar os eventos. Tente novamente.
               </p>
               <Button variant="outline" onClick={() => refetch()} className="mt-4 gap-2">
@@ -237,7 +237,7 @@ export default function ProposalsListPage() {
                     className="text-center py-2 border-l border-slate-100"
                   >
                     <p
-                      className={`text-[11px] font-semibold uppercase tracking-wide ${isToday ? "text-primary" : "text-slate-400"}`}
+                      className={`text-[11px] font-semibold uppercase tracking-wide ${isToday ? "text-primary" : "text-slate-500"}`}
                     >
                       {format(day, "EEE", { locale: ptBR })}
                     </p>
@@ -260,7 +260,7 @@ export default function ProposalsListPage() {
                   gridTemplateColumns: `52px repeat(${colCount}, 1fr)`,
                 }}
               >
-                <div className="flex items-center justify-end pr-2 text-[10px] text-slate-400 font-medium">
+                <div className="flex items-center justify-end pr-2 text-[10px] text-slate-500 font-medium">
                   tudo
                 </div>
                 {visibleDays.map((day) => (
@@ -291,7 +291,7 @@ export default function ProposalsListPage() {
                     style={{ height: HOUR_HEIGHT }}
                   >
                     <span
-                      className={`text-[10px] text-slate-400 font-medium ${i === 0 ? "" : "-translate-y-2"}`}
+                      className={`text-[10px] text-slate-500 font-medium ${i === 0 ? "" : "-translate-y-2"}`}
                     >
                       {String(START_HOUR + i).padStart(2, "0")}:00
                     </span>
@@ -371,7 +371,7 @@ export default function ProposalsListPage() {
                 Isso vai remover <strong>todos os eventos</strong> que o rotinaFlow sincronizou no
                 seu Google Agenda. Os eventos que você criou manualmente não serão afetados.
               </p>
-              <p className="text-slate-400 text-xs mt-2">Esta ação não pode ser desfeita.</p>
+              <p className="text-slate-500 text-xs mt-2">Esta ação não pode ser desfeita.</p>
             </div>
             <div className="flex gap-3 px-6 pb-6">
               <Button

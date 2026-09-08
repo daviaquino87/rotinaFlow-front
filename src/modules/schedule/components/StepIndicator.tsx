@@ -24,7 +24,7 @@ export function StepIndicator({ current }: StepIndicatorProps) {
                     ? "bg-green-500 text-white"
                     : active
                       ? "bg-primary text-white"
-                      : "bg-slate-200 text-slate-400",
+                      : "bg-slate-200 text-slate-500",
                 )}
               >
                 {done ? <Check className="w-4 h-4" /> : stepNum}
@@ -32,7 +32,7 @@ export function StepIndicator({ current }: StepIndicatorProps) {
               <span
                 className={cn(
                   "text-sm font-medium hidden sm:block",
-                  active ? "text-slate-900" : done ? "text-green-600" : "text-slate-400",
+                  active ? "text-slate-900" : done ? "text-green-600" : "text-slate-500",
                 )}
               >
                 {label}

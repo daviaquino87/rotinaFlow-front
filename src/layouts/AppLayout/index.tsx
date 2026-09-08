@@ -19,18 +19,21 @@ const NAV_LINKS = [
     href: "/routine",
     icon: ClipboardList,
     label: "Nova Rotina",
+    shortLabel: "Nova",
     match: (l: string) => l.startsWith("/routine"),
   },
   {
     href: "/proposals",
     icon: CalendarDays,
     label: "Minha Rotina",
+    shortLabel: "Minha",
     match: (l: string) => l.startsWith("/proposal"),
   },
   {
     href: "/templates",
     icon: LayoutTemplate,
     label: "Templates",
+    shortLabel: "Templates",
     match: (l: string) => l.startsWith("/templates"),
   },
 ];
@@ -161,19 +164,24 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         </Link>
 
         <nav className="hidden sm:flex items-center gap-1 ml-2">
-          {NAV_LINKS.map(({ href, icon: Icon, label, match }) => (
+          {NAV_LINKS.map(({ href, icon: Icon, label, shortLabel, match }) => (
             <Link
               key={href}
               href={href}
               className={cn(
-                "flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all",
+                "flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium whitespace-nowrap transition-all",
                 match(location)
                   ? "bg-primary/10 text-primary"
                   : "text-slate-600 hover:bg-slate-100 hover:text-slate-900",
               )}
             >
-              <Icon className="w-4 h-4" />
-              {label}
+              <Icon className="w-4 h-4 shrink-0" />
+              {/* Between sm (640px) and lg (1024px) there isn't enough room
+                  for the full labels alongside the logo, credits badge and
+                  user menu on one line — show the short form there and the
+                  full label once the header has real breathing room. */}
+              <span className="hidden lg:inline">{label}</span>
+              <span className="lg:hidden">{shortLabel}</span>
             </Link>
           ))}
         </nav>
@@ -198,7 +206,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             <button
               onClick={handleLogout}
               title="Sair"
-              className="ml-1 p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all"
+              className="ml-1 p-1.5 rounded-lg text-slate-500 hover:text-red-500 hover:bg-red-50 transition-all"
             >
               {logoutMut.isPending ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -231,7 +239,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   <p className="text-sm font-semibold text-slate-800 truncate">
                     {session.user!.name}
                   </p>
-                  <p className="text-xs text-slate-400 truncate">{session.user!.email}</p>
+                  <p className="text-xs text-slate-500 truncate">{session.user!.email}</p>
                 </div>
                 <button
                   onClick={handleLogout}
@@ -280,14 +288,14 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   <Icon
                     className={cn(
                       "w-5 h-5 transition-colors",
-                      active ? "text-primary" : "text-slate-400",
+                      active ? "text-primary" : "text-slate-500",
                     )}
                   />
                 </div>
                 <span
                   className={cn(
                     "text-[10px] font-semibold transition-colors",
-                    active ? "text-primary" : "text-slate-400",
+                    active ? "text-primary" : "text-slate-500",
                   )}
                 >
                   {label}

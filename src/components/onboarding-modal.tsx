@@ -87,7 +87,7 @@ export function OnboardingModal() {
                 reachable even when the content scrolls on short viewports. */}
             <button
               onClick={dismiss}
-              className="absolute top-4 right-4 p-2.5 -m-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all z-10"
+              className="absolute top-4 right-4 p-2.5 -m-1 rounded-lg text-slate-500 hover:text-slate-600 hover:bg-slate-100 transition-all z-10"
               aria-label="Fechar"
             >
               <X className="w-4 h-4" />
@@ -152,7 +152,7 @@ export function OnboardingModal() {
                   Começar agora
                   <ArrowRight className="w-4 h-4" />
                 </motion.button>
-                <p className="text-center text-xs text-slate-400 mt-3">
+                <p className="text-center text-xs text-slate-500 mt-3">
                   Sua primeira rotina é{" "}
                   <span className="font-semibold text-emerald-600">gratuita</span> 🎉
                 </p>

@@ -83,7 +83,7 @@ export function ActivitySelector({
 
       {activities.length === 0 && (
         <div className="text-center py-10 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
-          <p className="text-slate-400 text-sm">Nenhuma atividade adicionada ainda.</p>
+          <p className="text-slate-500 text-sm">Nenhuma atividade adicionada ainda.</p>
         </div>
       )}
 

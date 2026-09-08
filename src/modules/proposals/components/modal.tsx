@@ -20,7 +20,7 @@ export function Modal({
           <button
             onClick={onClose}
             aria-label="Fechar"
-            className="text-slate-400 hover:text-slate-600 text-2xl leading-none p-2 -m-2 rounded-full hover:bg-slate-100 transition-colors shrink-0"
+            className="text-slate-500 hover:text-slate-600 text-2xl leading-none p-2 -m-2 rounded-full hover:bg-slate-100 transition-colors shrink-0"
           >
             &times;
           </button>

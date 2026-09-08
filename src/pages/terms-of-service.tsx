@@ -24,7 +24,7 @@ export default function TermsOfService() {
       {/* Content */}
       <main className="max-w-3xl mx-auto px-6 py-12">
         <h1 className="text-3xl font-extrabold text-slate-900 mb-2">Termos de Serviço</h1>
-        <p className="text-sm text-slate-400 mb-10">Última atualização: setembro de 2026</p>
+        <p className="text-sm text-slate-500 mb-10">Última atualização: setembro de 2026</p>
 
         <div className="prose prose-slate max-w-none space-y-8 text-slate-600 leading-relaxed">
           <section>
@@ -185,7 +185,7 @@ export default function TermsOfService() {
 
       {/* Footer */}
       <footer className="py-8 px-6 border-t border-slate-100 bg-slate-50 mt-12">
-        <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-400">
+        <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-500">
           <span>© 2025 rotinaFlow. Todos os direitos reservados.</span>
           <div className="flex gap-4">
             <Link href="/privacidade" className="hover:text-slate-600 transition-colors">

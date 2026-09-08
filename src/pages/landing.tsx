@@ -10,8 +10,6 @@ import {
   Target,
   CheckCircle2,
   Loader2,
-  Star,
-  TrendingUp,
   Shield,
   RefreshCw,
   CalendarCheck2,
@@ -80,7 +78,7 @@ function SchedulePreview() {
             transition={{ delay: 0.3 + i * 0.08, duration: 0.4, ease: "easeOut" }}
             className="flex items-center gap-3"
           >
-            <span className="text-xs font-mono text-slate-400 w-10 shrink-0">{block.time}</span>
+            <span className="text-xs font-mono text-slate-500 w-10 shrink-0">{block.time}</span>
             <div className="flex-1 relative h-7 rounded-lg overflow-hidden bg-slate-50">
               <motion.div
                 initial={{ width: 0 }}
@@ -299,28 +297,15 @@ export default function Landing() {
               </a>
             </div>
 
-            <div className="mt-8 flex items-center gap-6">
-              <div className="flex -space-x-2">
-                {["#c904bc", "#3B82F6", "#10B981", "#F59E0B"].map((c, i) => (
-                  <div
-                    key={i}
-                    className="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-white text-xs font-bold"
-                    style={{ backgroundColor: c }}
-                  >
-                    {String.fromCharCode(65 + i)}
-                  </div>
-                ))}
-              </div>
-              <div>
-                <div className="flex items-center gap-1 mb-0.5">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
-                <p className="text-xs text-slate-500">
-                  Primeira rotina <strong className="text-slate-700">100% gratuita</strong>
-                </p>
-              </div>
+            <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-500">
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
+                Sem cartão de crédito
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
+                Primeira rotina <strong className="text-slate-700">100% gratuita</strong>
+              </span>
             </div>
           </motion.div>
 
@@ -342,7 +327,7 @@ export default function Landing() {
               </div>
               <div>
                 <p className="text-xs font-bold text-slate-800">IA analisando...</p>
-                <p className="text-[11px] text-slate-400">Otimizando sua semana</p>
+                <p className="text-[11px] text-slate-500">Otimizando sua semana</p>
               </div>
             </motion.div>
 
@@ -355,11 +340,11 @@ export default function Landing() {
               className="absolute -bottom-4 -right-4 z-10 bg-white rounded-2xl shadow-xl border border-slate-100 px-4 py-2.5 flex items-center gap-2.5"
             >
               <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center">
-                <TrendingUp className="w-4 h-4 text-primary" />
+                <Sparkles className="w-4 h-4 text-primary" />
               </div>
               <div>
-                <p className="text-xs font-bold text-slate-800">+34% produtividade</p>
-                <p className="text-[11px] text-slate-400">Média dos usuários</p>
+                <p className="text-xs font-bold text-slate-800">Equilíbrio automático</p>
+                <p className="text-[11px] text-slate-500">Trabalho, saúde e lazer</p>
               </div>
             </motion.div>
           </motion.div>
@@ -702,7 +687,7 @@ export default function Landing() {
               </>
             )}
           </button>
-          <p className="text-sm text-slate-400 mt-4">
+          <p className="text-sm text-slate-500 mt-4">
             Sem cartão de crédito. Sem assinatura. Começa em minutos.
           </p>
         </FadeIn>
@@ -715,8 +700,8 @@ export default function Landing() {
             <img src="/images/icon-192.png" alt="rotinaFlow" className="w-6 h-6 rounded-md" />
             <span className="font-bold text-slate-700">rotinaFlow</span>
           </div>
-          <p className="text-sm text-slate-400">© 2025 rotinaFlow. Todos os direitos reservados.</p>
-          <div className="flex gap-4 text-sm text-slate-400">
+          <p className="text-sm text-slate-500">© 2025 rotinaFlow. Todos os direitos reservados.</p>
+          <div className="flex gap-4 text-sm text-slate-500">
             <a href="/privacidade" className="hover:text-slate-600 transition-colors">
               Política de Privacidade
             </a>

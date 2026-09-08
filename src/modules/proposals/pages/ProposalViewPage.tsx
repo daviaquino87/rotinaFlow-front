@@ -251,7 +251,7 @@ export default function ProposalViewPage() {
               <div className="px-3 sm:px-6 py-6">
                 {selectedDayEvents.length === 0 ? (
                   <div className="text-center py-10">
-                    <p className="text-slate-400 text-sm mb-4">Nenhuma atividade para este dia.</p>
+                    <p className="text-slate-500 text-sm mb-4">Nenhuma atividade para este dia.</p>
                     {!isApproved && (
                       <button
                         onClick={() => handleAddEvent()}
@@ -262,9 +262,7 @@ export default function ProposalViewPage() {
                     )}
                   </div>
                 ) : (
-                  <div className="relative">
-                    {/* Center vertical line — hidden on mobile */}
-                    <div className="hidden sm:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-slate-100 -translate-x-1/2" />
+                  <div>
                     <div className="space-y-2">
                       {!isApproved && (
                         <AddBetweenButton
@@ -276,7 +274,6 @@ export default function ProposalViewPage() {
                         <React.Fragment key={event.id}>
                           <TimelineEventCard
                             event={event}
-                            side={i % 2 === 0 ? "right" : "left"}
                             onEdit={() => {
                               setIsAddingNew(false);
                               setEditingEvent(event);
@@ -376,7 +373,7 @@ export default function ProposalViewPage() {
                 </div>
                 <div>
                   <p className="font-semibold text-slate-800 text-sm">Rotina Gerada</p>
-                  <p className="text-xs text-slate-400 mt-0.5">IA processou suas preferências.</p>
+                  <p className="text-xs text-slate-500 mt-0.5">IA processou suas preferências.</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -385,11 +382,11 @@ export default function ProposalViewPage() {
                 </div>
                 <div>
                   <p className="font-semibold text-slate-800 text-sm">Sincronizar</p>
-                  <p className="text-xs text-slate-400 mt-0.5">Conecte-se com Google Agenda.</p>
+                  <p className="text-xs text-slate-500 mt-0.5">Conecte-se com Google Agenda.</p>
                 </div>
               </div>
             </div>
-            <p className="text-xs text-slate-400 text-center">
+            <p className="text-xs text-slate-500 text-center">
               <span className="hidden sm:inline">
                 Passe o mouse sobre um evento para editá-lo, ou arraste para trocar horários.
               </span>

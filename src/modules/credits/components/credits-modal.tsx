@@ -19,7 +19,7 @@ const PACKAGES: Package[] = [
     priceLabel: "R$ 3,00",
     amountCents: 300,
     icon: <Zap className="w-5 h-5" />,
-    description: "1 geração + 1 sincronização",
+    description: "1 geração de rotina, sobra 1 crédito",
   },
   {
     credits: 5,
@@ -27,14 +27,14 @@ const PACKAGES: Package[] = [
     amountCents: 500,
     popular: true,
     icon: <Star className="w-5 h-5" />,
-    description: "2 gerações + 1 sync, sobra 0",
+    description: "1 geração + 1 sincronização, sobra 0",
   },
   {
     credits: 10,
     priceLabel: "R$ 10,00",
     amountCents: 1000,
     icon: <Rocket className="w-5 h-5" />,
-    description: "4 gerações + 1 sync com troco",
+    description: "2 gerações + 2 sincronizações, sobra 0",
   },
 ];
 
@@ -215,7 +215,7 @@ export function CreditsModal({
               </div>
 
               <div className="px-6 pb-5">
-                <p className="text-center text-xs text-slate-400">
+                <p className="text-center text-xs text-slate-500">
                   Pagamento seguro via Stripe • Créditos não expiram
                 </p>
               </div>

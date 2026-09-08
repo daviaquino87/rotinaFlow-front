@@ -238,7 +238,7 @@ export default function RoutineFormPage() {
                 onClick={handleGoogleSync}
                 disabled={isSyncing}
                 className={cn(
-                  "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap text-slate-400 hover:text-slate-600 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed",
+                  "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap text-slate-500 hover:text-slate-600 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed",
                 )}
               >
                 {isSyncing ? (
@@ -327,7 +327,7 @@ export default function RoutineFormPage() {
                   <div
                     className={cn(
                       "w-12 h-12 rounded-xl flex items-center justify-center",
-                      isDynamic === value ? "bg-primary text-white" : "bg-slate-100 text-slate-400",
+                      isDynamic === value ? "bg-primary text-white" : "bg-slate-100 text-slate-500",
                     )}
                   >
                     <Icon className="w-6 h-6" />
@@ -354,7 +354,7 @@ export default function RoutineFormPage() {
                   showSchedule={false}
                   allowNotes
                 />
-                <p className="text-xs text-slate-400 flex items-center gap-1.5">
+                <p className="text-xs text-slate-500 flex items-center gap-1.5">
                   <Wand2 className="w-3.5 h-3.5 shrink-0" />
                   Você só escolhe o quê. A IA encaixa o melhor dia, horário e frequência para cada
                   atividade com base na sua rotina atual — clique numa atividade selecionada para
@@ -390,13 +390,27 @@ export default function RoutineFormPage() {
               >
                 <ArrowLeft className="mr-2 w-4 h-4" /> Voltar
               </Button>
-              <Button
-                onClick={handleGenerate}
-                isLoading={isGenerating}
-                className="h-12 px-8 rounded-2xl text-base bg-gradient-to-r from-primary to-blue-500 hover:opacity-90 shadow-xl shadow-primary/20"
-              >
-                <CalendarCheck2 className="w-5 h-5 mr-2" /> Gerar minha agenda
-              </Button>
+              <div className="flex items-center gap-3">
+                {!isFirstGeneration && (
+                  <span
+                    className={cn(
+                      "text-xs font-medium",
+                      (creditsData?.credits ?? 0) < GENERATION_COST
+                        ? "text-red-500"
+                        : "text-slate-500",
+                    )}
+                  >
+                    Custa {GENERATION_COST} créditos
+                  </span>
+                )}
+                <Button
+                  onClick={handleGenerate}
+                  isLoading={isGenerating}
+                  className="h-12 px-8 rounded-2xl text-base bg-gradient-to-r from-primary to-blue-500 hover:opacity-90 shadow-xl shadow-primary/20"
+                >
+                  <CalendarCheck2 className="w-5 h-5 mr-2" /> Gerar minha agenda
+                </Button>
+              </div>
             </div>
           </motion.div>
         )}

@@ -8,7 +8,7 @@ export function DonutChart({ segments }: { segments: DonutSegment[] }) {
   const total = segments.reduce((s, seg) => s + seg.value, 0);
   if (total === 0) {
     return (
-      <div className="w-28 h-28 rounded-full bg-slate-200 flex items-center justify-center text-xs text-slate-400">
+      <div className="w-28 h-28 rounded-full bg-slate-200 flex items-center justify-center text-xs text-slate-500">
         Sem dados
       </div>
     );

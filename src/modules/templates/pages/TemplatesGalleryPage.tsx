@@ -35,15 +35,18 @@ export default function TemplatesGalleryPage() {
         </p>
       </div>
 
+      {/* Below sm: a single scrollable row so the filters never push the
+          first template card below the fold on mobile. From sm up there's
+          room to just wrap normally. */}
       {!isLoading && templates && templates.length > 0 && (
-        <div className="flex flex-wrap gap-2">
+        <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 sm:flex-wrap sm:overflow-visible sm:pb-0 sm:mx-0 sm:px-0">
           {categories.map((c) => (
             <button
               key={c}
               type="button"
               onClick={() => setCategory(c)}
               className={cn(
-                "px-3.5 py-1.5 rounded-full text-sm font-medium border transition-all",
+                "shrink-0 px-3.5 py-1.5 rounded-full text-sm font-medium border transition-all",
                 category === c
                   ? "bg-primary text-white border-primary shadow-md shadow-primary/20"
                   : "bg-white text-slate-600 border-slate-200 hover:border-primary/50 hover:bg-primary/5",
@@ -63,11 +66,11 @@ export default function TemplatesGalleryPage() {
         </div>
       ) : !templates || templates.length === 0 ? (
         <div className="text-center py-16 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
-          <p className="text-slate-400 text-sm">Nenhum template disponível no momento.</p>
+          <p className="text-slate-500 text-sm">Nenhum template disponível no momento.</p>
         </div>
       ) : filteredTemplates.length === 0 ? (
         <div className="text-center py-16 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
-          <p className="text-slate-400 text-sm">Nenhum template na categoria "{category}".</p>
+          <p className="text-slate-500 text-sm">Nenhum template na categoria "{category}".</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -89,7 +92,7 @@ export default function TemplatesGalleryPage() {
                   {template.description}
                 </p>
                 <div className="flex items-center justify-between mt-5 pt-4 border-t border-slate-100">
-                  <span className="flex items-center gap-1.5 text-xs text-slate-400 font-medium">
+                  <span className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
                     <ListChecks className="w-3.5 h-3.5" />
                     {template.eventCount} atividades semanais
                   </span>

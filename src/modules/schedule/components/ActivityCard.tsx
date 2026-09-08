@@ -89,13 +89,13 @@ export function ActivityCard({
             <p className="font-semibold text-slate-800 text-sm">{activity.name}</p>
           )}
           {showSchedule && !activity.expanded && activity.days.length > 0 && (
-            <p className="text-xs text-slate-400 truncate mt-0.5">
+            <p className="text-xs text-slate-500 truncate mt-0.5">
               <Clock className="inline w-3 h-3 mr-1" />
               {formatDayList(activity.days)} · {activity.startTime}–{activity.endTime}
             </p>
           )}
           {allowNotes && !activity.expanded && activity.note.trim() && (
-            <p className="text-xs text-slate-400 truncate mt-0.5 italic">"{activity.note}"</p>
+            <p className="text-xs text-slate-500 truncate mt-0.5 italic">"{activity.note}"</p>
           )}
         </div>
         <div className="flex items-center gap-2">
@@ -114,7 +114,7 @@ export function ActivityCard({
             (activity.expanded ? (
               <ChevronUp className="w-4 h-4 text-primary" />
             ) : (
-              <ChevronDown className="w-4 h-4 text-slate-400" />
+              <ChevronDown className="w-4 h-4 text-slate-500" />
             ))}
         </div>
       </div>

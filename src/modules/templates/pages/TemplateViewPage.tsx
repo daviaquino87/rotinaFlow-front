@@ -151,7 +151,7 @@ export default function TemplateViewPage() {
               {viewMode === "dia" ? "Linha do Tempo Diária" : "Visão Semanal"}
             </h2>
             <div className="flex items-center gap-3">
-              <span className="hidden sm:inline text-xs text-slate-400 font-medium">
+              <span className="hidden sm:inline text-xs text-slate-500 font-medium">
                 Somente visualização
               </span>
               <div className="flex rounded-xl overflow-hidden border border-slate-200 text-sm">
@@ -203,20 +203,13 @@ export default function TemplateViewPage() {
               <div className="px-3 sm:px-6 py-6">
                 {selectedDayEvents.length === 0 ? (
                   <div className="text-center py-10">
-                    <p className="text-slate-400 text-sm">Nenhuma atividade para este dia.</p>
+                    <p className="text-slate-500 text-sm">Nenhuma atividade para este dia.</p>
                   </div>
                 ) : (
-                  <div className="relative">
-                    <div className="hidden sm:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-slate-100 -translate-x-1/2" />
-                    <div className="space-y-2">
-                      {selectedDayEvents.map((event, i) => (
-                        <TimelineEventCard
-                          key={event.id}
-                          event={event}
-                          side={i % 2 === 0 ? "right" : "left"}
-                        />
-                      ))}
-                    </div>
+                  <div className="space-y-2">
+                    {selectedDayEvents.map((event) => (
+                      <TimelineEventCard key={event.id} event={event} />
+                    ))}
                   </div>
                 )}
               </div>

@@ -6,7 +6,6 @@ import { getCategory } from "@modules/proposals/utils/event-category";
 
 export function TimelineEventCard({
   event,
-  side,
   onEdit,
   onMoveUp,
   onMoveDown,
@@ -19,7 +18,6 @@ export function TimelineEventCard({
   onDrop,
 }: {
   event: ScheduleEvent;
-  side: "left" | "right";
   onEdit?: () => void;
   onMoveUp?: () => void;
   onMoveDown?: () => void;
@@ -35,11 +33,26 @@ export function TimelineEventCard({
   return (
     <div
       className={cn(
-        "flex items-start gap-0 w-full transition-all duration-200 flex-row",
-        side === "left" ? "sm:flex-row" : "sm:flex-row-reverse",
+        "flex items-start gap-3 sm:gap-4 w-full transition-all duration-200",
         isDragging && "opacity-40 scale-95",
       )}
     >
+      {/* Rail: a single column of connector line + category dot, in
+          chronological order — replaces the old alternating left/right
+          layout, which forced the eye to zigzag instead of reading top to
+          bottom and left a large empty gap on whichever side had the
+          shorter card. */}
+      <div className="hidden sm:block relative w-4 self-stretch shrink-0">
+        <div className="absolute inset-y-0 left-1/2 w-0.5 -translate-x-1/2 bg-slate-100" />
+        <div
+          className={cn(
+            "absolute top-5 left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full border-2 border-white shadow-md z-10 transition-transform duration-150",
+            isOver && "scale-125",
+          )}
+          style={{ backgroundColor: isOver ? "var(--color-primary, #c904bc)" : cat.color }}
+        />
+      </div>
+
       {/* Content */}
       <div
         draggable
@@ -61,20 +74,13 @@ export function TimelineEventCard({
           onDrop?.();
         }}
         className={cn(
-          "flex-1 min-w-0 bg-white rounded-2xl p-4 shadow-sm border-2 transition-all duration-150 group select-none",
-          "ml-4 text-left",
-          side === "left" ? "sm:mr-6 sm:ml-0 sm:text-right" : "sm:ml-6 sm:text-left",
+          "flex-1 min-w-0 bg-white rounded-2xl p-4 shadow-sm border-2 transition-all duration-150 group select-none text-left",
           isOver
             ? "border-primary bg-primary/5 shadow-lg shadow-primary/20 scale-[1.02]"
             : "border-slate-100 cursor-grab active:cursor-grabbing hover:shadow-md hover:border-slate-200",
         )}
       >
-        <div
-          className={cn(
-            "flex items-center gap-2 mb-2 justify-start",
-            side === "left" ? "sm:justify-end" : "sm:justify-start",
-          )}
-        >
+        <div className="flex items-center gap-2 mb-2">
           <span className="text-sm font-bold text-slate-800">
             {event.startTime.substring(0, 5)} – {event.endTime.substring(0, 5)}
           </span>
@@ -87,17 +93,12 @@ export function TimelineEventCard({
         </div>
         <p className="font-bold text-slate-900 text-base">{event.title}</p>
         {event.description && (
-          <p className="text-sm text-slate-400 mt-0.5 line-clamp-2">{event.description}</p>
+          <p className="text-sm text-slate-500 mt-0.5 line-clamp-2">{event.description}</p>
         )}
 
         {/* Actions row */}
         {onEdit && (
-          <div
-            className={cn(
-              "flex items-center gap-1 mt-2.5 justify-start",
-              side === "left" ? "sm:justify-end" : "sm:justify-start",
-            )}
-          >
+          <div className="flex items-center gap-1 mt-2.5 justify-start">
             {/* Edit — always visible on mobile, hover-only on desktop */}
             <button
               onClick={(e) => {
@@ -105,7 +106,7 @@ export function TimelineEventCard({
                 onEdit();
               }}
               onMouseDown={(e) => e.stopPropagation()}
-              className="flex items-center gap-1 text-xs font-semibold text-slate-400 hover:text-primary hover:bg-primary/8 px-2 py-1 rounded-lg transition-all sm:opacity-0 sm:group-hover:opacity-100"
+              className="flex items-center gap-1 text-xs font-semibold text-slate-500 hover:text-primary hover:bg-primary/8 px-2 py-1 rounded-lg transition-all sm:opacity-0 sm:group-hover:opacity-100"
             >
               <Edit2 className="w-3 h-3" /> Editar
             </button>
@@ -139,22 +140,6 @@ export function TimelineEventCard({
           </div>
         )}
       </div>
-
-      {/* Dot on the center line — the line itself is hidden below sm: (see
-          the timeline's own "hidden sm:block" divider), so hide the dot
-          there too instead of leaving an orphan marker with nothing to sit on. */}
-      <div className="hidden sm:relative sm:flex sm:flex-col sm:items-center">
-        <div
-          className={cn(
-            "w-4 h-4 rounded-full border-2 border-white shadow-md z-10 transition-transform duration-150",
-            isOver && "scale-125",
-          )}
-          style={{ backgroundColor: isOver ? "var(--color-primary, #c904bc)" : cat.color }}
-        />
-      </div>
-
-      {/* Spacer for the other side — hidden on mobile */}
-      <div className="hidden sm:block sm:flex-1" />
     </div>
   );
 }

@@ -76,10 +76,10 @@ export function HistoryPanel({
     return (
       <div className="flex flex-col items-center justify-center gap-3 py-10 px-4 text-center">
         <div className="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center">
-          <History className="w-6 h-6 text-slate-400" />
+          <History className="w-6 h-6 text-slate-500" />
         </div>
         <p className="text-sm font-semibold text-slate-700">Nenhuma rotina salva</p>
-        <p className="text-xs text-slate-400">
+        <p className="text-xs text-slate-500">
           Gere sua primeira rotina para ver o histórico aqui.
         </p>
         <Link href="/routine">
@@ -96,7 +96,7 @@ export function HistoryPanel({
       <div className="px-4 py-3 border-b border-slate-100 flex items-center gap-2 bg-slate-50 sticky top-0">
         <History className="w-4 h-4 text-slate-500" />
         <h2 className="text-sm font-bold text-slate-700">Histórico de Rotinas</h2>
-        <span className="ml-auto text-xs text-slate-400 bg-slate-200 rounded-full px-2 py-0.5">
+        <span className="ml-auto text-xs text-slate-500 bg-slate-200 rounded-full px-2 py-0.5">
           {proposals.length}
         </span>
       </div>
@@ -145,7 +145,7 @@ export function HistoryPanel({
                       <button
                         onClick={cancelEdit}
                         disabled={isSaving}
-                        className="p-2.5 -m-1 rounded-lg text-slate-400 hover:bg-slate-100 transition-all"
+                        className="p-2.5 -m-1 rounded-lg text-slate-500 hover:bg-slate-100 transition-all"
                         title="Cancelar"
                         aria-label="Cancelar edição"
                       >
@@ -164,7 +164,7 @@ export function HistoryPanel({
                       <Pencil className="w-3 h-3 text-slate-300 group-hover:text-primary shrink-0 transition-colors" />
                     </button>
                   )}
-                  <p className="text-[11px] text-slate-400 mt-0.5">
+                  <p className="text-[11px] text-slate-500 mt-0.5">
                     {format(date, "d 'de' MMM 'de' yyyy", { locale: ptBR })}
                   </p>
                 </div>
