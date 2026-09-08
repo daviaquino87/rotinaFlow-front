@@ -1,6 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { LogOut, Loader2, ClipboardList, CalendarDays, Coins, LayoutTemplate } from "lucide-react";
+import {
+  LogOut,
+  Loader2,
+  ClipboardList,
+  CalendarDays,
+  Coins,
+  AlertTriangle,
+  HelpCircle,
+  LayoutTemplate,
+} from "lucide-react";
 import { useGetSession, useLogout } from "@/api-client";
 import { CreditsModal } from "@modules/credits/components/credits-modal";
 import { useCredits } from "@modules/credits/hooks/use-credits";
@@ -8,7 +17,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { PwaInstallBanner } from "@/components/pwa-install-banner";
-import { OnboardingModal } from "@/components/onboarding-modal";
+import { OnboardingModal, ONBOARDING_SEEN_KEY } from "@/components/onboarding-modal";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -52,6 +61,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   const { data: creditsData } = useCredits();
   const [showCredits, setShowCredits] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -63,6 +73,17 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
+
+  // First-visit onboarding — shown once per browser (see ONBOARDING_SEEN_KEY)
+  // and reopenable any time from "Como funciona" in the user menu below.
+  useEffect(() => {
+    if (!session?.user) return;
+    try {
+      if (!localStorage.getItem(ONBOARDING_SEEN_KEY)) setShowOnboarding(true);
+    } catch {
+      // localStorage unavailable
+    }
+  }, [session?.user]);
 
   // Show spinner during initial load OR while refetching stale unauthenticated data.
   // The second condition prevents a premature redirect when the landing page left
@@ -122,13 +143,21 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             ? "bg-red-50 border-red-200 hover:bg-red-100"
             : "bg-amber-50 border-amber-200 hover:bg-amber-100"
       }`}
-      title="Ver meus créditos"
+      title={
+        !firstSyncDone
+          ? "Ver meus créditos"
+          : credits <= 2
+            ? "Créditos baixos — ver meus créditos"
+            : "Ver meus créditos"
+      }
     >
-      <Coins
-        className={`w-4 h-4 ${
-          !firstSyncDone ? "text-emerald-600" : credits <= 2 ? "text-red-500" : "text-amber-600"
-        }`}
-      />
+      {/* An icon shape change (not just a color change) on low balance so the
+          warning doesn't rely on distinguishing amber from red alone. */}
+      {firstSyncDone && credits <= 2 ? (
+        <AlertTriangle className="w-4 h-4 text-red-500" />
+      ) : (
+        <Coins className={`w-4 h-4 ${!firstSyncDone ? "text-emerald-600" : "text-amber-600"}`} />
+      )}
       {!firstSyncDone ? (
         <span className="text-sm font-semibold text-emerald-700">Grátis</span>
       ) : (
@@ -144,7 +173,9 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-slate-50/50 flex flex-col font-sans">
       <PwaInstallBanner />
-      {isLoggedIn && <OnboardingModal />}
+      {isLoggedIn && (
+        <OnboardingModal open={showOnboarding} onClose={() => setShowOnboarding(false)} />
+      )}
 
       {/* safe-area-pt: with viewport-fit=cover (needed for the bottom nav's
           safe-area-pb below to work at all) the whole layout viewport can
@@ -204,9 +235,16 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               {session.user!.name}
             </span>
             <button
+              onClick={() => setShowOnboarding(true)}
+              title="Como funciona"
+              className="ml-1 p-1.5 rounded-lg text-slate-500 hover:text-primary hover:bg-primary/10 transition-all"
+            >
+              <HelpCircle className="w-4 h-4" />
+            </button>
+            <button
               onClick={handleLogout}
               title="Sair"
-              className="ml-1 p-1.5 rounded-lg text-slate-500 hover:text-red-500 hover:bg-red-50 transition-all"
+              className="p-1.5 rounded-lg text-slate-500 hover:text-red-500 hover:bg-red-50 transition-all"
             >
               {logoutMut.isPending ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -219,9 +257,14 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
         {isLoggedIn && (
           <div className="sm:hidden relative" ref={userMenuRef}>
+            {/* The visible avatar stays 32px so it doesn't outgrow the header,
+                but the button itself is a 44px hit area (WCAG 2.2 §2.5.8) —
+                otherwise this is the smallest tap target on the whole
+                mobile UI for an action (checking who's logged in, signing
+                out) used on every visit. */}
             <button
               onClick={() => setShowUserMenu((v) => !v)}
-              className="relative w-8 h-8 rounded-full border-2 border-slate-200 overflow-hidden focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="relative w-11 h-11 -m-1.5 rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-primary/50"
             >
               <img
                 src={
@@ -229,7 +272,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   `https://ui-avatars.com/api/?name=${encodeURIComponent(session.user!.name)}&background=random`
                 }
                 alt={session.user!.name}
-                className="w-full h-full object-cover"
+                className="w-8 h-8 rounded-full border-2 border-slate-200 object-cover"
               />
             </button>
 
@@ -241,6 +284,16 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   </p>
                   <p className="text-xs text-slate-500 truncate">{session.user!.email}</p>
                 </div>
+                <button
+                  onClick={() => {
+                    setShowUserMenu(false);
+                    setShowOnboarding(true);
+                  }}
+                  className="w-full flex items-center gap-2 px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors border-b border-slate-100"
+                >
+                  <HelpCircle className="w-4 h-4" />
+                  Como funciona
+                </button>
                 <button
                   onClick={handleLogout}
                   disabled={logoutMut.isPending}

@@ -32,7 +32,9 @@ export default defineConfig({
           "Organize sua rotina semanal com inteligência artificial e sincronize com o Google Calendar.",
         start_url: "/",
         display: "standalone",
-        orientation: "portrait",
+        // No orientation lock: the calendar/timeline views are genuinely
+        // more useful with extra width, so tablets and convertible laptops
+        // used in landscape shouldn't be forced back to portrait.
         background_color: "#ffffff",
         theme_color: "#c904bc",
         lang: "pt-BR",

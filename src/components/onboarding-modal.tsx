@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ClipboardList, Sparkles, CalendarCheck2, ArrowRight, X } from "lucide-react";
 import { useLocation } from "wouter";
 
-const STORAGE_KEY = "rotinaflow_onboarding_seen";
+// Exported so AppLayout can decide whether to show this on first login and
+// reset it when the user reopens onboarding from the "Como funciona" menu.
+export const ONBOARDING_SEEN_KEY = "rotinaflow_onboarding_seen";
 
 const STEPS = [
   {
@@ -39,24 +41,14 @@ const STEPS = [
   },
 ];
 
-export function OnboardingModal() {
-  const [visible, setVisible] = useState(false);
+export function OnboardingModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [, setLocation] = useLocation();
-
-  useEffect(() => {
-    try {
-      const seen = localStorage.getItem(STORAGE_KEY);
-      if (!seen) setVisible(true);
-    } catch {
-      // localStorage unavailable
-    }
-  }, []);
 
   const dismiss = () => {
     try {
-      localStorage.setItem(STORAGE_KEY, "1");
+      localStorage.setItem(ONBOARDING_SEEN_KEY, "1");
     } catch {}
-    setVisible(false);
+    onClose();
   };
 
   const start = () => {
@@ -66,7 +58,7 @@ export function OnboardingModal() {
 
   return (
     <AnimatePresence>
-      {visible && (
+      {open && (
         <motion.div
           key="onboarding-overlay"
           initial={{ opacity: 0 }}
