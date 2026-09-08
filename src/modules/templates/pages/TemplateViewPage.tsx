@@ -95,6 +95,9 @@ export default function TemplateViewPage() {
           <div className="flex items-center gap-3">
             <span className="text-3xl">{template.emoji}</span>
             <h1 className="font-display text-3xl font-bold text-slate-900">{template.title}</h1>
+            <span className="text-[11px] font-semibold uppercase tracking-wide text-primary bg-primary/10 px-2 py-1 rounded-full whitespace-nowrap">
+              {template.category}
+            </span>
           </div>
           <p className="text-slate-500 mt-2 max-w-xl">{template.description}</p>
         </div>

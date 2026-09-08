@@ -6,6 +6,7 @@ export interface RoutineTemplateSummary {
   title: string;
   description: string;
   emoji: string;
+  category: string;
   priceCredits: number;
   eventCount: number;
 }
