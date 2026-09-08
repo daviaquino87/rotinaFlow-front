@@ -109,7 +109,7 @@ export default function TemplateViewPage() {
           <p className="text-slate-500 mt-2 max-w-xl">{template.description}</p>
         </div>
 
-        {template.alreadyPurchased ? (
+        {template.alreadyPurchased && template.proposalUuid ? (
           <Link href={`/proposal/${template.proposalUuid}`}>
             <Button
               size="lg"
@@ -118,6 +118,17 @@ export default function TemplateViewPage() {
               <Check className="w-5 h-5" /> Ver minha rotina
             </Button>
           </Link>
+        ) : template.alreadyPurchased ? (
+          <Button
+            onClick={handlePurchase}
+            isLoading={isPurchasing}
+            disabled={isPurchasing}
+            size="lg"
+            className="gap-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg shadow-emerald-500/30"
+          >
+            <Check className="w-5 h-5" />
+            {isPurchasing ? "Recriando..." : "Recriar minha rotina"}
+          </Button>
         ) : (
           <Button
             onClick={handlePurchase}
@@ -289,6 +300,24 @@ export default function TemplateViewPage() {
                   <Coins className="w-4 h-4" />
                 )}
                 Comprar por {template.priceCredits} créditos
+              </Button>
+            </div>
+          )}
+
+          {template.alreadyPurchased && !template.proposalUuid && (
+            <div className="bg-emerald-50 rounded-2xl p-5 border border-emerald-100 space-y-3">
+              <p className="text-sm text-slate-600">
+                Você já comprou este template — parece que apagou a rotina criada por ele. Sem
+                problema: recriar é gratuito, você não paga de novo.
+              </p>
+              <Button
+                onClick={handlePurchase}
+                isLoading={isPurchasing}
+                disabled={isPurchasing}
+                className="w-full gap-2 bg-emerald-600 hover:bg-emerald-700"
+              >
+                {isPurchasing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
+                Recriar minha rotina
               </Button>
             </div>
           )}
