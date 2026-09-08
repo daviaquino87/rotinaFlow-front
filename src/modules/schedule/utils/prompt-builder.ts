@@ -46,7 +46,7 @@ export function buildSchedulePrompt(
           `  - ${a.emoji} ${a.name}: ${formatDayList(a.days)}, das ${a.startTime} às ${a.endTime}`,
       )
       .join("\n");
-    newSection = `\nAtividades que quero incluir na minha nova rotina:\n${newLines || "  (nenhuma especificada)"}`;
+    newSection = `\nAtividades que quero incluir na minha nova rotina:\n${newLines || "  (nenhuma especificada)"}\n\nModo de geração: MANUAL — encaixe exatamente essas atividades (sem alterar dia, horário ou remover nenhuma) e, além delas, complemente a semana com sugestões adicionais (hábitos de suporte ou outras atividades relevantes) para deixá-la completa e equilibrada.`;
     if (goals.trim()) newSection += `\nObservações adicionais: ${goals.trim()}`;
   }
 
