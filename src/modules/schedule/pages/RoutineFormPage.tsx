@@ -399,18 +399,21 @@ export default function RoutineFormPage() {
                 className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 min-h-[90px] resize-none"
               />
             </div>
-            <div className="pt-4 border-t border-slate-100 flex justify-between items-center">
+            {/* flex-col below sm: "Voltar" + o texto de créditos + o CTA não
+                cabem numa linha só em telas de iPhone (~375px) — empilhar
+                evita que o botão "Gerar minha agenda" espreme/quebre. */}
+            <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
               <Button
                 variant="ghost"
                 onClick={() => {
                   setStep(1);
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className="text-slate-500"
+                className="text-slate-500 w-full sm:w-auto"
               >
                 <ArrowLeft className="mr-2 w-4 h-4" /> Voltar
               </Button>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-between sm:justify-end gap-3">
                 {!isFirstGeneration && (
                   <span
                     className={cn(
