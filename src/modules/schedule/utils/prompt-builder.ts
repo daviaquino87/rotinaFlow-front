@@ -25,6 +25,8 @@ export function buildSchedulePrompt(
   newActs: Activity[],
   dynamic: boolean,
   goals: string,
+  wakeTime: string,
+  sleepTime: string,
 ): string {
   const currentLines = current
     .filter((a) => a.days.length > 0)
@@ -50,5 +52,5 @@ export function buildSchedulePrompt(
     if (goals.trim()) newSection += `\nObservações adicionais: ${goals.trim()}`;
   }
 
-  return `Olá! Aqui estão as informações sobre minha rotina:\n\nRotina ATUAL (já faço regularmente):\n${currentLines}${newSection}\n\nCom base nisso, por favor crie uma proposta de agenda semanal completa, organizada e equilibrada para mim, encaixando as atividades existentes e as novas de forma harmoniosa.`;
+  return `Olá! Aqui estão as informações sobre minha rotina:\n\nAcordo às ${wakeTime} e durmo às ${sleepTime} todos os dias — respeite essa janela ao encaixar qualquer atividade.\n\nRotina ATUAL (já faço regularmente):\n${currentLines}${newSection}\n\nCom base nisso, por favor crie uma proposta de agenda semanal completa, organizada e equilibrada para mim, encaixando as atividades existentes e as novas de forma harmoniosa.`;
 }

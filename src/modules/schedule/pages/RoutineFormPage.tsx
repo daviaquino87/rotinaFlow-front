@@ -30,6 +30,8 @@ import {
   CalendarCheck2,
   CalendarDays,
   RefreshCw,
+  Sunrise,
+  Moon,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@lib/utils";
@@ -73,10 +75,12 @@ export default function RoutineFormPage() {
   const [newActs, setNewActs] = useState<Activity[]>(draft?.newActs ?? []);
   const [isDynamic, setIsDynamic] = useState(draft?.isDynamic ?? false);
   const [goals, setGoals] = useState(draft?.goals ?? "");
+  const [wakeTime, setWakeTime] = useState(draft?.wakeTime ?? "");
+  const [sleepTime, setSleepTime] = useState(draft?.sleepTime ?? "");
 
   useEffect(() => {
-    saveDraft({ currentActs, newActs, isDynamic, goals });
-  }, [currentActs, newActs, isDynamic, goals]);
+    saveDraft({ currentActs, newActs, isDynamic, goals, wakeTime, sleepTime });
+  }, [currentActs, newActs, isDynamic, goals, wakeTime, sleepTime]);
 
   const queryClient = useQueryClient();
   const createConv = useCreateOpenaiConversation();
@@ -144,7 +148,14 @@ export default function RoutineFormPage() {
           { onSuccess: resolve, onError: reject },
         ),
       );
-      const prompt = buildSchedulePrompt(currentActs, newActs, isDynamic, goals);
+      const prompt = buildSchedulePrompt(
+        currentActs,
+        newActs,
+        isDynamic,
+        goals,
+        wakeTime,
+        sleepTime,
+      );
       await sendMessage(prompt, conv.id);
       await new Promise<void>((resolve, reject) =>
         createProposal.mutate(
@@ -269,6 +280,35 @@ export default function RoutineFormPage() {
                 {isSyncing ? "Sincronizando..." : "Sincronizar Google Agenda"}
               </button>
             </div>
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 space-y-4">
+              <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">
+                Informações essenciais
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 flex items-center gap-1.5">
+                    <Sunrise className="w-3.5 h-3.5" /> A que horas você acorda?
+                  </label>
+                  <input
+                    type="time"
+                    value={wakeTime}
+                    onChange={(e) => setWakeTime(e.target.value)}
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 flex items-center gap-1.5">
+                    <Moon className="w-3.5 h-3.5" /> A que horas você dorme?
+                  </label>
+                  <input
+                    type="time"
+                    value={sleepTime}
+                    onChange={(e) => setSleepTime(e.target.value)}
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  />
+                </div>
+              </div>
+            </div>
             <ActivitySelector
               presets={CURRENT_PRESETS}
               activities={currentActs}
@@ -282,6 +322,14 @@ export default function RoutineFormPage() {
             <div className="pt-4 border-t border-slate-100 flex justify-end">
               <Button
                 onClick={() => {
+                  if (!wakeTime || !sleepTime) {
+                    toast({
+                      title: "Preencha os horários essenciais",
+                      description: "Informe a que horas você acorda e a que horas você dorme.",
+                      variant: "destructive",
+                    });
+                    return;
+                  }
                   if (currentActs.length === 0) {
                     toast({
                       title: "Adicione pelo menos uma atividade",

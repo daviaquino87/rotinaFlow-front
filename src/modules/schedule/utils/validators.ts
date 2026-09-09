@@ -19,6 +19,14 @@ export const DraftSchema = z.object({
   newActs: z.array(ActivitySchema).max(50),
   isDynamic: z.boolean(),
   goals: z.string().max(2000),
+  wakeTime: z
+    .string()
+    .regex(/^(\d{2}:\d{2})?$/)
+    .default(""),
+  sleepTime: z
+    .string()
+    .regex(/^(\d{2}:\d{2})?$/)
+    .default(""),
 });
 
 export type DraftData = z.infer<typeof DraftSchema>;

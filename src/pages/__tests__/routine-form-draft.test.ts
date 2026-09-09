@@ -47,6 +47,20 @@ describe("DraftSchema - valid inputs", () => {
     const result = DraftSchema.safeParse({ ...validDraft, goals: "a".repeat(2000) });
     expect(result.success).toBe(true);
   });
+
+  it("defaults wakeTime/sleepTime to empty string for drafts saved before that field existed", () => {
+    const result = DraftSchema.safeParse(validDraft);
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.wakeTime).toBe("");
+      expect(result.data.sleepTime).toBe("");
+    }
+  });
+
+  it("allows a valid wakeTime/sleepTime", () => {
+    const result = DraftSchema.safeParse({ ...validDraft, wakeTime: "07:00", sleepTime: "23:00" });
+    expect(result.success).toBe(true);
+  });
 });
 
 // ─── Invalid / malicious drafts ───────────────────────────────────────────────
@@ -105,6 +119,11 @@ describe("DraftSchema - rejects malicious or malformed input", () => {
   it("rejects emoji field longer than 10 chars", () => {
     const act = { ...validActivity, emoji: "🏋️".repeat(5) };
     const result = DraftSchema.safeParse({ ...validDraft, currentActs: [act] });
+    expect(result.success).toBe(false);
+  });
+
+  it("rejects invalid wakeTime/sleepTime format", () => {
+    const result = DraftSchema.safeParse({ ...validDraft, wakeTime: "7am" });
     expect(result.success).toBe(false);
   });
 });
