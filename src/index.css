@@ -109,6 +109,18 @@
     font-family: var(--font-display);
     @apply tracking-tight font-bold;
   }
+
+  /* iOS Safari auto-zooms the viewport on focus for any input/textarea/select
+     with a computed font-size under 16px, and doesn't zoom back out on blur —
+     this happens even in standalone PWA mode. Force 16px on mobile viewports
+     regardless of the text-sm/text-xs utility classes applied elsewhere. */
+  @media (max-width: 767px) {
+    input,
+    textarea,
+    select {
+      font-size: 16px;
+    }
+  }
 }
 
 /* Custom Scrollbar for a polished look */
