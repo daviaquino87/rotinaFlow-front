@@ -1,0 +1,156 @@
+{
+  "nav": {
+    "logoAlt": "rotinaFlow",
+    "loginButton": "Sign in with Google",
+    "loginWaiting": "Waiting..."
+  },
+  "hero": {
+    "badge": "AI-powered routine planning",
+    "titlePrefix": "Stop winging it.",
+    "titleHighlight": "Live with intention.",
+    "subtitle": "Describe your goals and let AI build a personalized weekly routine, synced to your Google Calendar in seconds.",
+    "ctaPrimary": "Start free with Google",
+    "ctaPrimaryWaiting": "Finish signing in on the open tab...",
+    "ctaSecondary": "How it works",
+    "trustNoCard": "No credit card required",
+    "trustFreeRoutinePrefix": "First routine",
+    "trustFreeRoutineStrong": "100% free",
+    "floatingAiAnalyzingTitle": "AI analyzing...",
+    "floatingAiAnalyzingSubtitle": "Optimizing your week",
+    "floatingBalanceTitle": "Automatic balance",
+    "floatingBalanceSubtitle": "Work, health, and leisure"
+  },
+  "schedulePreview": {
+    "windowLabel": "Monday • rotinaFlow",
+    "syncedLabel": "Synced with Google Calendar",
+    "blocks": {
+      "gym": "Gym",
+      "deepFocus": "Deep Focus",
+      "teamMeeting": "Team meeting",
+      "lunch": "Lunch",
+      "readingStudy": "Reading & Study",
+      "taskBlock": "Task block",
+      "walk": "Walk",
+      "nightReading": "Evening reading"
+    }
+  },
+  "benefits": {
+    "badge": "Why rotinaFlow works",
+    "title": "Your week, optimized by AI",
+    "subtitle": "More than a calendar — an intelligent system that learns from you and builds the ideal week to reach your goals.",
+    "items": {
+      "aiStyle": {
+        "title": "AI that gets your style",
+        "desc": "Analyzes your current routine, goals, and preferences to build a schedule tailored to you — one that actually fits your life."
+      },
+      "oneClickSync": {
+        "title": "One-click sync",
+        "desc": "Approved your routine? In seconds it appears on your Google Calendar with every event, time, and recurrence set up automatically."
+      },
+      "focusOnGoals": {
+        "title": "Focus on your goals",
+        "desc": "Want to learn a language, work out 4x a week, read more books? AI allocates strategic blocks for each goal — without forgetting rest."
+      },
+      "eliminateDecisions": {
+        "title": "Eliminate daily decisions",
+        "desc": "No more asking \"what should I do now?\". With your routine ready, you wake up knowing exactly how to spend every hour of the day."
+      },
+      "realBalance": {
+        "title": "Real balance across areas",
+        "desc": "Work, health, leisure, and personal growth intelligently distributed — ensuring productivity without burnout."
+      },
+      "adjustAnytime": {
+        "title": "Adjust anytime",
+        "desc": "Life changes. Edit events, drag and drop to swap times, and re-sync whenever you want. Your schedule, your pace."
+      }
+    }
+  },
+  "howItWorks": {
+    "badge": "It's that simple",
+    "title": "From zero to routine in 3 steps",
+    "subtitle": "Takes less than 5 minutes from start to Google Calendar.",
+    "steps": {
+      "describe": {
+        "title": "Tell us your routine",
+        "desc": "Let us know what you already do today — activities, times, and habits. The smart form captures it all in minutes."
+      },
+      "generate": {
+        "title": "AI builds your schedule",
+        "desc": "Our AI analyzes your data and puts together a complete weekly proposal, balancing work, health, and leisure."
+      },
+      "sync": {
+        "title": "Approve and sync",
+        "desc": "Review it, tweak it if you like, and sync it straight to Google Calendar — with recurrence and everything set up automatically."
+      }
+    }
+  },
+  "security": {
+    "badge": "Secure and private data",
+    "titlePrefix": "Connected to Google,",
+    "titleHighlight": "100% in your control",
+    "subtitle": "Login and syncing via official Google OAuth. Your events go to Google Calendar with recurrence configured — edit or cancel them whenever you want, no strings attached.",
+    "list": {
+      "oauthLogin": "Secure login via Google OAuth",
+      "bidirectionalSync": "Two-way sync with Google Calendar",
+      "noExtraAccess": "No access to sensitive data beyond what's needed",
+      "cancelAnytime": "Cancel and remove access anytime"
+    },
+    "widget": {
+      "title": "This Week's Routine",
+      "subtitle": "Monday to Sunday • Synced",
+      "categories": {
+        "workFocus": "Work & Focus",
+        "healthExercise": "Health & Exercise",
+        "learning": "Learning",
+        "leisureFamily": "Leisure & Family",
+        "meals": "Meals"
+      }
+    }
+  },
+  "pricing": {
+    "badge": "Fair, transparent pricing",
+    "title": "Start for free",
+    "subtitle": "No subscription, no catches. Pay only when you need more.",
+    "free": {
+      "label": "Get started",
+      "price": "Free",
+      "caption": "For your first routine",
+      "features": {
+        "oneRoutine": "1 AI-generated routine",
+        "googleSync": "Google Calendar sync",
+        "manualEdit": "Manual event editing",
+        "dragDrop": "Drag and drop to adjust times"
+      },
+      "cta": "Create my free routine"
+    },
+    "credits": {
+      "mostPopular": "MOST POPULAR",
+      "label": "Credits",
+      "priceValue": "$1",
+      "priceUnit": "/ credit",
+      "caption": "Generating costs 2 credits · Syncing costs 3 credits · A ready-made template costs 5 credits",
+      "features": {
+        "everythingFree": "Everything in the free plan",
+        "creditsNeverExpire": "Credits never expire",
+        "packages": "Bundles of 3, 5, or 10 credits",
+        "unlimitedRoutines": "Unlimited multiple routines"
+      },
+      "currencyPrefix": "$",
+      "packageUnit": "credits",
+      "cta": "Get started now"
+    }
+  },
+  "finalCta": {
+    "title": "Your best week starts today",
+    "subtitle": "Join those who've stopped winging it and started living with intention. First routine completely free.",
+    "cta": "Create my free routine",
+    "ctaWaiting": "Finish signing in on the open tab...",
+    "footnote": "No credit card. No subscription. Get started in minutes."
+  },
+  "footer": {
+    "logoAlt": "rotinaFlow",
+    "copyright": "© 2025 rotinaFlow. All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service"
+  }
+}

@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 interface DonutSegment {
   value: number;
   color: string;
@@ -5,11 +7,12 @@ interface DonutSegment {
 }
 
 export function DonutChart({ segments }: { segments: DonutSegment[] }) {
+  const { t } = useTranslation("proposals");
   const total = segments.reduce((s, seg) => s + seg.value, 0);
   if (total === 0) {
     return (
       <div className="w-28 h-28 rounded-full bg-slate-200 flex items-center justify-center text-xs text-slate-500">
-        Sem dados
+        {t("components.donutChart.noData")}
       </div>
     );
   }

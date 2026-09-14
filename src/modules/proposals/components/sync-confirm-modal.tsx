@@ -1,4 +1,5 @@
 import { CalendarCheck2, Trash2, Plus } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import {
   Dialog,
   DialogContent,
@@ -14,6 +15,7 @@ interface SyncConfirmModalProps {
 }
 
 export function SyncConfirmModal({ open, onClose, onConfirm, loading }: SyncConfirmModalProps) {
+  const { t } = useTranslation("proposals");
   return (
     <Dialog
       open={open}
@@ -27,10 +29,10 @@ export function SyncConfirmModal({ open, onClose, onConfirm, loading }: SyncConf
             <CalendarCheck2 className="w-6 h-6 text-violet-600" />
           </div>
           <DialogTitle className="text-center text-lg font-bold text-slate-900">
-            Sincronizar com Google Agenda
+            {t("components.syncConfirmModal.title")}
           </DialogTitle>
           <DialogDescription className="text-center text-sm text-slate-500 leading-relaxed">
-            Deseja limpar os eventos anteriores desta rotina antes de adicionar os novos?
+            {t("components.syncConfirmModal.description")}
           </DialogDescription>
         </DialogHeader>
 
@@ -44,9 +46,11 @@ export function SyncConfirmModal({ open, onClose, onConfirm, loading }: SyncConf
               <Trash2 className="w-4 h-4 text-orange-600" />
             </span>
             <span>
-              <p className="text-sm font-semibold text-slate-800">Limpar e sincronizar</p>
+              <p className="text-sm font-semibold text-slate-800">
+                {t("components.syncConfirmModal.clearAndSync.title")}
+              </p>
               <p className="text-xs text-slate-500">
-                Remove eventos anteriores e adiciona os novos
+                {t("components.syncConfirmModal.clearAndSync.description")}
               </p>
             </span>
           </button>
@@ -60,9 +64,11 @@ export function SyncConfirmModal({ open, onClose, onConfirm, loading }: SyncConf
               <Plus className="w-4 h-4 text-violet-600" />
             </span>
             <span>
-              <p className="text-sm font-semibold text-slate-800">Apenas adicionar</p>
+              <p className="text-sm font-semibold text-slate-800">
+                {t("components.syncConfirmModal.onlyAdd.title")}
+              </p>
               <p className="text-xs text-slate-500">
-                Mantém eventos existentes e adiciona os novos
+                {t("components.syncConfirmModal.onlyAdd.description")}
               </p>
             </span>
           </button>
@@ -72,7 +78,7 @@ export function SyncConfirmModal({ open, onClose, onConfirm, loading }: SyncConf
             disabled={loading}
             className="w-full py-2.5 rounded-xl text-sm font-medium text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Cancelar
+            {t("components.syncConfirmModal.cancel")}
           </button>
         </div>
       </DialogContent>

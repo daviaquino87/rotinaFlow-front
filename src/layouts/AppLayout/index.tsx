@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "wouter";
+import { useTranslation } from "react-i18next";
 import {
   LogOut,
   Loader2,
@@ -18,36 +19,42 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { PwaInstallBanner } from "@/components/pwa-install-banner";
 import { OnboardingModal, ONBOARDING_SEEN_KEY } from "@/components/onboarding-modal";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-const NAV_LINKS = [
-  {
-    href: "/routine",
-    icon: ClipboardList,
-    label: "Nova Rotina",
-    shortLabel: "Nova",
-    match: (l: string) => l.startsWith("/routine"),
-  },
-  {
-    href: "/proposals",
-    icon: CalendarDays,
-    label: "Minha Rotina",
-    shortLabel: "Minha",
-    match: (l: string) => l.startsWith("/proposal"),
-  },
-  {
-    href: "/templates",
-    icon: LayoutTemplate,
-    label: "Templates",
-    shortLabel: "Templates",
-    match: (l: string) => l.startsWith("/templates"),
-  },
-];
+function useNavLinks() {
+  const { t } = useTranslation();
+  return [
+    {
+      href: "/routine",
+      icon: ClipboardList,
+      label: t("nav.newRoutine"),
+      shortLabel: t("nav.newRoutineShort"),
+      match: (l: string) => l.startsWith("/routine"),
+    },
+    {
+      href: "/proposals",
+      icon: CalendarDays,
+      label: t("nav.myRoutine"),
+      shortLabel: t("nav.myRoutineShort"),
+      match: (l: string) => l.startsWith("/proposal"),
+    },
+    {
+      href: "/templates",
+      icon: LayoutTemplate,
+      label: t("nav.templates"),
+      shortLabel: t("nav.templatesShort"),
+      match: (l: string) => l.startsWith("/templates"),
+    },
+  ];
+}
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
+  const { t } = useTranslation();
+  const NAV_LINKS = useNavLinks();
   const [location] = useLocation();
   const {
     data: session,
@@ -101,12 +108,12 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   if (isError && !session) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-slate-50">
-        <p className="text-slate-600 text-sm">Não foi possível verificar sua sessão.</p>
+        <p className="text-slate-600 text-sm">{t("session.checkError")}</p>
         <button
           onClick={() => window.location.reload()}
           className="px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary/90 transition-colors"
         >
-          Tentar novamente
+          {t("session.retry")}
         </button>
       </div>
     );
@@ -145,10 +152,10 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       }`}
       title={
         !firstSyncDone
-          ? "Ver meus créditos"
+          ? t("header.viewCredits")
           : credits <= 2
-            ? "Créditos baixos — ver meus créditos"
-            : "Ver meus créditos"
+            ? t("header.lowCreditsViewCredits")
+            : t("header.viewCredits")
       }
     >
       {/* An icon shape change (not just a color change) on low balance so the
@@ -159,7 +166,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         <Coins className={`w-4 h-4 ${!firstSyncDone ? "text-emerald-600" : "text-amber-600"}`} />
       )}
       {!firstSyncDone ? (
-        <span className="text-sm font-semibold text-emerald-700">Grátis</span>
+        <span className="text-sm font-semibold text-emerald-700">{t("header.freeCredits")}</span>
       ) : (
         <span
           className={`text-sm font-semibold ${credits <= 2 ? "text-red-600" : "text-amber-700"}`}
@@ -219,6 +226,8 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
         <div className="flex-1" />
 
+        <LanguageSwitcher className="hidden sm:flex" />
+
         {isLoggedIn && <CreditsBadge />}
 
         {isLoggedIn && (
@@ -236,14 +245,14 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             </span>
             <button
               onClick={() => setShowOnboarding(true)}
-              title="Como funciona"
+              title={t("header.howItWorks")}
               className="ml-1 p-1.5 rounded-lg text-slate-500 hover:text-primary hover:bg-primary/10 transition-all"
             >
               <HelpCircle className="w-4 h-4" />
             </button>
             <button
               onClick={handleLogout}
-              title="Sair"
+              title={t("header.logout")}
               className="p-1.5 rounded-lg text-slate-500 hover:text-red-500 hover:bg-red-50 transition-all"
             >
               {logoutMut.isPending ? (
@@ -292,8 +301,11 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   className="w-full flex items-center gap-2 px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors border-b border-slate-100"
                 >
                   <HelpCircle className="w-4 h-4" />
-                  Como funciona
+                  {t("header.howItWorks")}
                 </button>
+                <div className="border-b border-slate-100">
+                  <LanguageSwitcher className="w-full justify-start px-4 py-3 rounded-none" />
+                </div>
                 <button
                   onClick={handleLogout}
                   disabled={logoutMut.isPending}
@@ -304,7 +316,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   ) : (
                     <LogOut className="w-4 h-4" />
                   )}
-                  Sair
+                  {t("header.logout")}
                 </button>
               </div>
             )}

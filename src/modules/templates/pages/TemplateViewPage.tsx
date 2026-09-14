@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useRoute, Link, useLocation } from "wouter";
+import { useTranslation } from "react-i18next";
 import { ArrowLeft, Coins, Check, Loader2 } from "lucide-react";
 import { ApiError } from "@/api-client";
 import { Button, Skeleton } from "@/components/ui-elements";
@@ -15,6 +16,7 @@ import { useCredits } from "@modules/credits/hooks/use-credits";
 import { useTemplate, usePurchaseTemplate } from "../hooks/use-templates";
 
 export default function TemplateViewPage() {
+  const { t } = useTranslation("templates");
   const [, params] = useRoute("/templates/:uuid");
   const templateUuid = params?.uuid ?? "";
   const [, setLocation] = useLocation();
@@ -50,8 +52,8 @@ export default function TemplateViewPage() {
     try {
       const { proposalUuid } = await purchaseTemplate(template.uuid);
       toast({
-        title: "Rotina criada!",
-        description: `"${template.title}" agora é sua — edite como quiser.`,
+        title: t("templateView.toast.createdTitle"),
+        description: t("templateView.toast.createdDescription", { title: template.title }),
       });
       setLocation(`/proposal/${proposalUuid}`);
     } catch (err) {
@@ -61,8 +63,8 @@ export default function TemplateViewPage() {
         return;
       }
       toast({
-        title: "Erro ao comprar template",
-        description: "Não foi possível criar sua rotina. Tente novamente.",
+        title: t("templateView.toast.errorTitle"),
+        description: t("templateView.toast.errorDescription"),
         variant: "destructive",
       });
     } finally {
@@ -79,7 +81,7 @@ export default function TemplateViewPage() {
   }
 
   if (!template) {
-    return <div className="p-8 text-center text-slate-500">Template não encontrado.</div>;
+    return <div className="p-8 text-center text-slate-500">{t("templateView.notFound")}</div>;
   }
 
   return (
@@ -89,7 +91,7 @@ export default function TemplateViewPage() {
         <div>
           <Link href="/templates">
             <button className="flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 mb-2 transition-colors">
-              <ArrowLeft className="w-4 h-4" /> Templates
+              <ArrowLeft className="w-4 h-4" /> {t("templateView.backLink")}
             </button>
           </Link>
           {/* flex-wrap + break-words: several real template titles ("Founder
@@ -115,7 +117,7 @@ export default function TemplateViewPage() {
               size="lg"
               className="gap-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg shadow-emerald-500/30"
             >
-              <Check className="w-5 h-5" /> Ver minha rotina
+              <Check className="w-5 h-5" /> {t("templateView.viewMyRoutine")}
             </Button>
           </Link>
         ) : template.alreadyPurchased ? (
@@ -127,7 +129,7 @@ export default function TemplateViewPage() {
             className="gap-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg shadow-emerald-500/30"
           >
             <Check className="w-5 h-5" />
-            {isPurchasing ? "Recriando..." : "Recriar minha rotina"}
+            {isPurchasing ? t("templateView.recreating") : t("templateView.recreateMyRoutine")}
           </Button>
         ) : (
           <Button
@@ -138,7 +140,9 @@ export default function TemplateViewPage() {
             className="gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-indigo-500/30"
           >
             <Coins className="w-5 h-5" />
-            {isPurchasing ? "Comprando..." : `Comprar por ${template.priceCredits} créditos`}
+            {isPurchasing
+              ? t("templateView.buying")
+              : t("templateView.buyForCredits", { credits: template.priceCredits })}
           </Button>
         )}
       </div>
@@ -148,11 +152,11 @@ export default function TemplateViewPage() {
         <div className="flex-1 min-w-0 bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
           <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
             <h2 className="font-bold text-slate-800">
-              {viewMode === "dia" ? "Linha do Tempo Diária" : "Visão Semanal"}
+              {viewMode === "dia" ? t("templateView.dailyTimeline") : t("templateView.weeklyView")}
             </h2>
             <div className="flex items-center gap-3">
               <span className="hidden sm:inline text-xs text-slate-500 font-medium">
-                Somente visualização
+                {t("templateView.viewOnly")}
               </span>
               <div className="flex rounded-xl overflow-hidden border border-slate-200 text-sm">
                 <button
@@ -164,7 +168,7 @@ export default function TemplateViewPage() {
                       : "text-slate-500 hover:bg-slate-50",
                   )}
                 >
-                  Dia
+                  {t("templateView.dayToggle")}
                 </button>
                 <button
                   onClick={() => setViewMode("semana")}
@@ -175,7 +179,7 @@ export default function TemplateViewPage() {
                       : "text-slate-500 hover:bg-slate-50",
                   )}
                 >
-                  Semana
+                  {t("templateView.weekToggle")}
                 </button>
               </div>
             </div>
@@ -203,7 +207,9 @@ export default function TemplateViewPage() {
               <div className="px-3 sm:px-6 py-6">
                 {selectedDayEvents.length === 0 ? (
                   <div className="text-center py-10">
-                    <p className="text-slate-500 text-sm">Nenhuma atividade para este dia.</p>
+                    <p className="text-slate-500 text-sm">
+                      {t("templateView.noActivitiesForDay")}
+                    </p>
                   </div>
                 ) : (
                   <div className="space-y-2">
@@ -251,14 +257,28 @@ export default function TemplateViewPage() {
             className="rounded-2xl p-5 space-y-4"
             style={{ background: "linear-gradient(135deg, #1E1B4B 0%, #312E81 100%)" }}
           >
-            <h3 className="font-bold text-white text-base">Equilíbrio do Dia</h3>
-            <ProgressBar label="Produtividade" value={equilibrio.produtividade} color="#818CF8" />
-            <ProgressBar label="Bem-estar" value={equilibrio.bemEstar} color="#34D399" />
-            <ProgressBar label="Lazer" value={equilibrio.lazer} color="#FCD34D" />
+            <h3 className="font-bold text-white text-base">{t("templateView.dailyBalance")}</h3>
+            <ProgressBar
+              label={t("templateView.productivity")}
+              value={equilibrio.produtividade}
+              color="#818CF8"
+            />
+            <ProgressBar
+              label={t("templateView.wellbeing")}
+              value={equilibrio.bemEstar}
+              color="#34D399"
+            />
+            <ProgressBar
+              label={t("templateView.leisure")}
+              value={equilibrio.lazer}
+              color="#FCD34D"
+            />
           </div>
 
           <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
-            <h3 className="font-bold text-slate-800 text-base mb-4">Distribuição Semanal</h3>
+            <h3 className="font-bold text-slate-800 text-base mb-4">
+              {t("templateView.weeklyDistribution")}
+            </h3>
             <div className="flex items-center justify-between gap-4">
               <DonutChart segments={distribuicaoSegments} />
               <div className="space-y-2 flex-1">
@@ -277,10 +297,7 @@ export default function TemplateViewPage() {
 
           {!template.alreadyPurchased && (
             <div className="bg-primary/5 rounded-2xl p-5 border border-primary/10 space-y-3">
-              <p className="text-sm text-slate-600">
-                Ao comprar, esta rotina é copiada para a sua conta — você pode editar dias, horários
-                e atividades livremente, sem afetar este template.
-              </p>
+              <p className="text-sm text-slate-600">{t("templateView.purchaseInfo")}</p>
               <Button
                 onClick={handlePurchase}
                 isLoading={isPurchasing}
@@ -292,17 +309,14 @@ export default function TemplateViewPage() {
                 ) : (
                   <Coins className="w-4 h-4" />
                 )}
-                Comprar por {template.priceCredits} créditos
+                {t("templateView.buyForCredits", { credits: template.priceCredits })}
               </Button>
             </div>
           )}
 
           {template.alreadyPurchased && !template.proposalUuid && (
             <div className="bg-emerald-50 rounded-2xl p-5 border border-emerald-100 space-y-3">
-              <p className="text-sm text-slate-600">
-                Você já comprou este template — parece que apagou a rotina criada por ele. Sem
-                problema: recriar é gratuito, você não paga de novo.
-              </p>
+              <p className="text-sm text-slate-600">{t("templateView.recreateInfo")}</p>
               <Button
                 onClick={handlePurchase}
                 isLoading={isPurchasing}
@@ -314,7 +328,7 @@ export default function TemplateViewPage() {
                 ) : (
                   <Check className="w-4 h-4" />
                 )}
-                Recriar minha rotina
+                {t("templateView.recreateMyRoutine")}
               </Button>
             </div>
           )}
@@ -326,7 +340,7 @@ export default function TemplateViewPage() {
         onClose={() => setShowCreditsModal(false)}
         currentCredits={creditsData?.credits ?? 0}
         requiredCredits={creditsRequired}
-        action="comprar este template"
+        action={t("templateView.creditsModalAction")}
       />
     </div>
   );

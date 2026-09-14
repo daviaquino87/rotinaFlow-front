@@ -1,0 +1,158 @@
+{
+  "components": {
+    "addBetweenButton": {
+      "add": "Add"
+    },
+    "modal": {
+      "close": "Close"
+    },
+    "donutChart": {
+      "noData": "No data"
+    },
+    "promptHistoryModal": {
+      "title": "What you asked for",
+      "noHistory": "We couldn't find the history for this generation.",
+      "fallbackAssistantText": "Routine generated successfully.",
+      "userLabel": "What you described",
+      "assistantLabel": "How the AI interpreted it"
+    },
+    "syncConfirmModal": {
+      "title": "Sync with Google Calendar",
+      "description": "Do you want to clear this routine's previous events before adding the new ones?",
+      "clearAndSync": {
+        "title": "Clear and sync",
+        "description": "Removes previous events and adds the new ones"
+      },
+      "onlyAdd": {
+        "title": "Just add",
+        "description": "Keeps existing events and adds the new ones"
+      },
+      "cancel": "Cancel"
+    },
+    "timelineEventCard": {
+      "edit": "Edit",
+      "moveUp": "Move up",
+      "moveDown": "Move down"
+    },
+    "historyPanel": {
+      "renameError": "Error renaming",
+      "routineFallbackLabel": "Routine {{number}}",
+      "emptyState": {
+        "title": "No saved routines",
+        "description": "Generate your first routine to see the history here.",
+        "createButton": "Create Routine"
+      },
+      "header": {
+        "title": "Routine History"
+      },
+      "save": "Save",
+      "cancelEditTitle": "Cancel",
+      "cancelEditAriaLabel": "Cancel editing",
+      "renameHint": "Click to rename",
+      "status": {
+        "approved": "Synced",
+        "pending": "Pending"
+      },
+      "deleteRoutine": "Delete routine",
+      "viewButton": "View",
+      "syncButton": {
+        "sync": "Sync",
+        "resync": "Re-sync"
+      },
+      "newRoutineButton": "New Routine"
+    }
+  },
+  "pages": {
+    "proposalsList": {
+      "title": "My Routine",
+      "todayButton": "Today",
+      "refreshTooltip": "Refresh calendar",
+      "clearTooltip": "Clear calendar",
+      "syncBanner": {
+        "message": "Your routine was generated and isn't on Google Calendar yet?",
+        "button": "Sync now"
+      },
+      "statusSynced": "Synced",
+      "createRoutineFull": "Create AI Routine",
+      "createRoutineShort": "New Routine",
+      "noToken": {
+        "title": "Google Calendar not connected",
+        "description": "To see your calendar, sign in again with your Google account to authorize access to Google Calendar.",
+        "reconnectButton": "Reconnect with Google"
+      },
+      "error": {
+        "title": "Error loading calendar",
+        "description": "We couldn't load the events. Please try again.",
+        "retryButton": "Try again"
+      },
+      "allDayLabel": "all day",
+      "clearConfirmModal": {
+        "title": "Clear calendar",
+        "descriptionPrefix": "This will remove ",
+        "descriptionStrong": "all events",
+        "descriptionSuffix": " that rotinaFlow synced to your Google Calendar. Events you created manually won't be affected.",
+        "warning": "This action cannot be undone.",
+        "cancelButton": "Cancel",
+        "confirmButton": "Clear"
+      },
+      "creditsModalAction": "sync with Google Calendar"
+    },
+    "proposalView": {
+      "backLink": "My Routines",
+      "title": "Your Suggested Routine",
+      "subtitle": "Generated with AI analysis based on your preferences",
+      "viewPromptLink": "See what I asked for",
+      "saveButton": "Save",
+      "regenerateButton": "Regenerate",
+      "syncButton": "Sync Calendar",
+      "syncingButton": "Syncing...",
+      "syncedStatus": "Synced",
+      "syncOverlay": {
+        "title": "Syncing with Google Calendar",
+        "subtitle": "Please wait, this may take a few seconds..."
+      },
+      "timelinePanel": {
+        "title": "Daily Timeline",
+        "viewModeDay": "Day",
+        "viewModeWeek": "Week"
+      },
+      "emptyState": {
+        "message": "No activities for this day.",
+        "addButton": "Add activity"
+      },
+      "addAtStart": "Add at the start",
+      "addAfter": "Add after {{time}}",
+      "balanceCard": {
+        "title": "Daily Balance",
+        "productivity": "Productivity",
+        "wellbeing": "Well-being",
+        "leisure": "Leisure"
+      },
+      "nextSteps": {
+        "title": "Next Steps",
+        "step1Title": "Routine Generated",
+        "step1Description": "AI processed your preferences.",
+        "step2Title": "Sync",
+        "step2Description": "Connect with Google Calendar.",
+        "hintDesktop": "Hover over an event to edit it, or drag it to swap times.",
+        "hintMobile": "Tap \"Edit\" on the card or use the ↑↓ arrows to reorder."
+      },
+      "weeklyDistribution": {
+        "title": "Weekly Distribution"
+      },
+      "modal": {
+        "addTitle": "New Activity",
+        "editTitle": "Edit Activity",
+        "titleLabel": "Title",
+        "startLabel": "Start",
+        "endLabel": "End",
+        "descriptionLabel": "Description",
+        "deleteButton": "Delete",
+        "cancelButton": "Cancel",
+        "saveButton": "Save"
+      },
+      "notFound": "Proposal not found.",
+      "creditsModalAction": "sync with Google Calendar"
+    }
+  }
+}

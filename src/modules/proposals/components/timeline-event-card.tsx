@@ -1,5 +1,6 @@
 import React from "react";
 import { Edit2, ChevronUp, ChevronDown } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@lib/utils";
 import type { ScheduleEvent } from "@/api-client";
 import { getCategory } from "@modules/proposals/utils/event-category";
@@ -29,6 +30,7 @@ export function TimelineEventCard({
   onDragLeave?: () => void;
   onDrop?: () => void;
 }) {
+  const { t } = useTranslation("proposals");
   const cat = getCategory(event);
   return (
     <div
@@ -108,7 +110,7 @@ export function TimelineEventCard({
               onMouseDown={(e) => e.stopPropagation()}
               className="flex items-center gap-1 text-xs font-semibold text-slate-500 hover:text-primary hover:bg-primary/8 px-2 py-1 rounded-lg transition-all sm:opacity-0 sm:group-hover:opacity-100"
             >
-              <Edit2 className="w-3 h-3" /> Editar
+              <Edit2 className="w-3 h-3" /> {t("components.timelineEventCard.edit")}
             </button>
             {/* Up/down — only on mobile */}
             {(onMoveUp || onMoveDown) && (
@@ -120,7 +122,7 @@ export function TimelineEventCard({
                   }}
                   disabled={!onMoveUp}
                   className="p-1.5 rounded-lg text-slate-300 hover:text-primary hover:bg-primary/8 disabled:opacity-20 transition-all"
-                  title="Mover para cima"
+                  title={t("components.timelineEventCard.moveUp")}
                 >
                   <ChevronUp className="w-4 h-4" />
                 </button>
@@ -131,7 +133,7 @@ export function TimelineEventCard({
                   }}
                   disabled={!onMoveDown}
                   className="p-1.5 rounded-lg text-slate-300 hover:text-primary hover:bg-primary/8 disabled:opacity-20 transition-all"
-                  title="Mover para baixo"
+                  title={t("components.timelineEventCard.moveDown")}
                 >
                   <ChevronDown className="w-4 h-4" />
                 </button>

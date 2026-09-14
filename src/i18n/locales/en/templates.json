@@ -1,0 +1,40 @@
+{
+  "templatesGallery": {
+    "title": "Routine Templates",
+    "subtitle": "Ready-made routines, created by experts. Buy one with your credits and it becomes yours — fully editable, without affecting the original template.",
+    "allCategory": "All",
+    "emptyState": "No templates available at the moment.",
+    "emptyCategory": "No templates in the \"{{category}}\" category.",
+    "weeklyActivities": "{{count}} weekly activities",
+    "viewRoutine": "View routine"
+  },
+  "templateView": {
+    "backLink": "Templates",
+    "viewMyRoutine": "View my routine",
+    "recreating": "Recreating...",
+    "recreateMyRoutine": "Recreate my routine",
+    "buying": "Buying...",
+    "buyForCredits": "Buy for {{credits}} credits",
+    "notFound": "Template not found.",
+    "dailyTimeline": "Daily Timeline",
+    "weeklyView": "Weekly View",
+    "viewOnly": "View only",
+    "dayToggle": "Day",
+    "weekToggle": "Week",
+    "noActivitiesForDay": "No activities for this day.",
+    "dailyBalance": "Daily Balance",
+    "productivity": "Productivity",
+    "wellbeing": "Well-being",
+    "leisure": "Leisure",
+    "weeklyDistribution": "Weekly Distribution",
+    "purchaseInfo": "When you buy it, this routine is copied to your account — you can freely edit days, times, and activities without affecting this template.",
+    "recreateInfo": "You've already bought this template — looks like you deleted the routine it created. No problem: recreating is free, you won't pay again.",
+    "creditsModalAction": "buy this template",
+    "toast": {
+      "createdTitle": "Routine created!",
+      "createdDescription": "\"{{title}}\" is now yours — edit it however you like.",
+      "errorTitle": "Error buying template",
+      "errorDescription": "Couldn't create your routine. Please try again."
+    }
+  }
+}

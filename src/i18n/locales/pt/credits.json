@@ -1,0 +1,34 @@
+{
+  "creditsModal": {
+    "close": "Fechar",
+    "title": "Adicionar Créditos",
+    "exchangeRate": "1 crédito = R$ 1,00",
+    "currentBalance": "Seu saldo atual",
+    "creditsCount_one": "{{count}} crédito",
+    "creditsCount_other": "{{count}} créditos",
+    "needCreditsPrefix": "Você precisa de",
+    "forAction": "para",
+    "defaultAction": "esta ação",
+    "youHave": "Você tem",
+    "costPerAction": "Custo por ação",
+    "creditsLabel": "créditos",
+    "generateRoutine": "Gerar rotina",
+    "sync": "Sincronizar",
+    "choosePackage": "Escolha um pacote",
+    "mostPopular": "Mais popular",
+    "packages": {
+      "starter": {
+        "description": "1 geração de rotina, sobra 1 crédito"
+      },
+      "popular": {
+        "description": "1 geração + 1 sincronização, sobra 0"
+      },
+      "pro": {
+        "description": "2 gerações + 2 sincronizações, sobra 0"
+      }
+    },
+    "footer": "Pagamento seguro via Stripe • Créditos não expiram",
+    "toastErrorTitle": "Erro",
+    "toastErrorDefaultMessage": "Erro ao criar checkout"
+  }
+}

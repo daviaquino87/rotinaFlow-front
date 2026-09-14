@@ -1,0 +1,67 @@
+{
+  "appName": "rotinaFlow",
+  "nav": {
+    "newRoutine": "Nova Rotina",
+    "newRoutineShort": "Nova",
+    "myRoutine": "Minha Rotina",
+    "myRoutineShort": "Minha",
+    "templates": "Templates",
+    "templatesShort": "Templates"
+  },
+  "header": {
+    "howItWorks": "Como funciona",
+    "logout": "Sair",
+    "freeCredits": "Grátis",
+    "viewCredits": "Ver meus créditos",
+    "lowCreditsViewCredits": "Créditos baixos — ver meus créditos"
+  },
+  "session": {
+    "checkError": "Não foi possível verificar sua sessão.",
+    "retry": "Tentar novamente"
+  },
+  "onboarding": {
+    "close": "Fechar",
+    "welcomeTitle": "Bem-vindo ao rotinaFlow!",
+    "welcomeSubtitlePrefix": "Organize sua semana com inteligência artificial em",
+    "welcomeSubtitleStrong": "3 passos simples",
+    "step": "Passo {{num}}",
+    "steps": {
+      "describe": {
+        "title": "Descreva sua rotina",
+        "description": "Informe as atividades que você já faz e o que quer incluir no seu dia a dia."
+      },
+      "generate": {
+        "title": "A IA gera sua agenda",
+        "description": "Nossa IA analisa suas informações e monta uma rotina semanal personalizada para você."
+      },
+      "sync": {
+        "title": "Sincronize com o Google",
+        "description": "Exporte sua rotina direto para o Google Agenda com um clique."
+      }
+    },
+    "startNow": "Começar agora",
+    "firstRoutineFreePrefix": "Sua primeira rotina é",
+    "firstRoutineFreeStrong": "gratuita"
+  },
+  "pwaInstall": {
+    "promptLong": "Instale o rotinaFlow no seu celular para acesso rápido —",
+    "promptShort": "Instale o app para acesso rápido —",
+    "installNow": "Instalar agora",
+    "close": "Fechar"
+  },
+  "errorBoundary": {
+    "title": "Algo deu errado",
+    "description": "Encontramos um erro inesperado. Recarregue a página para continuar — se o problema persistir, tente novamente em alguns minutos.",
+    "reload": "Recarregar página"
+  },
+  "notFound": {
+    "title": "Página não encontrada",
+    "description": "Esse link não existe ou mudou de endereço. Talvez a rotina que você procura tenha sido movida ou removida.",
+    "backToRoutine": "Voltar para minha rotina"
+  },
+  "language": {
+    "label": "Idioma",
+    "pt": "Português",
+    "en": "English"
+  }
+}

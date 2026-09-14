@@ -1,0 +1,158 @@
+{
+  "components": {
+    "addBetweenButton": {
+      "add": "Adicionar"
+    },
+    "modal": {
+      "close": "Fechar"
+    },
+    "donutChart": {
+      "noData": "Sem dados"
+    },
+    "promptHistoryModal": {
+      "title": "O que você pediu",
+      "noHistory": "Não encontramos o histórico dessa geração.",
+      "fallbackAssistantText": "Rotina gerada com sucesso.",
+      "userLabel": "O que você descreveu",
+      "assistantLabel": "Como a IA interpretou"
+    },
+    "syncConfirmModal": {
+      "title": "Sincronizar com Google Agenda",
+      "description": "Deseja limpar os eventos anteriores desta rotina antes de adicionar os novos?",
+      "clearAndSync": {
+        "title": "Limpar e sincronizar",
+        "description": "Remove eventos anteriores e adiciona os novos"
+      },
+      "onlyAdd": {
+        "title": "Apenas adicionar",
+        "description": "Mantém eventos existentes e adiciona os novos"
+      },
+      "cancel": "Cancelar"
+    },
+    "timelineEventCard": {
+      "edit": "Editar",
+      "moveUp": "Mover para cima",
+      "moveDown": "Mover para baixo"
+    },
+    "historyPanel": {
+      "renameError": "Erro ao renomear",
+      "routineFallbackLabel": "Rotina {{number}}",
+      "emptyState": {
+        "title": "Nenhuma rotina salva",
+        "description": "Gere sua primeira rotina para ver o histórico aqui.",
+        "createButton": "Criar Rotina"
+      },
+      "header": {
+        "title": "Histórico de Rotinas"
+      },
+      "save": "Salvar",
+      "cancelEditTitle": "Cancelar",
+      "cancelEditAriaLabel": "Cancelar edição",
+      "renameHint": "Clique para renomear",
+      "status": {
+        "approved": "Sincronizada",
+        "pending": "Pendente"
+      },
+      "deleteRoutine": "Excluir rotina",
+      "viewButton": "Visualizar",
+      "syncButton": {
+        "sync": "Sincronizar",
+        "resync": "Re-sincronizar"
+      },
+      "newRoutineButton": "Nova Rotina"
+    }
+  },
+  "pages": {
+    "proposalsList": {
+      "title": "Minha Rotina",
+      "todayButton": "Hoje",
+      "refreshTooltip": "Atualizar calendário",
+      "clearTooltip": "Limpar agenda",
+      "syncBanner": {
+        "message": "Sua rotina foi gerada e ainda não está no Google Agenda?",
+        "button": "Sincronizar agora"
+      },
+      "statusSynced": "Sincronizada",
+      "createRoutineFull": "Criar Rotina IA",
+      "createRoutineShort": "Nova Rotina",
+      "noToken": {
+        "title": "Google Agenda não conectado",
+        "description": "Para ver sua agenda, faça login novamente com sua conta Google para autorizar o acesso ao Google Calendar.",
+        "reconnectButton": "Reconectar com Google"
+      },
+      "error": {
+        "title": "Erro ao carregar calendário",
+        "description": "Não foi possível carregar os eventos. Tente novamente.",
+        "retryButton": "Tentar novamente"
+      },
+      "allDayLabel": "tudo",
+      "clearConfirmModal": {
+        "title": "Limpar agenda",
+        "descriptionPrefix": "Isso vai remover ",
+        "descriptionStrong": "todos os eventos",
+        "descriptionSuffix": " que o rotinaFlow sincronizou no seu Google Agenda. Os eventos que você criou manualmente não serão afetados.",
+        "warning": "Esta ação não pode ser desfeita.",
+        "cancelButton": "Cancelar",
+        "confirmButton": "Limpar"
+      },
+      "creditsModalAction": "sincronizar com Google Agenda"
+    },
+    "proposalView": {
+      "backLink": "Minhas Rotinas",
+      "title": "Sua Rotina Sugerida",
+      "subtitle": "Gerada com análise de IA com base nas suas preferências",
+      "viewPromptLink": "Ver o que eu pedi",
+      "saveButton": "Salvar",
+      "regenerateButton": "Regerar",
+      "syncButton": "Sincronizar Agenda",
+      "syncingButton": "Sincronizando...",
+      "syncedStatus": "Sincronizada",
+      "syncOverlay": {
+        "title": "Sincronizando com Google Agenda",
+        "subtitle": "Aguarde, isso pode levar alguns segundos..."
+      },
+      "timelinePanel": {
+        "title": "Linha do Tempo Diária",
+        "viewModeDay": "Dia",
+        "viewModeWeek": "Semana"
+      },
+      "emptyState": {
+        "message": "Nenhuma atividade para este dia.",
+        "addButton": "Adicionar atividade"
+      },
+      "addAtStart": "Adicionar no início",
+      "addAfter": "Adicionar após {{time}}",
+      "balanceCard": {
+        "title": "Equilíbrio do Dia",
+        "productivity": "Produtividade",
+        "wellbeing": "Bem-estar",
+        "leisure": "Lazer"
+      },
+      "nextSteps": {
+        "title": "Próximos Passos",
+        "step1Title": "Rotina Gerada",
+        "step1Description": "IA processou suas preferências.",
+        "step2Title": "Sincronizar",
+        "step2Description": "Conecte-se com Google Agenda.",
+        "hintDesktop": "Passe o mouse sobre um evento para editá-lo, ou arraste para trocar horários.",
+        "hintMobile": "Toque em \"Editar\" no card ou use as setas ↑↓ para reordenar."
+      },
+      "weeklyDistribution": {
+        "title": "Distribuição Semanal"
+      },
+      "modal": {
+        "addTitle": "Nova Atividade",
+        "editTitle": "Editar Atividade",
+        "titleLabel": "Título",
+        "startLabel": "Início",
+        "endLabel": "Fim",
+        "descriptionLabel": "Descrição",
+        "deleteButton": "Excluir",
+        "cancelButton": "Cancelar",
+        "saveButton": "Salvar"
+      },
+      "notFound": "Proposta não encontrada.",
+      "creditsModalAction": "sincronizar com Google Agenda"
+    }
+  }
+}

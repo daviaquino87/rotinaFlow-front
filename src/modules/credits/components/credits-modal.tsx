@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { X, Coins, Zap, Star, Rocket, Loader2 } from "lucide-react";
 import { useToast } from "@hooks/use-toast";
 import { ApiError, customFetch } from "@/api-client";
@@ -10,7 +11,7 @@ interface Package {
   amountCents: number;
   popular?: boolean;
   icon: React.ReactNode;
-  description: string;
+  key: "starter" | "popular" | "pro";
 }
 
 const PACKAGES: Package[] = [
@@ -19,7 +20,7 @@ const PACKAGES: Package[] = [
     priceLabel: "R$ 3,00",
     amountCents: 300,
     icon: <Zap className="w-5 h-5" />,
-    description: "1 geração de rotina, sobra 1 crédito",
+    key: "starter",
   },
   {
     credits: 5,
@@ -27,14 +28,14 @@ const PACKAGES: Package[] = [
     amountCents: 500,
     popular: true,
     icon: <Star className="w-5 h-5" />,
-    description: "1 geração + 1 sincronização, sobra 0",
+    key: "popular",
   },
   {
     credits: 10,
     priceLabel: "R$ 10,00",
     amountCents: 1000,
     icon: <Rocket className="w-5 h-5" />,
-    description: "2 gerações + 2 sincronizações, sobra 0",
+    key: "pro",
   },
 ];
 
@@ -53,6 +54,7 @@ export function CreditsModal({
   requiredCredits,
   action,
 }: CreditsModalProps) {
+  const { t } = useTranslation("credits");
   const [loading, setLoading] = useState<number | null>(null);
   const { toast } = useToast();
 
@@ -82,8 +84,9 @@ export function CreditsModal({
           ? (err.data as { error: string }).error
           : undefined;
       const message =
-        backendError ?? (err instanceof Error ? err.message : "Erro ao criar checkout");
-      toast({ title: "Erro", description: message, variant: "destructive" });
+        backendError ??
+        (err instanceof Error ? err.message : t("creditsModal.toastErrorDefaultMessage"));
+      toast({ title: t("creditsModal.toastErrorTitle"), description: message, variant: "destructive" });
       setLoading(null);
     }
   };
@@ -109,7 +112,7 @@ export function CreditsModal({
             <div className="bg-gradient-to-br from-primary to-purple-600 p-6 text-white shrink-0">
               <button
                 onClick={onClose}
-                aria-label="Fechar"
+                aria-label={t("creditsModal.close")}
                 className="absolute top-4 right-4 p-2 rounded-full bg-white/20 hover:bg-white/30 transition"
               >
                 <X className="w-4 h-4" />
@@ -119,22 +122,24 @@ export function CreditsModal({
                   <Coins className="w-5 h-5" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold">Adicionar Créditos</h2>
-                  <p className="text-white/80 text-sm">1 crédito = R$ 1,00</p>
+                  <h2 className="text-lg font-bold">{t("creditsModal.title")}</h2>
+                  <p className="text-white/80 text-sm">{t("creditsModal.exchangeRate")}</p>
                 </div>
               </div>
 
               <div className="mt-4 bg-white/10 rounded-xl p-3 flex items-center justify-between">
-                <span className="text-sm text-white/80">Seu saldo atual</span>
+                <span className="text-sm text-white/80">{t("creditsModal.currentBalance")}</span>
                 <span className="font-bold text-xl">
-                  {currentCredits} crédito{currentCredits !== 1 ? "s" : ""}
+                  {t("creditsModal.creditsCount", { count: currentCredits })}
                 </span>
               </div>
 
               {requiredCredits !== undefined && requiredCredits > currentCredits && (
                 <div className="mt-3 bg-white/10 rounded-xl p-3 text-sm text-white/90">
-                  Você precisa de <strong>{requiredCredits} créditos</strong> para{" "}
-                  {action ?? "esta ação"}. Você tem <strong>{currentCredits}</strong>.
+                  {t("creditsModal.needCreditsPrefix")}{" "}
+                  <strong>{t("creditsModal.creditsCount", { count: requiredCredits })}</strong>{" "}
+                  {t("creditsModal.forAction")} {action ?? t("creditsModal.defaultAction")}.{" "}
+                  {t("creditsModal.youHave")} <strong>{currentCredits}</strong>.
                 </div>
               )}
             </div>
@@ -146,25 +151,27 @@ export function CreditsModal({
             <div className="overflow-y-auto flex-1 min-h-0">
               <div className="px-6 pt-5 pb-2">
                 <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
-                  Custo por ação
+                  {t("creditsModal.costPerAction")}
                 </p>
                 <div className="flex gap-3">
                   <div className="flex-1 bg-blue-50 rounded-lg p-2.5 text-center">
                     <div className="text-blue-600 font-bold text-lg">2</div>
-                    <div className="text-blue-700 text-xs">créditos</div>
-                    <div className="text-slate-500 text-xs mt-0.5">Gerar rotina</div>
+                    <div className="text-blue-700 text-xs">{t("creditsModal.creditsLabel")}</div>
+                    <div className="text-slate-500 text-xs mt-0.5">
+                      {t("creditsModal.generateRoutine")}
+                    </div>
                   </div>
                   <div className="flex-1 bg-purple-50 rounded-lg p-2.5 text-center">
                     <div className="text-purple-600 font-bold text-lg">3</div>
-                    <div className="text-purple-700 text-xs">créditos</div>
-                    <div className="text-slate-500 text-xs mt-0.5">Sincronizar</div>
+                    <div className="text-purple-700 text-xs">{t("creditsModal.creditsLabel")}</div>
+                    <div className="text-slate-500 text-xs mt-0.5">{t("creditsModal.sync")}</div>
                   </div>
                 </div>
               </div>
 
               <div className="px-6 py-4 space-y-3">
                 <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                  Escolha um pacote
+                  {t("creditsModal.choosePackage")}
                 </p>
                 {PACKAGES.map((pkg) => (
                   <div
@@ -177,7 +184,7 @@ export function CreditsModal({
                   >
                     {pkg.popular && (
                       <span className="absolute -top-2.5 left-4 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
-                        Mais popular
+                        {t("creditsModal.mostPopular")}
                       </span>
                     )}
                     <div className="flex items-center justify-between">
@@ -189,9 +196,11 @@ export function CreditsModal({
                         </div>
                         <div>
                           <div className="font-semibold text-slate-900">
-                            {pkg.credits} crédito{pkg.credits > 1 ? "s" : ""}
+                            {t("creditsModal.creditsCount", { count: pkg.credits })}
                           </div>
-                          <div className="text-xs text-slate-500">{pkg.description}</div>
+                          <div className="text-xs text-slate-500">
+                            {t(`creditsModal.packages.${pkg.key}.description`)}
+                          </div>
                         </div>
                       </div>
                       <button
@@ -215,9 +224,7 @@ export function CreditsModal({
               </div>
 
               <div className="px-6 pb-5">
-                <p className="text-center text-xs text-slate-500">
-                  Pagamento seguro via Stripe • Créditos não expiram
-                </p>
+                <p className="text-center text-xs text-slate-500">{t("creditsModal.footer")}</p>
               </div>
             </div>
           </motion.div>

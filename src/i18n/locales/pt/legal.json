@@ -1,0 +1,195 @@
+{
+  "common": {
+    "back": "Voltar",
+    "lastUpdated": "Última atualização: setembro de 2026",
+    "copyright": "© 2025 rotinaFlow. Todos os direitos reservados.",
+    "footerNav": {
+      "privacy": "Política de Privacidade",
+      "terms": "Termos de Serviço"
+    }
+  },
+  "privacy": {
+    "title": "Política de Privacidade",
+    "sections": {
+      "whoWeAre": {
+        "title": "1. Quem somos",
+        "lead": "O",
+        "body": "é um serviço de organização de rotina semanal com inteligência artificial, disponível em",
+        "outro": ". Esta política descreve como coletamos, usamos e protegemos suas informações pessoais."
+      },
+      "dataCollected": {
+        "title": "2. Dados que coletamos",
+        "items": {
+          "googleAccount": {
+            "label": "Dados de conta Google:",
+            "description": "nome, endereço de e-mail e foto de perfil, obtidos via Google OAuth no momento do login."
+          },
+          "googleCalendar": {
+            "label": "Dados do Google Calendar:",
+            "description": "lemos e criamos eventos no calendário somente com sua autorização explícita e para os fins do serviço."
+          },
+          "payment": {
+            "label": "Dados de pagamento:",
+            "description": "processados pelo Stripe. Não armazenamos dados de cartão — apenas o ID da sessão de pagamento e o status da transação."
+          },
+          "routineContent": {
+            "label": "Conteúdo da rotina:",
+            "description": "as informações que você fornece para gerar sua rotina personalizada (horários, objetivos, preferências)."
+          },
+          "usageData": {
+            "label": "Dados de uso:",
+            "description": "logs de acesso, erros e métricas de desempenho para manter a qualidade do serviço."
+          }
+        }
+      },
+      "dataUse": {
+        "title": "3. Como usamos seus dados",
+        "items": {
+          "authenticate": "Autenticar sua conta e manter sua sessão ativa.",
+          "generate": "Gerar rotinas personalizadas com inteligência artificial (GroqCloud).",
+          "sync": "Sincronizar eventos aprovados com o seu Google Calendar.",
+          "processCredits": "Processar e registrar suas compras de créditos.",
+          "improve": "Melhorar o serviço com base em dados agregados e anônimos."
+        }
+      },
+      "dataSharing": {
+        "title": "4. Compartilhamento de dados",
+        "intro": "Não vendemos seus dados pessoais. Compartilhamos informações apenas com:",
+        "items": {
+          "google": {
+            "label": "Google LLC",
+            "description": "— para autenticação e integração com o Google Calendar."
+          },
+          "groq": {
+            "label": "Groq (GroqCloud)",
+            "description": "— para processamento de linguagem natural e geração de rotinas. Os dados enviados são usados somente para gerar sua resposta e não são usados para treinar modelos, conforme a política da API da Groq."
+          },
+          "stripe": {
+            "label": "Stripe",
+            "description": "— para processamento de pagamentos."
+          },
+          "railway": {
+            "label": "Railway",
+            "description": "— infraestrutura de hospedagem onde o serviço opera."
+          },
+          "supabase": {
+            "label": "Supabase",
+            "description": "— banco de dados onde suas informações de conta, rotinas e sessão são armazenadas."
+          }
+        }
+      },
+      "retention": {
+        "title": "5. Retenção de dados",
+        "body": "Mantemos seus dados enquanto sua conta estiver ativa. Você pode solicitar a exclusão de seus dados a qualquer momento pelo e-mail de contato abaixo. Após a exclusão, os dados são removidos dos nossos sistemas em até 30 dias."
+      },
+      "rights": {
+        "title": "6. Seus direitos (LGPD)",
+        "intro": "De acordo com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018), você tem direito a:",
+        "items": {
+          "confirm": "Confirmar a existência de tratamento de seus dados.",
+          "access": "Acessar, corrigir ou atualizar seus dados.",
+          "anonymize": "Solicitar a anonimização, bloqueio ou eliminação de dados desnecessários.",
+          "revoke": "Revogar o consentimento a qualquer momento.",
+          "portability": "Solicitar a portabilidade dos seus dados."
+        }
+      },
+      "security": {
+        "title": "7. Segurança",
+        "body": "Utilizamos HTTPS em todas as comunicações, sessões criptografadas armazenadas em banco de dados seguro, e não armazenamos senhas (o login é feito exclusivamente via Google). Ainda assim, nenhum sistema é 100% seguro — caso identifique qualquer irregularidade, entre em contato conosco imediatamente."
+      },
+      "cookies": {
+        "title": "8. Cookies e armazenamento local",
+        "body": "Utilizamos cookies de sessão para manter você autenticado. Não utilizamos cookies de rastreamento ou publicidade."
+      },
+      "changes": {
+        "title": "9. Alterações nesta política",
+        "body": "Podemos atualizar esta política periodicamente. Notificaremos você sobre mudanças significativas por e-mail ou por aviso no próprio serviço. O uso continuado do rotinaFlow após as alterações implica aceitação da nova política."
+      },
+      "contact": {
+        "title": "10. Contato",
+        "lead": "Para dúvidas, solicitações ou exercício dos seus direitos, entre em contato pelo e-mail:"
+      }
+    }
+  },
+  "terms": {
+    "title": "Termos de Serviço",
+    "sections": {
+      "acceptance": {
+        "title": "1. Aceitação dos termos",
+        "lead": "Ao acessar ou usar o",
+        "outro": ", você concorda com estes Termos de Serviço. Se você não concordar com algum dos termos, não utilize o serviço. O uso do rotinaFlow implica aceitação integral destas condições."
+      },
+      "description": {
+        "title": "2. Descrição do serviço",
+        "intro": "O rotinaFlow é uma plataforma de organização de rotina semanal que utiliza inteligência artificial para criar rotinas personalizadas e sincronizá-las com o Google Calendar. O serviço oferece:",
+        "items": {
+          "aiRoutine": "Criação de rotinas personalizadas por IA com base nas suas preferências e objetivos.",
+          "calendarSync": "Sincronização automática de eventos com o Google Calendar.",
+          "creditsModel": "Um modelo de créditos para utilização do serviço após a primeira rotina gratuita."
+        }
+      },
+      "account": {
+        "title": "3. Conta e acesso",
+        "items": {
+          "googleOnly": "O acesso ao rotinaFlow é feito exclusivamente via conta Google.",
+          "responsibility": "Você é responsável pela segurança da sua conta Google e por todas as atividades realizadas com ela.",
+          "minAge": "Você deve ter pelo menos 13 anos de idade para usar o serviço.",
+          "prohibited": "É proibido criar contas falsas, usar o serviço de forma automatizada sem autorização ou compartilhar seu acesso com terceiros."
+        }
+      },
+      "credits": {
+        "title": "4. Créditos e pagamentos",
+        "items": {
+          "freeFirst": "A primeira rotina é gratuita. Rotinas adicionais requerem créditos.",
+          "noExpiry": "Créditos são adquiridos mediante pagamento via Stripe e não expiram.",
+          "pricing": "Os preços estão em Reais (BRL) e podem ser alterados com aviso prévio.",
+          "nonRefundable": "Pagamentos são processados pelo Stripe e não são reembolsáveis, exceto em casos de erro técnico comprovado do serviço.",
+          "paymentIssue": "Em caso de problema com um pagamento, entre em contato em até 7 dias úteis após a transação."
+        }
+      },
+      "googleCalendar": {
+        "title": "5. Google Calendar",
+        "body": "Ao autorizar o acesso ao Google Calendar, você permite que o rotinaFlow crie, edite e exclua eventos em seu calendário conforme sua aprovação explícita dentro do app. Você pode revogar esse acesso a qualquer momento nas configurações da sua conta Google."
+      },
+      "acceptableUse": {
+        "title": "6. Uso aceitável",
+        "intro": "Você concorda em não usar o rotinaFlow para:",
+        "items": {
+          "laws": "Violar leis ou regulamentações aplicáveis.",
+          "offensive": "Enviar conteúdo ofensivo, abusivo ou que infrinja direitos de terceiros.",
+          "unauthorizedAccess": "Tentar acessar sistemas ou dados de outros usuários.",
+          "reverseEngineer": "Realizar engenharia reversa, modificar ou distribuir o software sem autorização.",
+          "overload": "Sobrecarregar intencionalmente a infraestrutura do serviço."
+        }
+      },
+      "availability": {
+        "title": "7. Disponibilidade e qualidade",
+        "body": "Nos esforçamos para manter o serviço disponível continuamente, mas não garantimos disponibilidade ininterrupta. Podemos suspender o serviço para manutenção com ou sem aviso prévio. A qualidade das rotinas geradas por IA pode variar — o serviço não substitui orientação profissional de saúde, nutrição ou carreira."
+      },
+      "ip": {
+        "title": "8. Propriedade intelectual",
+        "body": "Todo o conteúdo, design e código do rotinaFlow são de propriedade do serviço e protegidos por direitos autorais. As rotinas geradas para você são de seu uso pessoal. Você mantém a propriedade do conteúdo que fornece para gerar suas rotinas."
+      },
+      "liability": {
+        "title": "9. Limitação de responsabilidade",
+        "body": "O rotinaFlow é fornecido \"como está\". Não nos responsabilizamos por danos indiretos, incidentais ou consequentes decorrentes do uso ou impossibilidade de uso do serviço. Nossa responsabilidade total fica limitada ao valor pago pelos créditos nos últimos 30 dias."
+      },
+      "termination": {
+        "title": "10. Rescisão",
+        "body": "Podemos suspender ou encerrar sua conta caso você viole estes termos. Você pode encerrar sua conta a qualquer momento solicitando a exclusão dos seus dados pelo e-mail de contato. Créditos não utilizados não são reembolsáveis em caso de encerramento por violação dos termos."
+      },
+      "changes": {
+        "title": "11. Alterações nos termos",
+        "body": "Podemos atualizar estes termos periodicamente. Notificaremos você por e-mail ou aviso no serviço sobre mudanças relevantes. O uso continuado após as alterações implica aceitação dos novos termos."
+      },
+      "governingLaw": {
+        "title": "12. Lei aplicável",
+        "body": "Estes termos são regidos pelas leis da República Federativa do Brasil. Eventuais disputas serão resolvidas no foro da comarca de domicílio do usuário, conforme o Código de Defesa do Consumidor."
+      },
+      "contact": {
+        "title": "13. Contato",
+        "lead": "Para dúvidas sobre estes termos:"
+      }
+    }
+  }
+}

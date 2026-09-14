@@ -1,0 +1,195 @@
+{
+  "common": {
+    "back": "Back",
+    "lastUpdated": "Last updated: September 2026",
+    "copyright": "© 2025 rotinaFlow. All rights reserved.",
+    "footerNav": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "sections": {
+      "whoWeAre": {
+        "title": "1. Who we are",
+        "lead": "",
+        "body": "is a weekly routine organization service powered by artificial intelligence, available at",
+        "outro": ". This policy describes how we collect, use, and protect your personal information."
+      },
+      "dataCollected": {
+        "title": "2. Data we collect",
+        "items": {
+          "googleAccount": {
+            "label": "Google account data:",
+            "description": "name, email address, and profile picture, obtained via Google OAuth at login."
+          },
+          "googleCalendar": {
+            "label": "Google Calendar data:",
+            "description": "we read and create calendar events only with your explicit authorization and for the purposes of the service."
+          },
+          "payment": {
+            "label": "Payment data:",
+            "description": "processed by Stripe. We do not store card details — only the payment session ID and the transaction status."
+          },
+          "routineContent": {
+            "label": "Routine content:",
+            "description": "the information you provide to generate your personalized routine (schedules, goals, preferences)."
+          },
+          "usageData": {
+            "label": "Usage data:",
+            "description": "access logs, errors, and performance metrics to maintain the quality of the service."
+          }
+        }
+      },
+      "dataUse": {
+        "title": "3. How we use your data",
+        "items": {
+          "authenticate": "Authenticate your account and keep your session active.",
+          "generate": "Generate personalized routines using artificial intelligence (GroqCloud).",
+          "sync": "Sync approved events with your Google Calendar.",
+          "processCredits": "Process and record your credit purchases.",
+          "improve": "Improve the service based on aggregated, anonymized data."
+        }
+      },
+      "dataSharing": {
+        "title": "4. Data sharing",
+        "intro": "We do not sell your personal data. We share information only with:",
+        "items": {
+          "google": {
+            "label": "Google LLC",
+            "description": "— for authentication and Google Calendar integration."
+          },
+          "groq": {
+            "label": "Groq (GroqCloud)",
+            "description": "— for natural language processing and routine generation. Data sent is used only to generate your response and is not used to train models, in accordance with Groq's API policy."
+          },
+          "stripe": {
+            "label": "Stripe",
+            "description": "— for payment processing."
+          },
+          "railway": {
+            "label": "Railway",
+            "description": "— hosting infrastructure where the service runs."
+          },
+          "supabase": {
+            "label": "Supabase",
+            "description": "— the database where your account, routine, and session information is stored."
+          }
+        }
+      },
+      "retention": {
+        "title": "5. Data retention",
+        "body": "We keep your data for as long as your account is active. You may request the deletion of your data at any time using the contact email below. After deletion, your data is removed from our systems within 30 days."
+      },
+      "rights": {
+        "title": "6. Your rights (LGPD)",
+        "intro": "Under Brazil's General Data Protection Law (Lei nº 13.709/2018, \"LGPD\"), you have the right to:",
+        "items": {
+          "confirm": "Confirm whether your data is being processed.",
+          "access": "Access, correct, or update your data.",
+          "anonymize": "Request the anonymization, blocking, or deletion of unnecessary data.",
+          "revoke": "Withdraw your consent at any time.",
+          "portability": "Request the portability of your data."
+        }
+      },
+      "security": {
+        "title": "7. Security",
+        "body": "We use HTTPS for all communications, encrypted sessions stored in a secure database, and we do not store passwords (login is done exclusively via Google). Even so, no system is 100% secure — if you notice any irregularity, please contact us immediately."
+      },
+      "cookies": {
+        "title": "8. Cookies and local storage",
+        "body": "We use session cookies to keep you signed in. We do not use tracking or advertising cookies."
+      },
+      "changes": {
+        "title": "9. Changes to this policy",
+        "body": "We may update this policy periodically. We will notify you of significant changes by email or through a notice within the service itself. Continued use of rotinaFlow after such changes constitutes acceptance of the new policy."
+      },
+      "contact": {
+        "title": "10. Contact",
+        "lead": "For questions, requests, or to exercise your rights, please contact us by email:"
+      }
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "sections": {
+      "acceptance": {
+        "title": "1. Acceptance of terms",
+        "lead": "By accessing or using",
+        "outro": ", you agree to these Terms of Service. If you do not agree to any of these terms, do not use the service. Continued use of rotinaFlow constitutes full acceptance of these terms."
+      },
+      "description": {
+        "title": "2. Service description",
+        "intro": "rotinaFlow is a weekly routine organization platform that uses artificial intelligence to create personalized routines and sync them with Google Calendar. The service offers:",
+        "items": {
+          "aiRoutine": "AI-generated personalized routines based on your preferences and goals.",
+          "calendarSync": "Automatic event synchronization with Google Calendar.",
+          "creditsModel": "A credit-based model for using the service after your first free routine."
+        }
+      },
+      "account": {
+        "title": "3. Account and access",
+        "items": {
+          "googleOnly": "Access to rotinaFlow is exclusively through a Google account.",
+          "responsibility": "You are responsible for the security of your Google account and for all activity carried out through it.",
+          "minAge": "You must be at least 13 years old to use the service.",
+          "prohibited": "Creating fake accounts, using the service in an automated way without authorization, or sharing your access with third parties is prohibited."
+        }
+      },
+      "credits": {
+        "title": "4. Credits and payments",
+        "items": {
+          "freeFirst": "The first routine is free. Additional routines require credits.",
+          "noExpiry": "Credits are purchased via Stripe and do not expire.",
+          "pricing": "Prices are listed in Brazilian Reais (BRL) and may change with prior notice.",
+          "nonRefundable": "Payments are processed by Stripe and are non-refundable, except in cases of a proven technical error by the service.",
+          "paymentIssue": "If you have a problem with a payment, contact us within 7 business days of the transaction."
+        }
+      },
+      "googleCalendar": {
+        "title": "5. Google Calendar",
+        "body": "By authorizing access to Google Calendar, you allow rotinaFlow to create, edit, and delete events on your calendar according to your explicit approval within the app. You may revoke this access at any time in your Google account settings."
+      },
+      "acceptableUse": {
+        "title": "6. Acceptable use",
+        "intro": "You agree not to use rotinaFlow to:",
+        "items": {
+          "laws": "Violate applicable laws or regulations.",
+          "offensive": "Submit offensive or abusive content, or content that infringes the rights of third parties.",
+          "unauthorizedAccess": "Attempt to access other users' systems or data.",
+          "reverseEngineer": "Reverse engineer, modify, or distribute the software without authorization.",
+          "overload": "Intentionally overload the service's infrastructure."
+        }
+      },
+      "availability": {
+        "title": "7. Availability and quality",
+        "body": "We strive to keep the service continuously available, but we do not guarantee uninterrupted availability. We may suspend the service for maintenance with or without prior notice. The quality of AI-generated routines may vary — the service does not replace professional health, nutrition, or career guidance."
+      },
+      "ip": {
+        "title": "8. Intellectual property",
+        "body": "All content, design, and code of rotinaFlow are owned by the service and protected by copyright. The routines generated for you are for your personal use. You retain ownership of the content you provide to generate your routines."
+      },
+      "liability": {
+        "title": "9. Limitation of liability",
+        "body": "rotinaFlow is provided \"as is\". We are not liable for indirect, incidental, or consequential damages arising from the use or inability to use the service. Our total liability is limited to the amount paid for credits in the last 30 days."
+      },
+      "termination": {
+        "title": "10. Termination",
+        "body": "We may suspend or terminate your account if you violate these terms. You may terminate your account at any time by requesting the deletion of your data via the contact email. Unused credits are non-refundable in the event of termination due to a violation of these terms."
+      },
+      "changes": {
+        "title": "11. Changes to these terms",
+        "body": "We may update these terms periodically. We will notify you by email or through a notice on the service about material changes. Continued use after such changes constitutes acceptance of the new terms."
+      },
+      "governingLaw": {
+        "title": "12. Governing law",
+        "body": "These terms are governed by the laws of the Federative Republic of Brazil. Any disputes will be resolved in the court of the user's domicile, in accordance with the Brazilian Consumer Protection Code (Código de Defesa do Consumidor)."
+      },
+      "contact": {
+        "title": "13. Contact",
+        "lead": "For questions about these terms:"
+      }
+    }
+  }
+}

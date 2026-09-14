@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useSearch } from "wouter";
+import { useTranslation } from "react-i18next";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   ApiError,
@@ -59,6 +60,7 @@ function useActivityList(
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function RoutineFormPage() {
+  const { t } = useTranslation("schedule");
   const [, setLocation] = useLocation();
   const search = useSearch();
   const { toast } = useToast();
@@ -100,8 +102,8 @@ export default function RoutineFormPage() {
       }>("/api/calendar/import");
       if (data.activities.length === 0) {
         toast({
-          title: "Nenhum evento encontrado",
-          description: "Não encontramos eventos agendados nos próximos 14 dias.",
+          title: t("routineForm.googleSync.noEventsTitle"),
+          description: t("routineForm.googleSync.noEventsDescription"),
         });
         return;
       }
@@ -121,13 +123,13 @@ export default function RoutineFormPage() {
         return [...prev, ...imported.filter((a) => !existing.has(a.name.toLowerCase()))];
       });
       toast({
-        title: `${imported.length} evento(s) importado(s)`,
-        description: "Revise os horários e dias abaixo antes de continuar.",
+        title: t("routineForm.googleSync.importedTitle", { count: imported.length }),
+        description: t("routineForm.googleSync.importedDescription"),
       });
     } catch {
       toast({
-        title: "Erro ao sincronizar",
-        description: "Não foi possível acessar o Google Agenda.",
+        title: t("routineForm.googleSync.errorTitle"),
+        description: t("routineForm.googleSync.errorDescription"),
         variant: "destructive",
       });
     } finally {
@@ -144,7 +146,7 @@ export default function RoutineFormPage() {
     try {
       const conv = await new Promise<{ id: number }>((resolve, reject) =>
         createConv.mutate(
-          { data: { title: "Rotina — formulário" } },
+          { data: { title: t("routineForm.conversationTitle") } },
           { onSuccess: resolve, onError: reject },
         ),
       );
@@ -180,14 +182,16 @@ export default function RoutineFormPage() {
     } catch (err) {
       const isNoEvents = err instanceof ApiError && err.status === 422;
       toast({
-        title: isNoEvents ? "Não conseguimos gerar sua rotina" : "Erro ao gerar proposta",
+        title: isNoEvents
+          ? t("routineForm.generateError.noEventsTitle")
+          : t("routineForm.generateError.genericTitle"),
         description:
           (err instanceof ApiError && typeof err.data === "object" && err.data
             ? (err.data as { error?: string }).error
             : undefined) ??
           (isNoEvents
-            ? "Detalhe melhor sua rotina atual e seus objetivos e tente novamente."
-            : "Tente novamente."),
+            ? t("routineForm.generateError.noEventsDescription")
+            : t("routineForm.generateError.genericDescription")),
         variant: "destructive",
       });
       setIsGenerating(false);
@@ -202,11 +206,9 @@ export default function RoutineFormPage() {
         </div>
         <div className="text-center">
           <h2 className="font-display text-2xl font-bold text-slate-900 mb-2">
-            Criando sua proposta...
+            {t("routineForm.generating.title")}
           </h2>
-          <p className="text-slate-500">
-            A IA está analisando sua rotina e montando uma agenda personalizada.
-          </p>
+          <p className="text-slate-500">{t("routineForm.generating.description")}</p>
         </div>
         <div className="flex gap-2">
           {[0, 1, 2].map((i) => (
@@ -232,13 +234,9 @@ export default function RoutineFormPage() {
         <div className="flex items-center gap-2 mb-4 text-xs font-medium text-slate-500">
           <Sparkles className="w-3.5 h-3.5 text-primary shrink-0" />
           <span>
-            Você já criou {existingProposals!.length}{" "}
-            {existingProposals!.length === 1 ? "rotina" : "rotinas"} com o rotinaFlow
+            {t("routineForm.stats.createdCount", { count: existingProposals!.length })}
             {approvedCount > 0 && (
-              <>
-                {" "}
-                · {approvedCount} sincronizada{approvedCount > 1 ? "s" : ""} com o Google Agenda
-              </>
+              <> {t("routineForm.stats.syncedSuffix", { count: approvedCount })}</>
             )}
           </span>
         </div>
@@ -257,11 +255,12 @@ export default function RoutineFormPage() {
             <div className="flex items-start justify-between gap-4 flex-wrap">
               <div>
                 <h1 className="font-display text-3xl font-bold text-slate-900">
-                  Minha Rotina Atual
+                  {t("routineForm.step1.title")}
                 </h1>
                 <p className="text-slate-500 mt-2">
-                  Selecione as atividades que você <strong>já faz</strong> com regularidade e
-                  configure os dias e horários.
+                  {t("routineForm.step1.descriptionPrefix")}{" "}
+                  <strong>{t("routineForm.step1.descriptionEmphasis")}</strong>{" "}
+                  {t("routineForm.step1.descriptionSuffix")}
                 </p>
               </div>
               <button
@@ -277,17 +276,17 @@ export default function RoutineFormPage() {
                 ) : (
                   <CalendarDays className="w-3.5 h-3.5" />
                 )}
-                {isSyncing ? "Sincronizando..." : "Sincronizar Google Agenda"}
+                {isSyncing ? t("routineForm.googleSync.syncing") : t("routineForm.googleSync.label")}
               </button>
             </div>
             <div className="rounded-2xl border border-slate-200 bg-white p-5 space-y-4">
               <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">
-                Informações essenciais
+                {t("routineForm.step1.essentialInfo")}
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 flex items-center gap-1.5">
-                    <Sunrise className="w-3.5 h-3.5" /> A que horas você acorda?
+                    <Sunrise className="w-3.5 h-3.5" /> {t("routineForm.step1.wakeTimeLabel")}
                   </label>
                   <input
                     type="time"
@@ -298,7 +297,7 @@ export default function RoutineFormPage() {
                 </div>
                 <div>
                   <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 flex items-center gap-1.5">
-                    <Moon className="w-3.5 h-3.5" /> A que horas você dorme?
+                    <Moon className="w-3.5 h-3.5" /> {t("routineForm.step1.sleepTimeLabel")}
                   </label>
                   <input
                     type="time"
@@ -317,23 +316,23 @@ export default function RoutineFormPage() {
               onToggleExpand={current.toggle}
               onUpdate={current.update}
               onRemove={current.remove}
-              label="Atividades comuns — clique para adicionar"
+              label={t("routineForm.step1.activitiesLabel")}
             />
             <div className="pt-4 border-t border-slate-100 flex justify-end">
               <Button
                 onClick={() => {
                   if (!wakeTime || !sleepTime) {
                     toast({
-                      title: "Preencha os horários essenciais",
-                      description: "Informe a que horas você acorda e a que horas você dorme.",
+                      title: t("routineForm.step1.validation.missingTimesTitle"),
+                      description: t("routineForm.step1.validation.missingTimesDescription"),
                       variant: "destructive",
                     });
                     return;
                   }
                   if (currentActs.length === 0) {
                     toast({
-                      title: "Adicione pelo menos uma atividade",
-                      description: "Selecione o que você já faz no dia a dia.",
+                      title: t("routineForm.step1.validation.noActivitiesTitle"),
+                      description: t("routineForm.step1.validation.noActivitiesDescription"),
                       variant: "destructive",
                     });
                     return;
@@ -343,7 +342,7 @@ export default function RoutineFormPage() {
                 }}
                 className="h-12 px-8 rounded-2xl text-base"
               >
-                Próximo <ArrowRight className="ml-2 w-4 h-4" />
+                {t("routineForm.step1.next")} <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </div>
           </motion.div>
@@ -360,25 +359,23 @@ export default function RoutineFormPage() {
           >
             <div>
               <h1 className="font-display text-3xl font-bold text-slate-900">
-                O que você quer melhorar?
+                {t("routineForm.step2.title")}
               </h1>
-              <p className="text-slate-500 mt-2">
-                Escolha as novas atividades ou deixe a IA decidir o que é melhor para você.
-              </p>
+              <p className="text-slate-500 mt-2">{t("routineForm.step2.description")}</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {[
                 {
                   value: false,
                   Icon: ListChecks,
-                  title: "Escolho eu mesmo",
-                  desc: "Seleciono as atividades — a IA encaixa o dia e horário",
+                  title: t("routineForm.step2.options.manual.title"),
+                  desc: t("routineForm.step2.options.manual.description"),
                 },
                 {
                   value: true,
                   Icon: Wand2,
-                  title: "IA decide para mim",
-                  desc: "Sugestão inteligente baseada na minha rotina",
+                  title: t("routineForm.step2.options.ai.title"),
+                  desc: t("routineForm.step2.options.ai.description"),
                 },
               ].map(({ value, Icon, title, desc }) => (
                 <button
@@ -418,31 +415,29 @@ export default function RoutineFormPage() {
                   onToggleExpand={newList.toggle}
                   onUpdate={newList.update}
                   onRemove={newList.remove}
-                  label="Atividades que quero incluir"
+                  label={t("routineForm.step2.activitiesLabel")}
                   showSchedule={false}
                   allowNotes
                 />
                 <p className="text-xs text-slate-500 flex items-center gap-1.5">
                   <Wand2 className="w-3.5 h-3.5 shrink-0" />
-                  Você só escolhe o quê. A IA encaixa o melhor dia, horário e frequência para cada
-                  atividade com base na sua rotina atual — clique numa atividade selecionada para
-                  adicionar uma observação, se quiser.
+                  {t("routineForm.step2.aiHelperText")}
                 </p>
               </div>
             )}
             <div>
               <label className="text-sm font-semibold text-slate-700 mb-2 block">
                 {isDynamic
-                  ? "Quais são seus objetivos ou preferências? (opcional)"
-                  : "Observações adicionais (opcional)"}
+                  ? t("routineForm.step2.goalsLabelDynamic")
+                  : t("routineForm.step2.goalsLabelManual")}
               </label>
               <textarea
                 value={goals}
                 onChange={(e) => setGoals(e.target.value)}
                 placeholder={
                   isDynamic
-                    ? "Ex: quero melhorar minha saúde, ter mais tempo para a família, aprender inglês..."
-                    : "Ex: prefiro fazer exercícios de manhã, não tenho tempo às terças-feiras..."
+                    ? t("routineForm.step2.goalsPlaceholderDynamic")
+                    : t("routineForm.step2.goalsPlaceholderManual")
                 }
                 className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 min-h-[90px] resize-none"
               />
@@ -459,7 +454,7 @@ export default function RoutineFormPage() {
                 }}
                 className="text-slate-500 w-full sm:w-auto"
               >
-                <ArrowLeft className="mr-2 w-4 h-4" /> Voltar
+                <ArrowLeft className="mr-2 w-4 h-4" /> {t("routineForm.step2.back")}
               </Button>
               <div className="flex items-center justify-between sm:justify-end gap-3">
                 {!isFirstGeneration && (
@@ -471,7 +466,7 @@ export default function RoutineFormPage() {
                         : "text-slate-500",
                     )}
                   >
-                    Custa {GENERATION_COST} créditos
+                    {t("routineForm.step2.creditsCost", { count: GENERATION_COST })}
                   </span>
                 )}
                 <Button
@@ -479,7 +474,7 @@ export default function RoutineFormPage() {
                   isLoading={isGenerating}
                   className="h-12 px-8 rounded-2xl text-base bg-gradient-to-r from-primary to-blue-500 hover:opacity-90 shadow-xl shadow-primary/20"
                 >
-                  <CalendarCheck2 className="w-5 h-5 mr-2" /> Gerar minha agenda
+                  <CalendarCheck2 className="w-5 h-5 mr-2" /> {t("routineForm.step2.generate")}
                 </Button>
               </div>
             </div>
@@ -492,7 +487,7 @@ export default function RoutineFormPage() {
         onClose={() => setShowCreditsModal(false)}
         currentCredits={creditsData?.credits ?? 0}
         requiredCredits={GENERATION_COST}
-        action="gerar uma nova rotina"
+        action={t("routineForm.creditsModalAction")}
       />
     </div>
   );

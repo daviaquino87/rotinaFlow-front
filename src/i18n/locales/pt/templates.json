@@ -1,0 +1,40 @@
+{
+  "templatesGallery": {
+    "title": "Templates de Rotina",
+    "subtitle": "Rotinas prontas, criadas por especialistas. Compre uma com seus créditos e ela vira sua — totalmente editável, sem afetar o template original.",
+    "allCategory": "Todos",
+    "emptyState": "Nenhum template disponível no momento.",
+    "emptyCategory": "Nenhum template na categoria \"{{category}}\".",
+    "weeklyActivities": "{{count}} atividades semanais",
+    "viewRoutine": "Ver rotina"
+  },
+  "templateView": {
+    "backLink": "Templates",
+    "viewMyRoutine": "Ver minha rotina",
+    "recreating": "Recriando...",
+    "recreateMyRoutine": "Recriar minha rotina",
+    "buying": "Comprando...",
+    "buyForCredits": "Comprar por {{credits}} créditos",
+    "notFound": "Template não encontrado.",
+    "dailyTimeline": "Linha do Tempo Diária",
+    "weeklyView": "Visão Semanal",
+    "viewOnly": "Somente visualização",
+    "dayToggle": "Dia",
+    "weekToggle": "Semana",
+    "noActivitiesForDay": "Nenhuma atividade para este dia.",
+    "dailyBalance": "Equilíbrio do Dia",
+    "productivity": "Produtividade",
+    "wellbeing": "Bem-estar",
+    "leisure": "Lazer",
+    "weeklyDistribution": "Distribuição Semanal",
+    "purchaseInfo": "Ao comprar, esta rotina é copiada para a sua conta — você pode editar dias, horários e atividades livremente, sem afetar este template.",
+    "recreateInfo": "Você já comprou este template — parece que apagou a rotina criada por ele. Sem problema: recriar é gratuito, você não paga de novo.",
+    "creditsModalAction": "comprar este template",
+    "toast": {
+      "createdTitle": "Rotina criada!",
+      "createdDescription": "\"{{title}}\" agora é sua — edite como quiser.",
+      "errorTitle": "Erro ao comprar template",
+      "errorDescription": "Não foi possível criar sua rotina. Tente novamente."
+    }
+  }
+}

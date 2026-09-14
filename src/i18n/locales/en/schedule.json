@@ -1,0 +1,97 @@
+{
+  "activitySelector": {
+    "emptyState": "No activities added yet.",
+    "addCustom": "Add custom activity"
+  },
+  "activityCard": {
+    "namePlaceholder": "Activity name...",
+    "removeAria": "Remove activity",
+    "iconLabel": "Icon",
+    "useIconAria": "Use icon {{emoji}}",
+    "daysLabel": "Days",
+    "startLabel": "Start",
+    "endLabel": "End",
+    "noteLabel": "Note (optional)",
+    "notePlaceholder": "E.g.: I prefer evenings, can't do weekends, 2x a week is enough..."
+  },
+  "dayPicker": {
+    "selectAll": "All",
+    "selectNone": "None"
+  },
+  "stepIndicator": {
+    "currentRoutine": "Current routine",
+    "newGoals": "New goals"
+  },
+  "routineForm": {
+    "conversationTitle": "Routine — form",
+    "creditsModalAction": "generate a new routine",
+    "generating": {
+      "title": "Creating your proposal...",
+      "description": "The AI is analyzing your routine and building a personalized schedule."
+    },
+    "stats": {
+      "createdCount_one": "You've already created {{count}} routine with rotinaFlow",
+      "createdCount_other": "You've already created {{count}} routines with rotinaFlow",
+      "syncedSuffix_one": "· {{count}} synced with Google Calendar",
+      "syncedSuffix_other": "· {{count}} synced with Google Calendar"
+    },
+    "googleSync": {
+      "syncing": "Syncing...",
+      "label": "Sync Google Calendar",
+      "noEventsTitle": "No events found",
+      "noEventsDescription": "We couldn't find any scheduled events in the next 14 days.",
+      "importedTitle_one": "{{count}} event imported",
+      "importedTitle_other": "{{count}} events imported",
+      "importedDescription": "Review the times and days below before continuing.",
+      "errorTitle": "Sync error",
+      "errorDescription": "We couldn't access Google Calendar."
+    },
+    "generateError": {
+      "noEventsTitle": "We couldn't generate your routine",
+      "noEventsDescription": "Add more detail to your current routine and goals, then try again.",
+      "genericTitle": "Error generating proposal",
+      "genericDescription": "Please try again."
+    },
+    "step1": {
+      "title": "My Current Routine",
+      "descriptionPrefix": "Select the activities you",
+      "descriptionEmphasis": "already do",
+      "descriptionSuffix": "regularly and set the days and times.",
+      "essentialInfo": "Essential information",
+      "wakeTimeLabel": "What time do you wake up?",
+      "sleepTimeLabel": "What time do you go to sleep?",
+      "activitiesLabel": "Common activities — click to add",
+      "next": "Next",
+      "validation": {
+        "missingTimesTitle": "Fill in the essential times",
+        "missingTimesDescription": "Tell us what time you wake up and what time you go to sleep.",
+        "noActivitiesTitle": "Add at least one activity",
+        "noActivitiesDescription": "Select what you already do day-to-day."
+      }
+    },
+    "step2": {
+      "title": "What do you want to improve?",
+      "description": "Choose new activities or let the AI decide what's best for you.",
+      "options": {
+        "manual": {
+          "title": "I'll choose myself",
+          "description": "I pick the activities — the AI fits the day and time"
+        },
+        "ai": {
+          "title": "AI decides for me",
+          "description": "Smart suggestions based on my routine"
+        }
+      },
+      "activitiesLabel": "Activities I want to include",
+      "aiHelperText": "You only choose what. The AI fits the best day, time and frequency for each activity based on your current routine — click a selected activity to add a note, if you'd like.",
+      "goalsLabelDynamic": "What are your goals or preferences? (optional)",
+      "goalsLabelManual": "Additional notes (optional)",
+      "goalsPlaceholderDynamic": "E.g.: I want to improve my health, spend more time with family, learn English...",
+      "goalsPlaceholderManual": "E.g.: I prefer working out in the morning, I'm not free on Tuesdays...",
+      "back": "Back",
+      "creditsCost_one": "Costs {{count}} credit",
+      "creditsCost_other": "Costs {{count}} credits",
+      "generate": "Generate my schedule"
+    }
+  }
+}

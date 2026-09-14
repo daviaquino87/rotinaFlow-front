@@ -1,0 +1,97 @@
+{
+  "activitySelector": {
+    "emptyState": "Nenhuma atividade adicionada ainda.",
+    "addCustom": "Adicionar atividade personalizada"
+  },
+  "activityCard": {
+    "namePlaceholder": "Nome da atividade...",
+    "removeAria": "Remover atividade",
+    "iconLabel": "Ícone",
+    "useIconAria": "Usar ícone {{emoji}}",
+    "daysLabel": "Dias",
+    "startLabel": "Início",
+    "endLabel": "Fim",
+    "noteLabel": "Observação (opcional)",
+    "notePlaceholder": "Ex: prefiro à noite, não pode no fim de semana, 2x por semana já basta..."
+  },
+  "dayPicker": {
+    "selectAll": "Todos",
+    "selectNone": "Nenhum"
+  },
+  "stepIndicator": {
+    "currentRoutine": "Rotina atual",
+    "newGoals": "Novos objetivos"
+  },
+  "routineForm": {
+    "conversationTitle": "Rotina — formulário",
+    "creditsModalAction": "gerar uma nova rotina",
+    "generating": {
+      "title": "Criando sua proposta...",
+      "description": "A IA está analisando sua rotina e montando uma agenda personalizada."
+    },
+    "stats": {
+      "createdCount_one": "Você já criou {{count}} rotina com o rotinaFlow",
+      "createdCount_other": "Você já criou {{count}} rotinas com o rotinaFlow",
+      "syncedSuffix_one": "· {{count}} sincronizada com o Google Agenda",
+      "syncedSuffix_other": "· {{count}} sincronizadas com o Google Agenda"
+    },
+    "googleSync": {
+      "syncing": "Sincronizando...",
+      "label": "Sincronizar Google Agenda",
+      "noEventsTitle": "Nenhum evento encontrado",
+      "noEventsDescription": "Não encontramos eventos agendados nos próximos 14 dias.",
+      "importedTitle_one": "{{count}} evento importado",
+      "importedTitle_other": "{{count}} eventos importados",
+      "importedDescription": "Revise os horários e dias abaixo antes de continuar.",
+      "errorTitle": "Erro ao sincronizar",
+      "errorDescription": "Não foi possível acessar o Google Agenda."
+    },
+    "generateError": {
+      "noEventsTitle": "Não conseguimos gerar sua rotina",
+      "noEventsDescription": "Detalhe melhor sua rotina atual e seus objetivos e tente novamente.",
+      "genericTitle": "Erro ao gerar proposta",
+      "genericDescription": "Tente novamente."
+    },
+    "step1": {
+      "title": "Minha Rotina Atual",
+      "descriptionPrefix": "Selecione as atividades que você",
+      "descriptionEmphasis": "já faz",
+      "descriptionSuffix": "com regularidade e configure os dias e horários.",
+      "essentialInfo": "Informações essenciais",
+      "wakeTimeLabel": "A que horas você acorda?",
+      "sleepTimeLabel": "A que horas você dorme?",
+      "activitiesLabel": "Atividades comuns — clique para adicionar",
+      "next": "Próximo",
+      "validation": {
+        "missingTimesTitle": "Preencha os horários essenciais",
+        "missingTimesDescription": "Informe a que horas você acorda e a que horas você dorme.",
+        "noActivitiesTitle": "Adicione pelo menos uma atividade",
+        "noActivitiesDescription": "Selecione o que você já faz no dia a dia."
+      }
+    },
+    "step2": {
+      "title": "O que você quer melhorar?",
+      "description": "Escolha as novas atividades ou deixe a IA decidir o que é melhor para você.",
+      "options": {
+        "manual": {
+          "title": "Escolho eu mesmo",
+          "description": "Seleciono as atividades — a IA encaixa o dia e horário"
+        },
+        "ai": {
+          "title": "IA decide para mim",
+          "description": "Sugestão inteligente baseada na minha rotina"
+        }
+      },
+      "activitiesLabel": "Atividades que quero incluir",
+      "aiHelperText": "Você só escolhe o quê. A IA encaixa o melhor dia, horário e frequência para cada atividade com base na sua rotina atual — clique numa atividade selecionada para adicionar uma observação, se quiser.",
+      "goalsLabelDynamic": "Quais são seus objetivos ou preferências? (opcional)",
+      "goalsLabelManual": "Observações adicionais (opcional)",
+      "goalsPlaceholderDynamic": "Ex: quero melhorar minha saúde, ter mais tempo para a família, aprender inglês...",
+      "goalsPlaceholderManual": "Ex: prefiro fazer exercícios de manhã, não tenho tempo às terças-feiras...",
+      "back": "Voltar",
+      "creditsCost_one": "Custa {{count}} crédito",
+      "creditsCost_other": "Custa {{count}} créditos",
+      "generate": "Gerar minha agenda"
+    }
+  }
+}

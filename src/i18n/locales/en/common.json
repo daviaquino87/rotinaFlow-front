@@ -1,0 +1,67 @@
+{
+  "appName": "rotinaFlow",
+  "nav": {
+    "newRoutine": "New Routine",
+    "newRoutineShort": "New",
+    "myRoutine": "My Routine",
+    "myRoutineShort": "Mine",
+    "templates": "Templates",
+    "templatesShort": "Templates"
+  },
+  "header": {
+    "howItWorks": "How it works",
+    "logout": "Log out",
+    "freeCredits": "Free",
+    "viewCredits": "View my credits",
+    "lowCreditsViewCredits": "Low credits — view my credits"
+  },
+  "session": {
+    "checkError": "We couldn't verify your session.",
+    "retry": "Try again"
+  },
+  "onboarding": {
+    "close": "Close",
+    "welcomeTitle": "Welcome to rotinaFlow!",
+    "welcomeSubtitlePrefix": "Organize your week with artificial intelligence in",
+    "welcomeSubtitleStrong": "3 simple steps",
+    "step": "Step {{num}}",
+    "steps": {
+      "describe": {
+        "title": "Describe your routine",
+        "description": "Tell us what you already do and what you'd like to add to your day-to-day."
+      },
+      "generate": {
+        "title": "AI builds your schedule",
+        "description": "Our AI analyzes your information and puts together a personalized weekly routine for you."
+      },
+      "sync": {
+        "title": "Sync with Google",
+        "description": "Export your routine straight to Google Calendar with one click."
+      }
+    },
+    "startNow": "Get started",
+    "firstRoutineFreePrefix": "Your first routine is",
+    "firstRoutineFreeStrong": "free"
+  },
+  "pwaInstall": {
+    "promptLong": "Install rotinaFlow on your phone for quick access —",
+    "promptShort": "Install the app for quick access —",
+    "installNow": "Install now",
+    "close": "Close"
+  },
+  "errorBoundary": {
+    "title": "Something went wrong",
+    "description": "We ran into an unexpected error. Reload the page to continue — if the problem persists, try again in a few minutes.",
+    "reload": "Reload page"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "This link doesn't exist or has moved. The routine you're looking for may have been moved or removed.",
+    "backToRoutine": "Back to my routine"
+  },
+  "language": {
+    "label": "Language",
+    "pt": "Português",
+    "en": "English"
+  }
+}

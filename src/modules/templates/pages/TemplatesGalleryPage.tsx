@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
+import { useTranslation } from "react-i18next";
 import { Coins, ListChecks, ArrowRight } from "lucide-react";
 import { Card, Skeleton } from "@/components/ui-elements";
 import { cn } from "@lib/utils";
@@ -8,6 +9,7 @@ import { useTemplates } from "../hooks/use-templates";
 const ALL_CATEGORY = "Todos";
 
 export default function TemplatesGalleryPage() {
+  const { t } = useTranslation("templates");
   const { data: templates, isLoading } = useTemplates();
   const [category, setCategory] = useState(ALL_CATEGORY);
 
@@ -28,11 +30,10 @@ export default function TemplatesGalleryPage() {
   return (
     <div className="max-w-5xl mx-auto px-4 md:px-8 py-8 space-y-8">
       <div>
-        <h1 className="font-display text-3xl font-bold text-slate-900">Templates de Rotina</h1>
-        <p className="text-slate-500 mt-2">
-          Rotinas prontas, criadas por especialistas. Compre uma com seus créditos e ela vira sua —
-          totalmente editável, sem afetar o template original.
-        </p>
+        <h1 className="font-display text-3xl font-bold text-slate-900">
+          {t("templatesGallery.title")}
+        </h1>
+        <p className="text-slate-500 mt-2">{t("templatesGallery.subtitle")}</p>
       </div>
 
       {/* Below sm: a single scrollable row so the filters never push the
@@ -52,7 +53,7 @@ export default function TemplatesGalleryPage() {
                   : "bg-white text-slate-600 border-slate-200 hover:border-primary/50 hover:bg-primary/5",
               )}
             >
-              {c}
+              {c === ALL_CATEGORY ? t("templatesGallery.allCategory") : c}
             </button>
           ))}
         </div>
@@ -66,11 +67,13 @@ export default function TemplatesGalleryPage() {
         </div>
       ) : !templates || templates.length === 0 ? (
         <div className="text-center py-16 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
-          <p className="text-slate-500 text-sm">Nenhum template disponível no momento.</p>
+          <p className="text-slate-500 text-sm">{t("templatesGallery.emptyState")}</p>
         </div>
       ) : filteredTemplates.length === 0 ? (
         <div className="text-center py-16 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
-          <p className="text-slate-500 text-sm">Nenhum template na categoria "{category}".</p>
+          <p className="text-slate-500 text-sm">
+            {t("templatesGallery.emptyCategory", { category })}
+          </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -94,7 +97,7 @@ export default function TemplatesGalleryPage() {
                 <div className="flex items-center justify-between mt-5 pt-4 border-t border-slate-100">
                   <span className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
                     <ListChecks className="w-3.5 h-3.5" />
-                    {template.eventCount} atividades semanais
+                    {t("templatesGallery.weeklyActivities", { count: template.eventCount })}
                   </span>
                   <span className="flex items-center gap-1.5 text-sm font-bold text-primary">
                     <Coins className="w-4 h-4" />
@@ -102,7 +105,7 @@ export default function TemplatesGalleryPage() {
                   </span>
                 </div>
                 <span className="flex items-center gap-1.5 text-sm font-semibold text-primary mt-4 group-hover:gap-2.5 transition-all">
-                  Ver rotina <ArrowRight className="w-4 h-4" />
+                  {t("templatesGallery.viewRoutine")} <ArrowRight className="w-4 h-4" />
                 </span>
               </Card>
             </Link>

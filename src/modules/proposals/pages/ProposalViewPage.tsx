@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useRoute } from "wouter";
 import { Link } from "wouter";
+import { useTranslation } from "react-i18next";
 import type { ScheduleEvent } from "@/api-client";
 import { DAYS_OF_WEEK, cn } from "@lib/utils";
 import { Button, Skeleton, Input } from "@/components/ui-elements";
@@ -19,6 +20,7 @@ import { useProposalSync } from "@modules/proposals/hooks/use-proposal-sync";
 import { useProposalStats } from "@modules/proposals/hooks/use-proposal-stats";
 
 export default function ProposalViewPage() {
+  const { t } = useTranslation("proposals");
   const [, params] = useRoute("/proposal/:uuid");
   const proposalUuid = params?.uuid ?? "";
 
@@ -118,7 +120,9 @@ export default function ProposalViewPage() {
   }
 
   if (!proposal)
-    return <div className="p-8 text-center text-slate-500">Proposta não encontrada.</div>;
+    return (
+      <div className="p-8 text-center text-slate-500">{t("pages.proposalView.notFound")}</div>
+    );
 
   return (
     <div className="max-w-[1300px] mx-auto px-4 md:px-8 py-6 space-y-6 relative">
@@ -129,9 +133,9 @@ export default function ProposalViewPage() {
             <CalendarCheck2 className="w-10 h-10 text-white" />
           </div>
           <div className="text-center">
-            <p className="text-white font-bold text-xl">Sincronizando com Google Agenda</p>
+            <p className="text-white font-bold text-xl">{t("pages.proposalView.syncOverlay.title")}</p>
             <p className="text-slate-300 text-sm mt-1">
-              Aguarde, isso pode levar alguns segundos...
+              {t("pages.proposalView.syncOverlay.subtitle")}
             </p>
           </div>
           <div className="flex gap-2 mt-2">
@@ -150,12 +154,14 @@ export default function ProposalViewPage() {
         <div>
           <Link href="/proposals">
             <button className="flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 mb-2 transition-colors">
-              <ArrowLeft className="w-4 h-4" /> Minhas Rotinas
+              <ArrowLeft className="w-4 h-4" /> {t("pages.proposalView.backLink")}
             </button>
           </Link>
-          <h1 className="font-display text-3xl font-bold text-slate-900">Sua Rotina Sugerida</h1>
+          <h1 className="font-display text-3xl font-bold text-slate-900">
+            {t("pages.proposalView.title")}
+          </h1>
           <p className="text-slate-500 mt-1">
-            Gerada com análise de IA com base nas suas preferências
+            {t("pages.proposalView.subtitle")}
             {proposal.conversationId != null && (
               <>
                 {" · "}
@@ -163,7 +169,7 @@ export default function ProposalViewPage() {
                   onClick={() => setShowPromptHistory(true)}
                   className="text-primary font-medium hover:underline"
                 >
-                  Ver o que eu pedi
+                  {t("pages.proposalView.viewPromptLink")}
                 </button>
               </>
             )}
@@ -177,13 +183,13 @@ export default function ProposalViewPage() {
               onClick={handleSaveEvents}
               className="gap-2 bg-white"
             >
-              <Save className="w-4 h-4" /> Salvar
+              <Save className="w-4 h-4" /> {t("pages.proposalView.saveButton")}
             </Button>
           )}
           {!isApproved && (
             <Link href="/routine?step=2">
               <Button variant="outline" size="sm" className="gap-2 bg-white">
-                <RefreshCw className="w-4 h-4" /> Regerar
+                <RefreshCw className="w-4 h-4" /> {t("pages.proposalView.regenerateButton")}
               </Button>
             </Link>
           )}
@@ -196,12 +202,14 @@ export default function ProposalViewPage() {
               className="gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/40"
             >
               <CalendarCheck2 className="w-5 h-5" />
-              {isSyncing ? "Sincronizando..." : "Sincronizar Agenda"}
+              {isSyncing
+                ? t("pages.proposalView.syncingButton")
+                : t("pages.proposalView.syncButton")}
             </Button>
           )}
           {isApproved && (
             <span className="flex items-center gap-2 text-sm font-semibold text-green-600 bg-green-50 px-4 py-2 rounded-xl border border-green-200">
-              <Check className="w-4 h-4" /> Sincronizada
+              <Check className="w-4 h-4" /> {t("pages.proposalView.syncedStatus")}
             </span>
           )}
         </div>
@@ -213,7 +221,7 @@ export default function ProposalViewPage() {
         <div className="flex-1 min-w-0 bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
           {/* Panel header */}
           <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
-            <h2 className="font-bold text-slate-800">Linha do Tempo Diária</h2>
+            <h2 className="font-bold text-slate-800">{t("pages.proposalView.timelinePanel.title")}</h2>
             <div className="flex rounded-xl overflow-hidden border border-slate-200 text-sm">
               <button
                 onClick={() => setViewMode("dia")}
@@ -224,7 +232,7 @@ export default function ProposalViewPage() {
                     : "text-slate-500 hover:bg-slate-50",
                 )}
               >
-                Dia
+                {t("pages.proposalView.timelinePanel.viewModeDay")}
               </button>
               <button
                 onClick={() => setViewMode("semana")}
@@ -235,7 +243,7 @@ export default function ProposalViewPage() {
                     : "text-slate-500 hover:bg-slate-50",
                 )}
               >
-                Semana
+                {t("pages.proposalView.timelinePanel.viewModeWeek")}
               </button>
             </div>
           </div>
@@ -264,13 +272,15 @@ export default function ProposalViewPage() {
               <div className="px-3 sm:px-6 py-6">
                 {selectedDayEvents.length === 0 ? (
                   <div className="text-center py-10">
-                    <p className="text-slate-500 text-sm mb-4">Nenhuma atividade para este dia.</p>
+                    <p className="text-slate-500 text-sm mb-4">
+                      {t("pages.proposalView.emptyState.message")}
+                    </p>
                     {!isApproved && (
                       <button
                         onClick={() => handleAddEvent()}
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary/10 text-primary hover:bg-primary/20 transition-all text-sm font-semibold"
                       >
-                        <Plus className="w-4 h-4" /> Adicionar atividade
+                        <Plus className="w-4 h-4" /> {t("pages.proposalView.emptyState.addButton")}
                       </button>
                     )}
                   </div>
@@ -280,7 +290,7 @@ export default function ProposalViewPage() {
                       {!isApproved && (
                         <AddBetweenButton
                           onClick={() => handleAddEvent()}
-                          label="Adicionar no início"
+                          label={t("pages.proposalView.addAtStart")}
                         />
                       )}
                       {selectedDayEvents.map((event, i) => (
@@ -319,7 +329,9 @@ export default function ProposalViewPage() {
                           {!isApproved && (
                             <AddBetweenButton
                               onClick={() => handleAddEvent(event.endTime)}
-                              label={`Adicionar após ${event.startTime.substring(0, 5)}`}
+                              label={t("pages.proposalView.addAfter", {
+                                time: event.startTime.substring(0, 5),
+                              })}
                             />
                           )}
                         </React.Fragment>
@@ -370,23 +382,43 @@ export default function ProposalViewPage() {
             className="rounded-2xl p-5 space-y-4"
             style={{ background: "linear-gradient(135deg, #1E1B4B 0%, #312E81 100%)" }}
           >
-            <h3 className="font-bold text-white text-base">Equilíbrio do Dia</h3>
-            <ProgressBar label="Produtividade" value={equilibrio.produtividade} color="#818CF8" />
-            <ProgressBar label="Bem-estar" value={equilibrio.bemEstar} color="#34D399" />
-            <ProgressBar label="Lazer" value={equilibrio.lazer} color="#FCD34D" />
+            <h3 className="font-bold text-white text-base">
+              {t("pages.proposalView.balanceCard.title")}
+            </h3>
+            <ProgressBar
+              label={t("pages.proposalView.balanceCard.productivity")}
+              value={equilibrio.produtividade}
+              color="#818CF8"
+            />
+            <ProgressBar
+              label={t("pages.proposalView.balanceCard.wellbeing")}
+              value={equilibrio.bemEstar}
+              color="#34D399"
+            />
+            <ProgressBar
+              label={t("pages.proposalView.balanceCard.leisure")}
+              value={equilibrio.lazer}
+              color="#FCD34D"
+            />
           </div>
 
           {/* Próximos Passos */}
           <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm space-y-4">
-            <h3 className="font-bold text-slate-800 text-base">Próximos Passos</h3>
+            <h3 className="font-bold text-slate-800 text-base">
+              {t("pages.proposalView.nextSteps.title")}
+            </h3>
             <div className="space-y-3">
               <div className="flex items-start gap-3">
                 <div className="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center shrink-0 mt-0.5">
                   <Check className="w-3.5 h-3.5 text-white" />
                 </div>
                 <div>
-                  <p className="font-semibold text-slate-800 text-sm">Rotina Gerada</p>
-                  <p className="text-xs text-slate-500 mt-0.5">IA processou suas preferências.</p>
+                  <p className="font-semibold text-slate-800 text-sm">
+                    {t("pages.proposalView.nextSteps.step1Title")}
+                  </p>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    {t("pages.proposalView.nextSteps.step1Description")}
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -394,24 +426,28 @@ export default function ProposalViewPage() {
                   2
                 </div>
                 <div>
-                  <p className="font-semibold text-slate-800 text-sm">Sincronizar</p>
-                  <p className="text-xs text-slate-500 mt-0.5">Conecte-se com Google Agenda.</p>
+                  <p className="font-semibold text-slate-800 text-sm">
+                    {t("pages.proposalView.nextSteps.step2Title")}
+                  </p>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    {t("pages.proposalView.nextSteps.step2Description")}
+                  </p>
                 </div>
               </div>
             </div>
             <p className="text-xs text-slate-500 text-center">
               <span className="hidden sm:inline">
-                Passe o mouse sobre um evento para editá-lo, ou arraste para trocar horários.
+                {t("pages.proposalView.nextSteps.hintDesktop")}
               </span>
-              <span className="sm:hidden">
-                Toque em "Editar" no card ou use as setas ↑↓ para reordenar.
-              </span>
+              <span className="sm:hidden">{t("pages.proposalView.nextSteps.hintMobile")}</span>
             </p>
           </div>
 
           {/* Distribuição Semanal */}
           <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
-            <h3 className="font-bold text-slate-800 text-base mb-4">Distribuição Semanal</h3>
+            <h3 className="font-bold text-slate-800 text-base mb-4">
+              {t("pages.proposalView.weeklyDistribution.title")}
+            </h3>
             <div className="flex items-center justify-between gap-4">
               <DonutChart segments={distribuicaoSegments} />
               <div className="space-y-2 flex-1">
@@ -437,12 +473,16 @@ export default function ProposalViewPage() {
           setEditingEvent(null);
           setIsAddingNew(false);
         }}
-        title={isAddingNew ? "Nova Atividade" : "Editar Atividade"}
+        title={
+          isAddingNew ? t("pages.proposalView.modal.addTitle") : t("pages.proposalView.modal.editTitle")
+        }
       >
         {editingEvent && (
           <form onSubmit={saveEditedEvent} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Título</label>
+              <label className="block text-sm font-medium text-slate-700 mb-1">
+                {t("pages.proposalView.modal.titleLabel")}
+              </label>
               <Input
                 name="title"
                 defaultValue={editingEvent.title}
@@ -452,7 +492,9 @@ export default function ProposalViewPage() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Início</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">
+                  {t("pages.proposalView.modal.startLabel")}
+                </label>
                 <Input
                   type="time"
                   name="startTime"
@@ -462,7 +504,9 @@ export default function ProposalViewPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Fim</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">
+                  {t("pages.proposalView.modal.endLabel")}
+                </label>
                 <Input
                   type="time"
                   name="endTime"
@@ -473,7 +517,9 @@ export default function ProposalViewPage() {
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Descrição</label>
+              <label className="block text-sm font-medium text-slate-700 mb-1">
+                {t("pages.proposalView.modal.descriptionLabel")}
+              </label>
               <textarea
                 name="description"
                 defaultValue={editingEvent.description || ""}
@@ -495,7 +541,7 @@ export default function ProposalViewPage() {
                   }}
                   className="bg-red-50 text-red-600 hover:bg-red-100 border-0 w-full sm:w-auto"
                 >
-                  <Trash2 className="w-4 h-4 mr-2" /> Excluir
+                  <Trash2 className="w-4 h-4 mr-2" /> {t("pages.proposalView.modal.deleteButton")}
                 </Button>
               )}
               {/* sm:justify-between needs a second flex item to push the
@@ -513,10 +559,10 @@ export default function ProposalViewPage() {
                     setIsAddingNew(false);
                   }}
                 >
-                  Cancelar
+                  {t("pages.proposalView.modal.cancelButton")}
                 </Button>
                 <Button type="submit" className="flex-1 sm:flex-none">
-                  Salvar
+                  {t("pages.proposalView.modal.saveButton")}
                 </Button>
               </div>
             </div>
@@ -529,7 +575,7 @@ export default function ProposalViewPage() {
         onClose={() => setShowCreditsModal(false)}
         currentCredits={creditsData?.credits ?? 0}
         requiredCredits={creditsRequired}
-        action="sincronizar com Google Agenda"
+        action={t("pages.proposalView.creditsModalAction")}
       />
 
       <SyncConfirmModal

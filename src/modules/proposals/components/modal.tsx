@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
 export function Modal({
   isOpen,
@@ -11,6 +12,7 @@ export function Modal({
   title: string;
   children: ReactNode;
 }) {
+  const { t } = useTranslation("proposals");
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
@@ -19,7 +21,7 @@ export function Modal({
           <h3 className="font-display font-bold text-lg">{title}</h3>
           <button
             onClick={onClose}
-            aria-label="Fechar"
+            aria-label={t("components.modal.close")}
             className="text-slate-500 hover:text-slate-600 text-2xl leading-none p-2 -m-2 rounded-full hover:bg-slate-100 transition-colors shrink-0"
           >
             &times;

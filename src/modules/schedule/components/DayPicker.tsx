@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { cn } from "@lib/utils";
 import { ALL_DAYS } from "../constants";
 import type { Day } from "../types";
@@ -8,6 +9,7 @@ interface DayPickerProps {
 }
 
 export function DayPicker({ days, onChange }: DayPickerProps) {
+  const { t } = useTranslation("schedule");
   const toggle = (d: Day) =>
     onChange(days.includes(d) ? days.filter((x) => x !== d) : [...days, d]);
   return (
@@ -34,7 +36,7 @@ export function DayPicker({ days, onChange }: DayPickerProps) {
         onClick={() => onChange(days.length === 7 ? [] : ALL_DAYS.map((d) => d.id))}
         className="px-2.5 h-11 rounded-xl text-xs font-semibold text-primary bg-primary/10 hover:bg-primary/20 transition-all"
       >
-        {days.length === 7 ? "Nenhum" : "Todos"}
+        {days.length === 7 ? t("dayPicker.selectNone") : t("dayPicker.selectAll")}
       </button>
     </div>
   );

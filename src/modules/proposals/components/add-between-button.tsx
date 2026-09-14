@@ -1,6 +1,8 @@
 import { Plus } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export function AddBetweenButton({ onClick, label }: { onClick: () => void; label: string }) {
+  const { t } = useTranslation("proposals");
   return (
     <button
       onClick={onClick}
@@ -14,7 +16,7 @@ export function AddBetweenButton({ onClick, label }: { onClick: () => void; labe
     >
       <div className="flex-1 h-px bg-slate-200 group-hover:bg-primary/30 transition-colors" />
       <span className="flex items-center gap-1 text-xs font-semibold text-slate-500 group-hover:text-primary px-2 py-0.5 rounded-full group-hover:bg-primary/10 transition-all whitespace-nowrap">
-        <Plus className="w-3 h-3" /> Adicionar
+        <Plus className="w-3 h-3" /> {t("components.addBetweenButton.add")}
       </span>
       <div className="flex-1 h-px bg-slate-200 group-hover:bg-primary/30 transition-colors" />
     </button>

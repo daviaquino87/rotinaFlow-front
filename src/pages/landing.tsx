@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useGetSession } from "@/api-client";
 import { motion, useInView } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   Sparkles,
   ArrowRight,
@@ -19,6 +20,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { apiUrl } from "@/lib/api";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 // ─── Animated Section Wrapper ─────────────────────────────────────────────────
@@ -48,17 +50,18 @@ function FadeIn({
 
 // ─── Fake Schedule Preview ─────────────────────────────────────────────────────
 const SCHEDULE_BLOCKS = [
-  { time: "06:30", label: "Academia", color: "#10B981", cat: "Saúde", width: "75%" },
-  { time: "08:00", label: "Foco Profundo", color: "#3B82F6", cat: "Trabalho", width: "90%" },
-  { time: "10:30", label: "Reunião de equipe", color: "#3B82F6", cat: "Trabalho", width: "55%" },
-  { time: "12:00", label: "Almoço", color: "#F59E0B", cat: "Refeição", width: "40%" },
-  { time: "14:00", label: "Leitura & Estudo", color: "#06B6D4", cat: "Novo Hábito", width: "70%" },
-  { time: "16:00", label: "Bloco de Tarefas", color: "#3B82F6", cat: "Trabalho", width: "80%" },
-  { time: "19:00", label: "Caminhada", color: "#10B981", cat: "Saúde", width: "45%" },
-  { time: "21:00", label: "Leitura noturna", color: "#8B5CF6", cat: "Lazer", width: "60%" },
+  { time: "06:30", labelKey: "gym", color: "#10B981", width: "75%" },
+  { time: "08:00", labelKey: "deepFocus", color: "#3B82F6", width: "90%" },
+  { time: "10:30", labelKey: "teamMeeting", color: "#3B82F6", width: "55%" },
+  { time: "12:00", labelKey: "lunch", color: "#F59E0B", width: "40%" },
+  { time: "14:00", labelKey: "readingStudy", color: "#06B6D4", width: "70%" },
+  { time: "16:00", labelKey: "taskBlock", color: "#3B82F6", width: "80%" },
+  { time: "19:00", labelKey: "walk", color: "#10B981", width: "45%" },
+  { time: "21:00", labelKey: "nightReading", color: "#8B5CF6", width: "60%" },
 ];
 
 function SchedulePreview() {
+  const { t } = useTranslation("landing");
   return (
     <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl overflow-hidden w-full max-w-sm">
       <div className="bg-gradient-to-r from-slate-800 to-slate-700 px-4 py-3 flex items-center gap-2">
@@ -67,7 +70,7 @@ function SchedulePreview() {
             <div key={c} className="w-3 h-3 rounded-full" style={{ backgroundColor: c }} />
           ))}
         </div>
-        <span className="text-slate-300 text-xs font-mono ml-2">Segunda-feira • rotinaFlow</span>
+        <span className="text-slate-300 text-xs font-mono ml-2">{t("schedulePreview.windowLabel")}</span>
       </div>
       <div className="p-4 space-y-2.5">
         {SCHEDULE_BLOCKS.map((block, i) => (
@@ -88,7 +91,7 @@ function SchedulePreview() {
                 style={{ backgroundColor: block.color + "22" }}
               >
                 <span className="text-xs font-semibold truncate" style={{ color: block.color }}>
-                  {block.label}
+                  {t(`schedulePreview.blocks.${block.labelKey}`)}
                 </span>
               </motion.div>
             </div>
@@ -98,7 +101,7 @@ function SchedulePreview() {
       <div className="border-t border-slate-100 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-          <span className="text-xs text-slate-500 font-medium">Sincronizado com Google Agenda</span>
+          <span className="text-xs text-slate-500 font-medium">{t("schedulePreview.syncedLabel")}</span>
         </div>
         <CalendarCheck2 className="w-4 h-4 text-green-500" />
       </div>
@@ -172,6 +175,7 @@ function StepCard({
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 export default function Landing() {
+  const { t } = useTranslation("landing");
   const { data: session, isLoading } = useGetSession();
   const [waitingForLogin, setWaitingForLogin] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -207,26 +211,29 @@ export default function Landing() {
           <div className="flex items-center gap-2.5">
             <img
               src="/images/icon-192.png"
-              alt="rotinaFlow"
+              alt={t("nav.logoAlt")}
               className="w-8 h-8 rounded-lg shadow shadow-primary/30"
             />
             <span className="font-display font-bold text-lg tracking-tight">rotinaFlow</span>
           </div>
-          <button
-            onClick={handleLogin}
-            disabled={waitingForLogin}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900 text-white text-sm font-semibold hover:bg-slate-700 transition-colors disabled:opacity-60"
-          >
-            {waitingForLogin ? (
-              <>
-                <Loader2 className="w-3.5 h-3.5 animate-spin" /> Aguardando...
-              </>
-            ) : (
-              <>
-                <User className="w-3.5 h-3.5" /> Entrar com Google
-              </>
-            )}
-          </button>
+          <div className="flex items-center gap-2">
+            <LanguageSwitcher />
+            <button
+              onClick={handleLogin}
+              disabled={waitingForLogin}
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900 text-white text-sm font-semibold hover:bg-slate-700 transition-colors disabled:opacity-60"
+            >
+              {waitingForLogin ? (
+                <>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" /> {t("nav.loginWaiting")}
+                </>
+              ) : (
+                <>
+                  <User className="w-3.5 h-3.5" /> {t("nav.loginButton")}
+                </>
+              )}
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -256,21 +263,18 @@ export default function Landing() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-xs mb-6 border border-primary/20">
-              <Sparkles className="w-3.5 h-3.5" /> Inteligência Artificial aplicada à sua rotina
+              <Sparkles className="w-3.5 h-3.5" /> {t("hero.badge")}
             </div>
             <h1 className="font-display text-5xl md:text-6xl lg:text-[4rem] font-extrabold tracking-tight text-slate-900 leading-[1.08] mb-6">
-              Pare de improvisar.{" "}
+              {t("hero.titlePrefix")}{" "}
               <span className="relative">
                 <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-primary via-violet-500 to-blue-500">
-                  Viva com intenção.
+                  {t("hero.titleHighlight")}
                 </span>
                 <span className="absolute -bottom-1 left-0 right-0 h-3 bg-gradient-to-r from-primary/20 via-violet-400/20 to-blue-400/20 blur-sm rounded-full" />
               </span>
             </h1>
-            <p className="text-lg text-slate-500 mb-8 leading-relaxed max-w-lg">
-              Descreva seus objetivos e deixe a IA montar uma rotina semanal personalizada,
-              sincronizada com seu Google Agenda em segundos.
-            </p>
+            <p className="text-lg text-slate-500 mb-8 leading-relaxed max-w-lg">{t("hero.subtitle")}</p>
 
             <div className="flex flex-col sm:flex-row gap-3">
               <button
@@ -280,11 +284,11 @@ export default function Landing() {
               >
                 {waitingForLogin ? (
                   <>
-                    <Loader2 className="w-5 h-5 animate-spin" /> Conclua o login na aba aberta...
+                    <Loader2 className="w-5 h-5 animate-spin" /> {t("hero.ctaPrimaryWaiting")}
                   </>
                 ) : (
                   <>
-                    <span>Começar grátis com Google</span>
+                    <span>{t("hero.ctaPrimary")}</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </>
                 )}
@@ -293,18 +297,19 @@ export default function Landing() {
                 href="#como-funciona"
                 className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl border border-slate-200 text-slate-700 font-semibold text-base hover:bg-slate-50 transition-all"
               >
-                Como funciona <ChevronRight className="w-4 h-4" />
+                {t("hero.ctaSecondary")} <ChevronRight className="w-4 h-4" />
               </a>
             </div>
 
             <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-500">
               <span className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
-                Sem cartão de crédito
+                {t("hero.trustNoCard")}
               </span>
               <span className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
-                Primeira rotina <strong className="text-slate-700">100% gratuita</strong>
+                {t("hero.trustFreeRoutinePrefix")}{" "}
+                <strong className="text-slate-700">{t("hero.trustFreeRoutineStrong")}</strong>
               </span>
             </div>
           </motion.div>
@@ -326,8 +331,8 @@ export default function Landing() {
                 <Brain className="w-4 h-4 text-green-600" />
               </div>
               <div>
-                <p className="text-xs font-bold text-slate-800">IA analisando...</p>
-                <p className="text-[11px] text-slate-500">Otimizando sua semana</p>
+                <p className="text-xs font-bold text-slate-800">{t("hero.floatingAiAnalyzingTitle")}</p>
+                <p className="text-[11px] text-slate-500">{t("hero.floatingAiAnalyzingSubtitle")}</p>
               </div>
             </motion.div>
 
@@ -343,8 +348,8 @@ export default function Landing() {
                 <Sparkles className="w-4 h-4 text-primary" />
               </div>
               <div>
-                <p className="text-xs font-bold text-slate-800">Equilíbrio automático</p>
-                <p className="text-[11px] text-slate-500">Trabalho, saúde e lazer</p>
+                <p className="text-xs font-bold text-slate-800">{t("hero.floatingBalanceTitle")}</p>
+                <p className="text-[11px] text-slate-500">{t("hero.floatingBalanceSubtitle")}</p>
               </div>
             </motion.div>
           </motion.div>
@@ -358,15 +363,12 @@ export default function Landing() {
         <div className="max-w-7xl mx-auto">
           <FadeIn className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-violet-100 text-violet-700 font-semibold text-xs mb-4 border border-violet-200">
-              <Zap className="w-3.5 h-3.5" /> Por que o rotinaFlow funciona
+              <Zap className="w-3.5 h-3.5" /> {t("benefits.badge")}
             </div>
             <h2 className="font-display text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
-              Sua semana, otimizada pela IA
+              {t("benefits.title")}
             </h2>
-            <p className="text-slate-500 text-lg max-w-xl mx-auto">
-              Mais do que um calendário — um sistema inteligente que aprende com você e monta a
-              semana ideal para atingir seus objetivos.
-            </p>
+            <p className="text-slate-500 text-lg max-w-xl mx-auto">{t("benefits.subtitle")}</p>
           </FadeIn>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -374,43 +376,43 @@ export default function Landing() {
               delay={0}
               icon={Brain}
               color="#c904bc"
-              title="IA que entende seu estilo"
-              desc="Analisa sua rotina atual, seus objetivos e preferências para criar uma agenda feita sob medida — que realmente se encaixa na sua vida."
+              title={t("benefits.items.aiStyle.title")}
+              desc={t("benefits.items.aiStyle.desc")}
             />
             <BenefitCard
               delay={0.05}
               icon={CalendarCheck2}
               color="#3B82F6"
-              title="Sincronização em 1 clique"
-              desc="Aprovou a rotina? Em segundos ela aparece no seu Google Agenda com todos os eventos, horários e recorrências configurados automaticamente."
+              title={t("benefits.items.oneClickSync.title")}
+              desc={t("benefits.items.oneClickSync.desc")}
             />
             <BenefitCard
               delay={0.1}
               icon={Target}
               color="#10B981"
-              title="Foco nos seus objetivos"
-              desc="Quer aprender um idioma, malhar 4x por semana, ler mais livros? A IA aloca blocos estratégicos para cada meta — sem esquecer o descanso."
+              title={t("benefits.items.focusOnGoals.title")}
+              desc={t("benefits.items.focusOnGoals.desc")}
             />
             <BenefitCard
               delay={0.15}
               icon={Clock}
               color="#F59E0B"
-              title="Elimine decisões diárias"
-              desc="Chega de perguntar 'o que devo fazer agora?'. Com a rotina pronta, você acorda sabendo exatamente como aproveitar cada hora do dia."
+              title={t("benefits.items.eliminateDecisions.title")}
+              desc={t("benefits.items.eliminateDecisions.desc")}
             />
             <BenefitCard
               delay={0.2}
               icon={LayoutGrid}
-              title="Equilíbrio real entre áreas"
+              title={t("benefits.items.realBalance.title")}
               color="#8B5CF6"
-              desc="Trabalho, saúde, lazer e desenvolvimento pessoal distribuídos de forma inteligente — garantindo produtividade sem burnout."
+              desc={t("benefits.items.realBalance.desc")}
             />
             <BenefitCard
               delay={0.25}
               icon={RefreshCw}
               color="#06B6D4"
-              title="Ajuste a qualquer momento"
-              desc="A vida muda. Edite eventos, troque horários com drag & drop e re-sincronize quando quiser. Sua agenda, no seu ritmo."
+              title={t("benefits.items.adjustAnytime.title")}
+              desc={t("benefits.items.adjustAnytime.desc")}
             />
           </div>
         </div>
@@ -423,14 +425,12 @@ export default function Landing() {
         <div className="max-w-5xl mx-auto">
           <FadeIn className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 font-semibold text-xs mb-4 border border-blue-200">
-              <CheckCircle2 className="w-3.5 h-3.5" /> Simples assim
+              <CheckCircle2 className="w-3.5 h-3.5" /> {t("howItWorks.badge")}
             </div>
             <h2 className="font-display text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
-              De zero a rotina em 3 passos
+              {t("howItWorks.title")}
             </h2>
-            <p className="text-slate-500 text-lg">
-              Leva menos de 5 minutos do início ao Google Agenda.
-            </p>
+            <p className="text-slate-500 text-lg">{t("howItWorks.subtitle")}</p>
           </FadeIn>
 
           {/* Steps */}
@@ -443,24 +443,24 @@ export default function Landing() {
               delay={0}
               icon={User}
               color="#c904bc"
-              title="Conte sua rotina"
-              desc="Informe o que você já faz hoje — atividades, horários e hábitos. O formulário inteligente extrai tudo em minutos."
+              title={t("howItWorks.steps.describe.title")}
+              desc={t("howItWorks.steps.describe.desc")}
             />
             <StepCard
               num="2"
               delay={0.1}
               icon={Brain}
               color="#3B82F6"
-              title="IA cria sua agenda"
-              desc="Nossa IA analisa seus dados e monta uma proposta semanal completa, com equilíbrio entre trabalho, saúde e lazer."
+              title={t("howItWorks.steps.generate.title")}
+              desc={t("howItWorks.steps.generate.desc")}
             />
             <StepCard
               num="3"
               delay={0.2}
               icon={CalendarCheck2}
               color="#10B981"
-              title="Aprove e sincronize"
-              desc="Revise, ajuste se quiser, e sincronize direto com o Google Agenda — com recorrência e tudo configurado automaticamente."
+              title={t("howItWorks.steps.sync.title")}
+              desc={t("howItWorks.steps.sync.desc")}
             />
           </div>
         </div>
@@ -476,26 +476,22 @@ export default function Landing() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <FadeIn>
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 text-white/80 font-semibold text-xs mb-6 border border-white/20">
-                <Shield className="w-3.5 h-3.5" /> Dados seguros e privados
+                <Shield className="w-3.5 h-3.5" /> {t("security.badge")}
               </div>
               <h2 className="font-display text-4xl md:text-5xl font-extrabold leading-tight mb-6">
-                Conectado ao Google,
+                {t("security.titlePrefix")}
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-violet-400">
-                  100% sob seu controle
+                  {t("security.titleHighlight")}
                 </span>
               </h2>
-              <p className="text-slate-400 text-lg leading-relaxed mb-8">
-                Login e sincronização via OAuth oficial do Google. Seus eventos vão para o Google
-                Agenda com recorrência configurada — você pode editar ou cancelar quando quiser, sem
-                dependências.
-              </p>
+              <p className="text-slate-400 text-lg leading-relaxed mb-8">{t("security.subtitle")}</p>
               <div className="space-y-3">
                 {[
-                  "Login seguro via Google OAuth",
-                  "Sincronização bidirecional com Google Agenda",
-                  "Sem acesso a dados sensacionais além do necessário",
-                  "Cancele e remova quando quiser",
+                  t("security.list.oauthLogin"),
+                  t("security.list.bidirectionalSync"),
+                  t("security.list.noExtraAccess"),
+                  t("security.list.cancelAnytime"),
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-green-400 shrink-0" />
@@ -512,18 +508,18 @@ export default function Landing() {
                     <CalendarCheck2 className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <p className="font-bold text-white">Rotina da Semana</p>
-                    <p className="text-xs text-slate-400">Segunda a Domingo • Sincronizada</p>
+                    <p className="font-bold text-white">{t("security.widget.title")}</p>
+                    <p className="text-xs text-slate-400">{t("security.widget.subtitle")}</p>
                   </div>
                   <div className="ml-auto w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                 </div>
                 <div className="space-y-3">
                   {[
-                    { label: "Trabalho & Foco", pct: 38, color: "#3B82F6" },
-                    { label: "Saúde & Exercício", pct: 22, color: "#10B981" },
-                    { label: "Aprendizado", pct: 20, color: "#06B6D4" },
-                    { label: "Lazer & Família", pct: 12, color: "#8B5CF6" },
-                    { label: "Refeições", pct: 8, color: "#F59E0B" },
+                    { label: t("security.widget.categories.workFocus"), pct: 38, color: "#3B82F6" },
+                    { label: t("security.widget.categories.healthExercise"), pct: 22, color: "#10B981" },
+                    { label: t("security.widget.categories.learning"), pct: 20, color: "#06B6D4" },
+                    { label: t("security.widget.categories.leisureFamily"), pct: 12, color: "#8B5CF6" },
+                    { label: t("security.widget.categories.meals"), pct: 8, color: "#F59E0B" },
                   ].map((item, i) => (
                     <div key={i}>
                       <div className="flex justify-between text-xs mb-1.5">
@@ -554,14 +550,12 @@ export default function Landing() {
         <div className="max-w-3xl mx-auto text-center">
           <FadeIn>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-100 text-green-700 font-semibold text-xs mb-4 border border-green-200">
-              <Sparkles className="w-3.5 h-3.5" /> Preço justo e transparente
+              <Sparkles className="w-3.5 h-3.5" /> {t("pricing.badge")}
             </div>
             <h2 className="font-display text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
-              Comece de graça
+              {t("pricing.title")}
             </h2>
-            <p className="text-slate-500 text-lg mb-12">
-              Sem assinatura, sem pegadinhas. Pague só quando precisar de mais.
-            </p>
+            <p className="text-slate-500 text-lg mb-12">{t("pricing.subtitle")}</p>
           </FadeIn>
 
           <FadeIn delay={0.1}>
@@ -569,16 +563,16 @@ export default function Landing() {
               {/* Free */}
               <div className="bg-white border border-slate-200 rounded-3xl p-8">
                 <p className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-2">
-                  Começar
+                  {t("pricing.free.label")}
                 </p>
-                <p className="text-4xl font-extrabold text-slate-900 mb-1">Grátis</p>
-                <p className="text-slate-500 text-sm mb-6">Para sua primeira rotina</p>
+                <p className="text-4xl font-extrabold text-slate-900 mb-1">{t("pricing.free.price")}</p>
+                <p className="text-slate-500 text-sm mb-6">{t("pricing.free.caption")}</p>
                 <div className="space-y-3 mb-8">
                   {[
-                    "1 rotina gerada pela IA",
-                    "Sincronização com Google Agenda",
-                    "Edição manual dos eventos",
-                    "Drag & drop para ajustar horários",
+                    t("pricing.free.features.oneRoutine"),
+                    t("pricing.free.features.googleSync"),
+                    t("pricing.free.features.manualEdit"),
+                    t("pricing.free.features.dragDrop"),
                   ].map((item) => (
                     <div key={item} className="flex items-center gap-2.5 text-sm">
                       <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
@@ -590,31 +584,29 @@ export default function Landing() {
                   onClick={handleLogin}
                   className="w-full py-3 rounded-xl border-2 border-slate-200 font-bold text-slate-700 hover:border-primary hover:text-primary transition-colors"
                 >
-                  Criar minha rotina grátis
+                  {t("pricing.free.cta")}
                 </button>
               </div>
 
               {/* Credits */}
               <div className="bg-gradient-to-br from-primary to-violet-600 rounded-3xl p-8 text-white relative overflow-hidden">
                 <div className="absolute top-4 right-4 bg-white/20 rounded-full px-2 py-0.5 text-xs font-bold">
-                  MAIS POPULAR
+                  {t("pricing.credits.mostPopular")}
                 </div>
                 <p className="text-sm font-semibold text-white/70 uppercase tracking-wide mb-2">
-                  Créditos
+                  {t("pricing.credits.label")}
                 </p>
                 <p className="flex items-baseline gap-1 mb-1">
-                  <span className="text-4xl font-extrabold">R$1</span>
-                  <span className="text-white/70 text-sm">/ crédito</span>
+                  <span className="text-4xl font-extrabold">{t("pricing.credits.priceValue")}</span>
+                  <span className="text-white/70 text-sm">{t("pricing.credits.priceUnit")}</span>
                 </p>
-                <p className="text-white/70 text-sm mb-6">
-                  Gerar custa 2 créditos · Sync custa 3 créditos · Template pronto custa 5 créditos
-                </p>
+                <p className="text-white/70 text-sm mb-6">{t("pricing.credits.caption")}</p>
                 <div className="space-y-3 mb-4">
                   {[
-                    "Tudo do plano gratuito",
-                    "Créditos nunca expiram",
-                    "Pacotes de 3, 5 ou 10 créditos",
-                    "Múltiplas rotinas ilimitadas",
+                    t("pricing.credits.features.everythingFree"),
+                    t("pricing.credits.features.creditsNeverExpire"),
+                    t("pricing.credits.features.packages"),
+                    t("pricing.credits.features.unlimitedRoutines"),
                   ].map((item) => (
                     <div key={item} className="flex items-center gap-2.5 text-sm">
                       <CheckCircle2 className="w-4 h-4 text-white/80 shrink-0" />
@@ -623,17 +615,18 @@ export default function Landing() {
                   ))}
                 </div>
                 <div className="flex gap-2 mb-6">
-                  {[
-                    { c: 3, p: "R$3" },
-                    { c: 5, p: "R$5" },
-                    { c: 10, p: "R$10" },
-                  ].map((pkg) => (
+                  {[3, 5, 10].map((c) => (
                     <div
-                      key={pkg.c}
+                      key={c}
                       className="flex-1 bg-white/10 rounded-xl p-2 text-center border border-white/20"
                     >
-                      <div className="font-bold text-sm">{pkg.c} créd.</div>
-                      <div className="text-white/70 text-xs">{pkg.p}</div>
+                      <div className="font-bold text-sm">
+                        {c} {t("pricing.credits.packageUnit")}
+                      </div>
+                      <div className="text-white/70 text-xs">
+                        {t("pricing.credits.currencyPrefix")}
+                        {c}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -641,7 +634,7 @@ export default function Landing() {
                   onClick={handleLogin}
                   className="w-full py-3 rounded-xl bg-white text-primary font-bold hover:bg-white/90 transition-colors"
                 >
-                  Começar agora
+                  {t("pricing.credits.cta")}
                 </button>
               </div>
             </div>
@@ -665,12 +658,9 @@ export default function Landing() {
             />
           </div>
           <h2 className="font-display text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
-            Sua melhor semana começa hoje
+            {t("finalCta.title")}
           </h2>
-          <p className="text-slate-500 text-lg mb-10 max-w-lg mx-auto">
-            Junte-se a quem já parou de improvisar e passou a viver com intenção. Primeira rotina
-            totalmente grátis.
-          </p>
+          <p className="text-slate-500 text-lg mb-10 max-w-lg mx-auto">{t("finalCta.subtitle")}</p>
           <button
             onClick={handleLogin}
             disabled={waitingForLogin}
@@ -678,18 +668,16 @@ export default function Landing() {
           >
             {waitingForLogin ? (
               <>
-                <Loader2 className="w-5 h-5 animate-spin" /> Conclua o login na aba aberta...
+                <Loader2 className="w-5 h-5 animate-spin" /> {t("finalCta.ctaWaiting")}
               </>
             ) : (
               <>
-                <Sparkles className="w-5 h-5" /> Criar minha rotina grátis{" "}
+                <Sparkles className="w-5 h-5" /> {t("finalCta.cta")}{" "}
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </>
             )}
           </button>
-          <p className="text-sm text-slate-500 mt-4">
-            Sem cartão de crédito. Sem assinatura. Começa em minutos.
-          </p>
+          <p className="text-sm text-slate-500 mt-4">{t("finalCta.footnote")}</p>
         </FadeIn>
       </section>
 
@@ -697,16 +685,16 @@ export default function Landing() {
       <footer className="py-8 px-6 border-t border-slate-100 bg-slate-50">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <img src="/images/icon-192.png" alt="rotinaFlow" className="w-6 h-6 rounded-md" />
+            <img src="/images/icon-192.png" alt={t("footer.logoAlt")} className="w-6 h-6 rounded-md" />
             <span className="font-bold text-slate-700">rotinaFlow</span>
           </div>
-          <p className="text-sm text-slate-500">© 2025 rotinaFlow. Todos os direitos reservados.</p>
+          <p className="text-sm text-slate-500">{t("footer.copyright")}</p>
           <div className="flex gap-4 text-sm text-slate-500">
             <a href="/privacidade" className="hover:text-slate-600 transition-colors">
-              Política de Privacidade
+              {t("footer.privacyPolicy")}
             </a>
             <a href="/termos" className="hover:text-slate-600 transition-colors">
-              Termos de Serviço
+              {t("footer.termsOfService")}
             </a>
           </div>
         </div>

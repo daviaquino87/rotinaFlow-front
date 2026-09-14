@@ -1,4 +1,5 @@
 import { Plus, Check } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@lib/utils";
 import { ActivityCard } from "./ActivityCard";
 import type { Activity, ActivityPreset } from "../types";
@@ -30,6 +31,7 @@ export function ActivitySelector({
   showSchedule = true,
   allowNotes = false,
 }: ActivitySelectorProps) {
+  const { t } = useTranslation("schedule");
   const selectedNames = new Set(activities.map((a) => a.name));
   return (
     <div className="space-y-6">
@@ -83,7 +85,7 @@ export function ActivitySelector({
 
       {activities.length === 0 && (
         <div className="text-center py-10 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
-          <p className="text-slate-500 text-sm">Nenhuma atividade adicionada ainda.</p>
+          <p className="text-slate-500 text-sm">{t("activitySelector.emptyState")}</p>
         </div>
       )}
 
@@ -93,7 +95,7 @@ export function ActivitySelector({
         className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl border-2 border-dashed border-slate-300 text-slate-500 hover:border-primary hover:text-primary hover:bg-primary/5 transition-all text-sm font-medium"
       >
         <Plus className="w-4 h-4" />
-        Adicionar atividade personalizada
+        {t("activitySelector.addCustom")}
       </button>
     </div>
   );

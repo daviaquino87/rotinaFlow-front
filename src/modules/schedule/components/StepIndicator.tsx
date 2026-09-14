@@ -1,5 +1,6 @@
 import React from "react";
 import { Check } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@lib/utils";
 
 interface StepIndicatorProps {
@@ -7,7 +8,8 @@ interface StepIndicatorProps {
 }
 
 export function StepIndicator({ current }: StepIndicatorProps) {
-  const steps = ["Rotina atual", "Novos objetivos"];
+  const { t } = useTranslation("schedule");
+  const steps = [t("stepIndicator.currentRoutine"), t("stepIndicator.newGoals")];
   return (
     <div className="flex items-center gap-2 mb-8">
       {steps.map((label, i) => {

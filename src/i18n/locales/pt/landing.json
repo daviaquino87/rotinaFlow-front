@@ -1,0 +1,156 @@
+{
+  "nav": {
+    "logoAlt": "rotinaFlow",
+    "loginButton": "Entrar com Google",
+    "loginWaiting": "Aguardando..."
+  },
+  "hero": {
+    "badge": "Inteligência Artificial aplicada à sua rotina",
+    "titlePrefix": "Pare de improvisar.",
+    "titleHighlight": "Viva com intenção.",
+    "subtitle": "Descreva seus objetivos e deixe a IA montar uma rotina semanal personalizada, sincronizada com seu Google Agenda em segundos.",
+    "ctaPrimary": "Começar grátis com Google",
+    "ctaPrimaryWaiting": "Conclua o login na aba aberta...",
+    "ctaSecondary": "Como funciona",
+    "trustNoCard": "Sem cartão de crédito",
+    "trustFreeRoutinePrefix": "Primeira rotina",
+    "trustFreeRoutineStrong": "100% gratuita",
+    "floatingAiAnalyzingTitle": "IA analisando...",
+    "floatingAiAnalyzingSubtitle": "Otimizando sua semana",
+    "floatingBalanceTitle": "Equilíbrio automático",
+    "floatingBalanceSubtitle": "Trabalho, saúde e lazer"
+  },
+  "schedulePreview": {
+    "windowLabel": "Segunda-feira • rotinaFlow",
+    "syncedLabel": "Sincronizado com Google Agenda",
+    "blocks": {
+      "gym": "Academia",
+      "deepFocus": "Foco Profundo",
+      "teamMeeting": "Reunião de equipe",
+      "lunch": "Almoço",
+      "readingStudy": "Leitura & Estudo",
+      "taskBlock": "Bloco de Tarefas",
+      "walk": "Caminhada",
+      "nightReading": "Leitura noturna"
+    }
+  },
+  "benefits": {
+    "badge": "Por que o rotinaFlow funciona",
+    "title": "Sua semana, otimizada pela IA",
+    "subtitle": "Mais do que um calendário — um sistema inteligente que aprende com você e monta a semana ideal para atingir seus objetivos.",
+    "items": {
+      "aiStyle": {
+        "title": "IA que entende seu estilo",
+        "desc": "Analisa sua rotina atual, seus objetivos e preferências para criar uma agenda feita sob medida — que realmente se encaixa na sua vida."
+      },
+      "oneClickSync": {
+        "title": "Sincronização em 1 clique",
+        "desc": "Aprovou a rotina? Em segundos ela aparece no seu Google Agenda com todos os eventos, horários e recorrências configurados automaticamente."
+      },
+      "focusOnGoals": {
+        "title": "Foco nos seus objetivos",
+        "desc": "Quer aprender um idioma, malhar 4x por semana, ler mais livros? A IA aloca blocos estratégicos para cada meta — sem esquecer o descanso."
+      },
+      "eliminateDecisions": {
+        "title": "Elimine decisões diárias",
+        "desc": "Chega de perguntar 'o que devo fazer agora?'. Com a rotina pronta, você acorda sabendo exatamente como aproveitar cada hora do dia."
+      },
+      "realBalance": {
+        "title": "Equilíbrio real entre áreas",
+        "desc": "Trabalho, saúde, lazer e desenvolvimento pessoal distribuídos de forma inteligente — garantindo produtividade sem burnout."
+      },
+      "adjustAnytime": {
+        "title": "Ajuste a qualquer momento",
+        "desc": "A vida muda. Edite eventos, troque horários com drag & drop e re-sincronize quando quiser. Sua agenda, no seu ritmo."
+      }
+    }
+  },
+  "howItWorks": {
+    "badge": "Simples assim",
+    "title": "De zero a rotina em 3 passos",
+    "subtitle": "Leva menos de 5 minutos do início ao Google Agenda.",
+    "steps": {
+      "describe": {
+        "title": "Conte sua rotina",
+        "desc": "Informe o que você já faz hoje — atividades, horários e hábitos. O formulário inteligente extrai tudo em minutos."
+      },
+      "generate": {
+        "title": "IA cria sua agenda",
+        "desc": "Nossa IA analisa seus dados e monta uma proposta semanal completa, com equilíbrio entre trabalho, saúde e lazer."
+      },
+      "sync": {
+        "title": "Aprove e sincronize",
+        "desc": "Revise, ajuste se quiser, e sincronize direto com o Google Agenda — com recorrência e tudo configurado automaticamente."
+      }
+    }
+  },
+  "security": {
+    "badge": "Dados seguros e privados",
+    "titlePrefix": "Conectado ao Google,",
+    "titleHighlight": "100% sob seu controle",
+    "subtitle": "Login e sincronização via OAuth oficial do Google. Seus eventos vão para o Google Agenda com recorrência configurada — você pode editar ou cancelar quando quiser, sem dependências.",
+    "list": {
+      "oauthLogin": "Login seguro via Google OAuth",
+      "bidirectionalSync": "Sincronização bidirecional com Google Agenda",
+      "noExtraAccess": "Sem acesso a dados sensacionais além do necessário",
+      "cancelAnytime": "Cancele e remova quando quiser"
+    },
+    "widget": {
+      "title": "Rotina da Semana",
+      "subtitle": "Segunda a Domingo • Sincronizada",
+      "categories": {
+        "workFocus": "Trabalho & Foco",
+        "healthExercise": "Saúde & Exercício",
+        "learning": "Aprendizado",
+        "leisureFamily": "Lazer & Família",
+        "meals": "Refeições"
+      }
+    }
+  },
+  "pricing": {
+    "badge": "Preço justo e transparente",
+    "title": "Comece de graça",
+    "subtitle": "Sem assinatura, sem pegadinhas. Pague só quando precisar de mais.",
+    "free": {
+      "label": "Começar",
+      "price": "Grátis",
+      "caption": "Para sua primeira rotina",
+      "features": {
+        "oneRoutine": "1 rotina gerada pela IA",
+        "googleSync": "Sincronização com Google Agenda",
+        "manualEdit": "Edição manual dos eventos",
+        "dragDrop": "Drag & drop para ajustar horários"
+      },
+      "cta": "Criar minha rotina grátis"
+    },
+    "credits": {
+      "mostPopular": "MAIS POPULAR",
+      "label": "Créditos",
+      "priceValue": "R$1",
+      "priceUnit": "/ crédito",
+      "caption": "Gerar custa 2 créditos · Sync custa 3 créditos · Template pronto custa 5 créditos",
+      "features": {
+        "everythingFree": "Tudo do plano gratuito",
+        "creditsNeverExpire": "Créditos nunca expiram",
+        "packages": "Pacotes de 3, 5 ou 10 créditos",
+        "unlimitedRoutines": "Múltiplas rotinas ilimitadas"
+      },
+      "currencyPrefix": "R$",
+      "packageUnit": "créd.",
+      "cta": "Começar agora"
+    }
+  },
+  "finalCta": {
+    "title": "Sua melhor semana começa hoje",
+    "subtitle": "Junte-se a quem já parou de improvisar e passou a viver com intenção. Primeira rotina totalmente grátis.",
+    "cta": "Criar minha rotina grátis",
+    "ctaWaiting": "Conclua o login na aba aberta...",
+    "footnote": "Sem cartão de crédito. Sem assinatura. Começa em minutos."
+  },
+  "footer": {
+    "logoAlt": "rotinaFlow",
+    "copyright": "© 2025 rotinaFlow. Todos os direitos reservados.",
+    "privacyPolicy": "Política de Privacidade",
+    "termsOfService": "Termos de Serviço"
+  }
+}

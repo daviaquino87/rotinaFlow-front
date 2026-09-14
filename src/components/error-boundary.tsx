@@ -1,5 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
 import { AlertTriangle, RefreshCw } from "lucide-react";
+import i18n from "@/i18n";
 
 interface Props {
   children: ReactNode;
@@ -34,10 +35,11 @@ export class ErrorBoundary extends Component<Props, State> {
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-destructive to-red-400 shadow-lg shadow-destructive/30 mb-5">
             <AlertTriangle className="w-7 h-7 text-white" />
           </div>
-          <h1 className="font-display text-2xl font-bold text-slate-900 mb-2">Algo deu errado</h1>
+          <h1 className="font-display text-2xl font-bold text-slate-900 mb-2">
+            {i18n.t("errorBoundary.title")}
+          </h1>
           <p className="text-slate-500 text-sm leading-relaxed mb-6">
-            Encontramos um erro inesperado. Recarregue a página para continuar — se o problema
-            persistir, tente novamente em alguns minutos.
+            {i18n.t("errorBoundary.description")}
           </p>
           <button
             type="button"
@@ -45,7 +47,7 @@ export class ErrorBoundary extends Component<Props, State> {
             className="inline-flex items-center justify-center gap-2 w-full py-3 px-6 rounded-xl bg-gradient-to-r from-primary to-blue-500 text-white font-semibold text-sm shadow-lg shadow-primary/25 hover:opacity-90 transition-opacity"
           >
             <RefreshCw className="w-4 h-4" />
-            Recarregar página
+            {i18n.t("errorBoundary.reload")}
           </button>
         </div>
       </div>

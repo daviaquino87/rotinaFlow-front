@@ -1,4 +1,5 @@
 import { Trash2, ChevronDown, ChevronUp, Clock } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@lib/utils";
 import { DayPicker } from "./DayPicker";
 import type { Activity } from "../types";
@@ -59,6 +60,7 @@ export function ActivityCard({
   showSchedule = true,
   allowNotes = false,
 }: ActivityCardProps) {
+  const { t } = useTranslation("schedule");
   const isExpandable = activity.custom || showSchedule || allowNotes;
   return (
     <div
@@ -83,7 +85,7 @@ export function ActivityCard({
               value={activity.name}
               onChange={(e) => onUpdate({ name: e.target.value })}
               onClick={(e) => e.stopPropagation()}
-              placeholder="Nome da atividade..."
+              placeholder={t("activityCard.namePlaceholder")}
             />
           ) : (
             <p className="font-semibold text-slate-800 text-sm">{activity.name}</p>
@@ -101,7 +103,7 @@ export function ActivityCard({
         <div className="flex items-center gap-2">
           <button
             type="button"
-            aria-label="Remover atividade"
+            aria-label={t("activityCard.removeAria")}
             onClick={(e) => {
               e.stopPropagation();
               onRemove();
@@ -123,14 +125,14 @@ export function ActivityCard({
           {activity.custom && (
             <div>
               <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2 block">
-                Ícone
+                {t("activityCard.iconLabel")}
               </label>
               <div className="flex gap-2 flex-wrap">
                 {CUSTOM_EMOJIS.map((em) => (
                   <button
                     key={em}
                     type="button"
-                    aria-label={`Usar ícone ${em}`}
+                    aria-label={t("activityCard.useIconAria", { emoji: em })}
                     onClick={() => onUpdate({ emoji: em })}
                     className={cn(
                       "w-11 h-11 rounded-xl text-lg transition-all",
@@ -149,14 +151,14 @@ export function ActivityCard({
             <>
               <div>
                 <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2 block">
-                  Dias
+                  {t("activityCard.daysLabel")}
                 </label>
                 <DayPicker days={activity.days} onChange={(days) => onUpdate({ days })} />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">
-                    Início
+                    {t("activityCard.startLabel")}
                   </label>
                   <input
                     type="time"
@@ -167,7 +169,7 @@ export function ActivityCard({
                 </div>
                 <div>
                   <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">
-                    Fim
+                    {t("activityCard.endLabel")}
                   </label>
                   <input
                     type="time"
@@ -182,12 +184,12 @@ export function ActivityCard({
           {allowNotes && (
             <div>
               <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">
-                Observação (opcional)
+                {t("activityCard.noteLabel")}
               </label>
               <textarea
                 value={activity.note}
                 onChange={(e) => onUpdate({ note: e.target.value })}
-                placeholder="Ex: prefiro à noite, não pode no fim de semana, 2x por semana já basta..."
+                placeholder={t("activityCard.notePlaceholder")}
                 className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 min-h-[60px] resize-none"
               />
             </div>

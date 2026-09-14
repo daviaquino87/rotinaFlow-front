@@ -2,12 +2,13 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ClipboardList, Sparkles, CalendarCheck2, ArrowRight, X } from "lucide-react";
 import { useLocation } from "wouter";
+import { useTranslation } from "react-i18next";
 
 // Exported so AppLayout can decide whether to show this on first login and
-// reset it when the user reopens onboarding from the "Como funciona" menu.
+// reset it when the user reopens onboarding from the "How it works" menu.
 export const ONBOARDING_SEEN_KEY = "rotinaflow_onboarding_seen";
 
-const STEPS = [
+const STEP_STYLES = [
   {
     icon: ClipboardList,
     color: "from-violet-500 to-purple-600",
@@ -15,8 +16,7 @@ const STEPS = [
     border: "border-violet-100",
     textColor: "text-violet-700",
     num: "1",
-    title: "Descreva sua rotina",
-    description: "Informe as atividades que você já faz e o que quer incluir no seu dia a dia.",
+    key: "describe",
   },
   {
     icon: Sparkles,
@@ -25,9 +25,7 @@ const STEPS = [
     border: "border-blue-100",
     textColor: "text-blue-700",
     num: "2",
-    title: "A IA gera sua agenda",
-    description:
-      "Nossa IA analisa suas informações e monta uma rotina semanal personalizada para você.",
+    key: "generate",
   },
   {
     icon: CalendarCheck2,
@@ -36,12 +34,12 @@ const STEPS = [
     border: "border-emerald-100",
     textColor: "text-emerald-700",
     num: "3",
-    title: "Sincronize com o Google",
-    description: "Exporte sua rotina direto para o Google Agenda com um clique.",
+    key: "sync",
   },
-];
+] as const;
 
 export function OnboardingModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { t } = useTranslation();
   const [, setLocation] = useLocation();
 
   const dismiss = () => {
@@ -80,7 +78,7 @@ export function OnboardingModal({ open, onClose }: { open: boolean; onClose: () 
             <button
               onClick={dismiss}
               className="absolute top-4 right-4 p-2.5 -m-1 rounded-lg text-slate-500 hover:text-slate-600 hover:bg-slate-100 transition-all z-10"
-              aria-label="Fechar"
+              aria-label={t("onboarding.close")}
             >
               <X className="w-4 h-4" />
             </button>
@@ -91,16 +89,16 @@ export function OnboardingModal({ open, onClose }: { open: boolean; onClose: () 
                   <Sparkles className="w-7 h-7 text-white" />
                 </div>
                 <h2 className="font-display text-2xl font-bold text-slate-900 mb-2">
-                  Bem-vindo ao rotinaFlow!
+                  {t("onboarding.welcomeTitle")}
                 </h2>
                 <p className="text-slate-500 text-sm leading-relaxed max-w-sm mx-auto">
-                  Organize sua semana com inteligência artificial em{" "}
-                  <strong className="text-slate-700">3 passos simples</strong>.
+                  {t("onboarding.welcomeSubtitlePrefix")}{" "}
+                  <strong className="text-slate-700">{t("onboarding.welcomeSubtitleStrong")}</strong>.
                 </p>
               </div>
 
               <div className="px-6 py-6 space-y-3">
-                {STEPS.map((step, idx) => {
+                {STEP_STYLES.map((step, idx) => {
                   const Icon = step.icon;
                   return (
                     <motion.div
@@ -120,12 +118,14 @@ export function OnboardingModal({ open, onClose }: { open: boolean; onClose: () 
                           <span
                             className={`text-[10px] font-bold uppercase tracking-widest ${step.textColor}`}
                           >
-                            Passo {step.num}
+                            {t("onboarding.step", { num: step.num })}
                           </span>
                         </div>
-                        <p className="text-sm font-semibold text-slate-800">{step.title}</p>
+                        <p className="text-sm font-semibold text-slate-800">
+                          {t(`onboarding.steps.${step.key}.title`)}
+                        </p>
                         <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
-                          {step.description}
+                          {t(`onboarding.steps.${step.key}.description`)}
                         </p>
                       </div>
                     </motion.div>
@@ -141,12 +141,15 @@ export function OnboardingModal({ open, onClose }: { open: boolean; onClose: () 
                   onClick={start}
                   className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-gradient-to-r from-primary to-blue-500 text-white font-semibold text-sm shadow-lg shadow-primary/25 hover:opacity-90 transition-opacity"
                 >
-                  Começar agora
+                  {t("onboarding.startNow")}
                   <ArrowRight className="w-4 h-4" />
                 </motion.button>
                 <p className="text-center text-xs text-slate-500 mt-3">
-                  Sua primeira rotina é{" "}
-                  <span className="font-semibold text-emerald-600">gratuita</span> 🎉
+                  {t("onboarding.firstRoutineFreePrefix")}{" "}
+                  <span className="font-semibold text-emerald-600">
+                    {t("onboarding.firstRoutineFreeStrong")}
+                  </span>{" "}
+                  🎉
                 </p>
               </div>
             </div>

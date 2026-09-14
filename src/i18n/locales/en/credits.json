@@ -1,0 +1,34 @@
+{
+  "creditsModal": {
+    "close": "Close",
+    "title": "Add Credits",
+    "exchangeRate": "1 credit = R$ 1.00",
+    "currentBalance": "Your current balance",
+    "creditsCount_one": "{{count}} credit",
+    "creditsCount_other": "{{count}} credits",
+    "needCreditsPrefix": "You need",
+    "forAction": "for",
+    "defaultAction": "this action",
+    "youHave": "You have",
+    "costPerAction": "Cost per action",
+    "creditsLabel": "credits",
+    "generateRoutine": "Generate routine",
+    "sync": "Sync",
+    "choosePackage": "Choose a package",
+    "mostPopular": "Most popular",
+    "packages": {
+      "starter": {
+        "description": "1 routine generation, 1 credit left over"
+      },
+      "popular": {
+        "description": "1 generation + 1 sync, 0 left over"
+      },
+      "pro": {
+        "description": "2 generations + 2 syncs, 0 left over"
+      }
+    },
+    "footer": "Secure payment via Stripe • Credits never expire",
+    "toastErrorTitle": "Error",
+    "toastErrorDefaultMessage": "Error creating checkout"
+  }
+}
