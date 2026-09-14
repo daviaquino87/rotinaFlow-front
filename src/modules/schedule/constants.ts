@@ -134,6 +134,13 @@ export const NEW_PRESETS: ActivityPreset[] = [
     defaultEnd: "08:00",
   },
   {
+    name: "Pilates",
+    emoji: "🤸",
+    defaultDays: ["ter", "qui"],
+    defaultStart: "07:00",
+    defaultEnd: "08:00",
+  },
+  {
     name: "Dieta / Nutrição",
     emoji: "🥗",
     defaultDays: ["seg", "ter", "qua", "qui", "sex", "sab", "dom"],
@@ -186,7 +193,7 @@ export const NEW_PRESETS: ActivityPreset[] = [
 
 export const EMOJI_KEYWORDS: { words: string[]; emoji: string }[] = [
   { words: ["trabalho", "reunião", "meeting", "work", "escritório", "office", "job"], emoji: "💼" },
-  { words: ["academia", "gym", "musculação", "treino", "crossfit", "pilates"], emoji: "🏋️" },
+  { words: ["academia", "gym", "musculação", "treino", "crossfit"], emoji: "🏋️" },
   { words: ["estudo", "curso", "aula", "escola", "faculdade", "universidade"], emoji: "📚" },
   { words: ["almoço", "lunch", "refeição", "jantar", "café", "ceia"], emoji: "🍽️" },
   { words: ["dormir", "sono", "sleep", "nap", "descanso"], emoji: "😴" },
@@ -204,6 +211,7 @@ export const EMOJI_KEYWORDS: { words: string[]; emoji: string }[] = [
   { words: ["idioma", "inglês", "espanhol", "francês", "language"], emoji: "🗣️" },
   { words: ["natação", "nadar", "swim", "pool"], emoji: "🏊" },
   { words: ["yoga"], emoji: "🧘" },
+  { words: ["pilates"], emoji: "🤸" },
   { words: ["dieta", "nutrição", "nutri", "nutrition", "diet"], emoji: "🥗" },
   { words: ["música", "violão", "guitarra", "piano", "instrumento"], emoji: "🎸" },
   { words: ["arte", "pintura", "desenho", "artesanato", "creative"], emoji: "🎨" },
