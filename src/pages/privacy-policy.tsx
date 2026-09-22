@@ -150,6 +150,13 @@ export default function PrivacyPolicy() {
 
           <section>
             <h2 className="text-lg font-bold text-slate-800 mb-2">
+              {t("privacy.sections.googleLimitedUse.title")}
+            </h2>
+            <p>{t("privacy.sections.googleLimitedUse.body")}</p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-bold text-slate-800 mb-2">
               {t("privacy.sections.changes.title")}
             </h2>
             <p>{t("privacy.sections.changes.body")}</p>

@@ -101,12 +101,16 @@
         "title": "8. Cookies and local storage",
         "body": "We use session cookies to keep you signed in. We do not use tracking or advertising cookies."
       },
+      "googleLimitedUse": {
+        "title": "9. Google API Limited Use disclosure",
+        "body": "rotinaFlow's use and transfer of information received from Google APIs adheres to the Google API Services User Data Policy, including the Limited Use requirements. We do not use raw or derived user data obtained through Google Calendar to develop, train, improve, or personalize any generalized or proprietary artificial intelligence or machine learning models."
+      },
       "changes": {
-        "title": "9. Changes to this policy",
+        "title": "10. Changes to this policy",
         "body": "We may update this policy periodically. We will notify you of significant changes by email or through a notice within the service itself. Continued use of rotinaFlow after such changes constitutes acceptance of the new policy."
       },
       "contact": {
-        "title": "10. Contact",
+        "title": "11. Contact",
         "lead": "For questions, requests, or to exercise your rights, please contact us by email:"
       }
     }

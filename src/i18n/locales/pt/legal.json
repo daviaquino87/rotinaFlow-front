@@ -101,12 +101,16 @@
         "title": "8. Cookies e armazenamento local",
         "body": "Utilizamos cookies de sessão para manter você autenticado. Não utilizamos cookies de rastreamento ou publicidade."
       },
+      "googleLimitedUse": {
+        "title": "9. Uso Limitado de dados da API do Google",
+        "body": "O uso e a transferência, pelo rotinaFlow, de informações recebidas das APIs do Google estão em conformidade com a Política de Dados do Usuário dos Serviços de API do Google, incluindo os requisitos de Uso Limitado (Limited Use). Não utilizamos dados brutos ou derivados obtidos via Google Calendar para desenvolver, treinar, aprimorar ou personalizar modelos de inteligência artificial ou aprendizado de máquina, sejam eles genéricos ou de uso próprio."
+      },
       "changes": {
-        "title": "9. Alterações nesta política",
+        "title": "10. Alterações nesta política",
         "body": "Podemos atualizar esta política periodicamente. Notificaremos você sobre mudanças significativas por e-mail ou por aviso no próprio serviço. O uso continuado do rotinaFlow após as alterações implica aceitação da nova política."
       },
       "contact": {
-        "title": "10. Contato",
+        "title": "11. Contato",
         "lead": "Para dúvidas, solicitações ou exercício dos seus direitos, entre em contato pelo e-mail:"
       }
     }
